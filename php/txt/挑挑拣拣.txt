@@ -1,4 +1,5 @@
 欣赏频道,#genre#
+Plus综合频道,http://push-rtmp-hs-spe-f5.douyincdn.com/live/awei_j2.flv
 pₒₚc电影频道,https://fr-us7.jdiptv.cc/live/popc.m3u8
 中天新闻频道,https://smart.pendy.dpdns.org/Smart.php?id=ctinews
 有线新闻频道,http://api.mg.itv888.cn:8080/hls/5e12ccd9191/index.m3u8

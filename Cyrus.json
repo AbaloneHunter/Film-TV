@@ -4,105 +4,6 @@
   "wallpaper": "./imgs/Y3.webp",
   "sites": [
     {
-      "key": "vod",
-      "name": "Vod^点播",
-      "type": 1,
-      "api": "http://127.0.0.1:8088/php/json.php",
-      "style": {
-        "type": "rect"
-      },
-      "changeable": 1
-    },
-    {
-      "key": "live",
-      "name": "Live^直播",
-      "type": 4,
-      "api": "http://127.0.0.1:8088/php/txt.php",
-      "searchable": 1,
-      "style": {
-        "type": "list",
-        "ratio": 1.1
-      },
-      "changeable": 1
-    },
-    {
-      "key": "Wexconfig",
-      "name": "🐮配置┃中心🐮",
-      "jar": "./jar/wex.jar",
-      "type": 3,
-      "api": "csp_WexconfigGuard",
-      "searchable": 0,
-      "changeable": 0,
-      "indexs": 0
-    },
-    {
-      "key": "WexWo123panGuard",
-      "name": "🐮疯狂┃321🐮",
-      "jar": "./jar/wex.jar",
-      "type": 3,
-      "api": "csp_WexWo123panGuard",
-      "searchable": 1,
-      "changeable": 1,
-      "timeout": 50,
-      "style": {
-        "type": "list"
-      }
-    },
-    {
-      "key": "WexTJso",
-      "name": "铁甲🎠综合",
-      "jar": "./jar/wex.jar",
-      "type": 3,
-      "api": "csp_WexTJsoGuard",
-      "searchable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "WexHaiYinsoGuard",
-      "name": "海音🎠综合",
-      "jar": "./jar/wex.jar",
-      "type": 3,
-      "api": "csp_WexHaiYinsoGuard",
-      "searchable": 1,
-      "changeable": 0
-    },
-    {
-      "key": "玩偶",
-      "name": "玩偶💓‍4K‍",
-      "jar": "./jar/wex.jar",
-      "type": 3,
-      "api": "csp_WoggGuard",
-      "searchable": 1,
-      "changeable": 1
-    },
-    {
-      "key": "Wexmuougg",
-      "name": "木偶💓‍4K",
-      "jar": "./jar/wex.jar",
-      "type": 3,
-      "api": "csp_WexmuouggGuard",
-      "searchable": 1,
-      "changeable": 1
-    },
-    {
-      "key": "Wexerxiaoziyuan",
-      "name": "二小💓‍4K‍",
-      "jar": "./jar/wex.jar",
-      "type": 3,
-      "api": "csp_WexerxiaoziyuanGuard",
-      "searchable": 1,
-      "changeable": 1
-    },
-    {
-      "key": "WexfeimaoziyuanGuard",
-      "name": "肥猫💓‍4K",
-      "jar": "./jar/wex.jar",
-      "type": 3,
-      "api": "csp_WexfeimaoziyuanGuard",
-      "searchable": 1,
-      "changeable": 1
-    },
-    {
       "key": "克隆合集",
       "name": "克隆┃合集",
       "type": 4,
@@ -127,6 +28,16 @@
       "changeable": 1
     },
     {
+      "key": "lav",
+      "name": "(T.z)lav 𒉽",
+      "type": 3,
+      "api": "./py^js/lav.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "changeable": 0
+    },
+    {
       "key": "javxx",
       "name": "(T.z)javxx 𒉽",
       "type": 3,
@@ -140,17 +51,17 @@
       }
     },
     {
-      "key": "lav",
-      "name": "(T.z)lav 𒉽",
-      "type": 3,
-      "api": "./py^js/lav.py",
+      "key": "BadNews",
+      "name": "(T.z)BadNews 𒉽",
+      "type": 4,
+      "api": "https://py.doube.eu.org/spider?site=BadNews",
       "searchable": 1,
-      "quickSearch": 1,
+      "quickSearch": 0,
       "filterable": 0,
       "changeable": 0,
-      "ext": {
-        "proxy": {},
-        "plp": ""
+      "style": {
+        "type": "rect",
+        "ratio": 1.5
       }
     },
     {
@@ -206,9 +117,19 @@
         }
       }
     },
-    {
+        {
       "key": "missav",
       "name": "(T.z)missav 𒉽",
+      "type": 4,
+      "api": "https://py.doube.eu.org/spider?site=Miss",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0,
+      "changeable": 0
+    },
+    {
+      "key": "missav2",
+      "name": "(T.z)missav2 𒉽",
       "jar": "./jar/𒉽.jar;md5;875ce871703d1c382e0498711b9d3ba0",
       "type": 3,
       "quickSearch": 1,
@@ -308,15 +229,33 @@
           }
         }
       }
+    },
+        {
+      "key": "AiDou",
+      "name": "(T.z)AiDou 𒉽",
+      "type": 4,
+      "api": "https://py.doube.eu.org/spider?site=AiDou",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0,
+      "changeable": 0,
+      "style": {
+        "type": "rect",
+        "ratio": 1.5
+      }
+    },
+        {
+      "key": "rou",
+      "name": "(T.z)Rou 𒉽",
+      "type": 3,
+      "api": "https://d.kstore.dev/download/14756/python/vod_rou.py",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0,
+      "changeable": 0
     }
   ],
   "lives": [
-    {
-      "name": "组播",
-      "url": "./php/txt/zubo.txt",
-      "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
-      "logo": "https://epg.112114.xyz/logo/{name}.png"
-    },
     {
       "name": "MQiTV>jar",
       "api": "csp_MQiTV",
@@ -354,14 +293,14 @@
       "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
       "logo": "https://epg.112114.xyz/logo/{name}.png"
     },
-        {
+    {
       "name": "(T.z)斯玛特>py",
       "type": 3,
       "api": "./py^js/live_smart.py",
       "epg": "http://diyp5.112114.xyz/?ch={name}&date={date",
       "ext": ""
     },
-        {
+    {
       "name": "(T.z)BeeSport>py",
       "type": 3,
       "api": "./py^js/live_beesport.py",

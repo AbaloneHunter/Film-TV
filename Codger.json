@@ -129,11 +129,6 @@
   ],
   "lives": [
     {
-      "name": "组播",
-      "url": "./php/txt/zubo.txt",
-      "epg": "http://diyp5.112114.xyz/?ch={name}&date={date",
-    },
-    {
       "name": "MQiTV",
       "api": "csp_MQiTV",
       "epg": "http://diyp5.112114.xyz/?ch={name}&date={date",
