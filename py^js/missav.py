@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
 # by @嗷呜
-import copy
-import gzip
-import json
-import re
-import sys
-import time
-import uuid
+import os,copy,requests,gzip,json,re,sys,time,uuid
+from urllib.parse import unquote
 from base64 import b64decode
-from urllib.parse import urlparse, urlunparse
 from Crypto.Hash import SHA1, HMAC
 from pyquery import PyQuery as pq
 sys.path.append('..')
@@ -17,28 +11,17 @@ from base.spider import Spider
 
 class Spider(Spider):
 
-    def init(self, extend=""):
-        '''
-        {
-            "": "",
-            "ext": {
-                "site": "https://missav.ai",
-                "cfproxy": ""
-            }
-        }
-        自备:过cf代理如https://xx.vvvv.cc/proxy?url=
-        '''
-        try:
-            ext=json.loads(extend)
-            self.host,self.pcf,self.phost=ext.get('site',''),ext.get('cfproxy',''),''
-            if self.pcf:
-                parsed_url=urlparse(self.pcf)
-                self.phost=parsed_url.scheme + "://" + parsed_url.netloc
-        except:
-            pass
+    def init(self, extend="{}"):
+        config = json.loads(extend)
+        self.process = None
+        self.host = config['site']
+        self.plp = config.get('plp', '')
+        self.proxy = config.get('proxy', {})
+        self.one_mark, gobool = self.start_proxy(config.get('cfgo'))
+        self.cfproxy = 'http://127.0.0.1:12525?url=' if gobool else ''
         self.headers = {
             'referer': f'{self.host}',
-            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36'
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0'
         }
         pass
 
@@ -54,29 +37,129 @@ class Spider(Spider):
     def destroy(self):
         pass
 
+    def copy_file(self, source_path):
+        target_filename = os.path.basename(source_path)
+        try:
+            from java.io import File
+            from java.lang import Class
+            from java.nio.file import Files, Paths, StandardCopyOption
+
+            source_file = File(source_path)
+            if not source_file.exists() or not source_file.isFile():
+                self.log(f"❌ 源文件不存在: {source_path}")
+                return False
+
+            python_class = Class.forName("com.chaquo.python.Python")
+            get_instance_method = python_class.getMethod("getInstance")
+            python_instance = get_instance_method.invoke(None)
+
+            get_platform_method = python_class.getMethod("getPlatform")
+            platform = get_platform_method.invoke(python_instance)
+
+            get_application_method = platform.getClass().getMethod("getApplication")
+            application = get_application_method.invoke(platform)
+            context = application.getApplicationContext()
+            files_dir = context.getFilesDir().getAbsolutePath()
+            target_path = files_dir + "/" + target_filename
+
+            target_file = File(target_path)
+            if target_file.exists() and target_file.isFile() and target_file.length() == source_file.length():
+                target_file.setExecutable(True)
+                self.log(f"⚠️ 文件已存在: {target_path}")
+                return target_path
+
+            Files.copy(
+                Paths.get(source_path),
+                Paths.get(target_path),
+                StandardCopyOption.REPLACE_EXISTING
+            )
+
+            File(target_path).setExecutable(True)
+            self.log(f"✅ 复制完成: {target_path}")
+            return target_path
+
+        except Exception as e:
+            self.log(f"❌ 复制失败: {e}")
+            return False
+
+    def start_proxy(self,path, port=12525):
+        try:
+            if not path:
+                msg = "文件不存在"
+                self.log(msg)
+                return msg, False
+            from java.lang import ProcessBuilder
+            from java.io import File
+            from android.os import Environment
+            external_storage = Environment.getExternalStorageDirectory().getAbsolutePath()
+            absolute_path = os.path.abspath(path)
+            absolute_path = unquote(external_storage + absolute_path.split('/file')[-1])
+            c_file=self.copy_file(absolute_path)
+            if not c_file:
+                msg = f"无法复制文件"
+                self.log(msg)
+                return msg, False
+            if self.examine(port):
+                self.proxy={}
+                msg = f"✅ 代理已启动:{port}"
+                self.log(msg)
+                return msg, True
+            oder=[c_file, "-port", str(port)]
+            proxy=self.proxy.get('http','')
+            if proxy:
+                oder.extend(['-proxy',proxy])
+            pb = ProcessBuilder(oder)
+            pb.directory(File(c_file).getParentFile())
+            self.process = pb.start()
+            time.sleep(1)
+            if self.process and self.process.isAlive() and self.examine(port):
+                self.proxy = {}
+                msg = f"✅ 代理已启动:{port}"
+                self.log(msg)
+                return msg,True
+            else:
+                msg = "❌ 代理启动失败"
+                self.log(msg)
+                return msg,False
+
+        except Exception as e:
+            msg = "❌ 启动代理异常"
+            self.log(f"{msg}: {e}")
+            return msg, False
+
+    def examine(self,port):
+        import socket
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(1)
+        result = sock.connect_ex(('127.0.0.1', int(port)))
+        sock.close()
+        if result == 0:
+            return  True
+        return  False
+
     xhost='https://client-rapi-missav.recombee.com'
+
+    countr='/dm15/cn'
+
+    ccccc='H4sIAAAAAAAAA4uuViqpLEiNz0vMTVWyUlB6Nqfhxf6Jz2ZveTZtg5IORC4zBSSTkmtqaKKfnKefl1quVKuDrm/ahid75zzZ0fV0RxOGPgsLkL6i1JzUxOJULHqnL3i+oPHZ1san7bvQ9ZoZGYL0luYlp+YV5xelpugCDcnGNOPp0s1P9sx4sqPhxfIOVDOAuhOTS4pSi4tTizH1Pd+4++m8bgwd6al5RdiUP+2f+GJhz9OpbRg6chOzU4uAOmIBkkRrDlIBAAA='
 
     fts = 'H4sIAAAAAAAAA23P30rDMBQG8FeRXM8X8FVGGZk90rA0HU3SMcZgXjn8V6p2BS2KoOiFAwUn2iK+TBP7GBpYXbG9/c6Pc77TnaABjNHOFtojVIDPUQcx7IJJvl9ydX30GwSYSpN0J4iZgTqJiywrPlN1vm/GJiPMJgGxJaZo2qnc3WXDuZIKMqSwUcX7Ui8O1DJRH3Gldh3CgMM2l31BhNGW8euq3PNFrac+PVNZ2NYzjMrbY53c6/Sm2uwDBczB7mGxqaDTWfkV6atXvXiu4FD2KeHOf3nxViahjv8YxwHYtWfyQ3NvFZYP85oSno3HvYDAiNevPqnosWFHAAPahnU6b2DXY8Jp0bO8QdfEmlo/SBd5PPUBAAA='
 
     actfts = 'H4sIAAAAAAAAA5WVS2sUQRRG/0rT6xTcqq5Xiwjm/X6sQxZjbBLRBBeOIEGIIEgWrtwI4lJEQsjGhU6Iv2bGcf6FVUUydW/d1SxT55sDfbpmsn9WP+/e1A+q+rh7dnT8qp6rT3snXTz4N7icXH4OB697L/rxZP+sPo1g+Ot8PPg+vvoyOb+IOJ7Vb+fuqGxkJSrZmMOTexiORDjAGxs3GvDGinCANjp5NPbo4NHYo5PHYI8OHoM9JnkM9pjgMdhjksdijwkeiz02eSz22OCx2GOTx2GPDR6HPS55HPa44HHY45LHY48LHo89Pnk89vjg8djjk6fFHh88bfAcxNXduz/sv0Qvfnz74+/X65lf/OMqfzD9ndF8geYzWijQQkaLBVrMaKlASxktF2g5o5UCrWS0WqDVjNYKtJbReoHWM9oo0EZGmwXazGirQFsZbRdoO6OdAu1ktFug3Yz2CrRH70TvqEN3YvT75+TP+5nvxMNKwf0pCIWur4JwM5spVCAaRJtI9ZQ2IPBPg47UTKkGgb/wJlI7pQYE/ho/QsiCaFv61E+7J338Izj6MJi8+xSefnhzO/PTK1CmGt58G118zM+pDBloPtBk0PBBQwaKDxQZSD6QZAB8QN6UbNlAtmTg+cCTgeMDRwaWDywZ8JKSlJS8pCQlJS8pSUnJS0pSUvKSkpSUvKQkJYGXBFISeEkgJYGXBFISeEkgJYGXBFISeEkgJYGXBFISeEkgJYGXBFISeElI/7QO/gOZ7bAksggAAA=='
-
     def homeContent(self, filter):
-        html = self.getpq(f"{self.host}/cn",headers=self.headers)
+        one={"vod_name": "go状态","vod_pic": "https://img-blog.csdnimg.cn/6f8b58d3daf14b5696e85c710f18a571.png","action": "action","vod_remarks": self.one_mark,"style": {"type": "rect","ratio": 1.33}}
+        html = pq(requests.get(f"{self.cfproxy}{self.host}{self.countr}",headers=self.headers,proxies=self.proxy).content)
         result = {}
         filters = {}
-        classes=[]
-        for i in list(html('.mt-4.space-y-4').items())[:2]:
-            for j in i('ul li').items():
-                id=j('a').attr('href').split('/')[-1]
-                classes.append({
-                    'type_name': j.text(),
-                    'type_id': id
-                })
-                filters[id] = copy.deepcopy(self.ungzip(self.fts))
-                if id=='actresses':filters[id].extend(self.ungzip(self.actfts))
+        classes=self.ungzip(self.ccccc)
+        for i in classes:
+            id=i['type_id']
+            filters[id] = copy.deepcopy(self.ungzip(self.fts))
+            if 'cn/actresses' in id:filters[id].extend(self.ungzip(self.actfts))
         result['class'] = classes
         result['filters'] = filters
         result['list'] = self.getlist(html('.grid-cols-2.md\\:grid-cols-3 .thumbnail.group'))
+        result['list'].insert(0, one)
         return result
 
     def homeVideoContent(self):
@@ -84,15 +167,15 @@ class Spider(Spider):
 
     def categoryContent(self, tid, pg, filter, extend):
         params={
-            'page':'' if pg=='1' else pg
+            'page':pg
         }
         ft = {
             'filters': extend.get('filters', ''),
             'sort': extend.get('sort', '')
         }
-        if tid in ['makers', 'genres']:
+        if tid in ['cn/genres', 'cn/makers']:
             ft = {}
-        elif tid == 'actresses':
+        elif tid == 'cn/actresses':
             ft = {
                 'height': extend.get('height', ''),
                 'cup': extend.get('cup', ''),
@@ -101,13 +184,16 @@ class Spider(Spider):
                 'sort': extend.get('sort', '')
             }
         params.update(ft)
-        params = {k: v for k, v in params.items() if v != ""}
-        url=tid if 'http' in tid else f"{self.host}/cn/{tid}"
-        data=self.getpq(url,headers=self.headers,params=params)
+        params={k: v for k, v in params.items() if v}
+        req = requests.Request(
+            url=f"{self.host}/{tid}",
+            params=params,
+        ).prepare()
+        data=pq(requests.get(f"{self.cfproxy}{req.url}",headers=self.headers,proxies=self.proxy).content)
         result = {}
-        if tid in ['makers', 'genres']:
+        if tid in ['cn/genres', 'cn/makers']:
             videos = self.gmsca(data)
-        elif tid == 'actresses':
+        elif tid == 'cn/actresses':
             videos = self.actca(data)
         else:
             videos = self.getlist(data('.grid-cols-2.md\\:grid-cols-3 .thumbnail.group'))
@@ -119,27 +205,31 @@ class Spider(Spider):
         return result
 
     def detailContent(self, ids):
-        v=self.getpq(ids[0],headers=self.headers)
+        urlllll=f"{self.cfproxy}{self.host}/{ids[0]}"
+        v=pq(requests.get(urlllll,headers=self.headers,proxies=self.proxy).content)
         sctx=v('body script').text()
         urls=self.execute_js(sctx)
-        if not urls:urls=f"嗅探${ids[0]}"
+        if not urls:urls=f"嗅探${urlllll}"
         c=v('.space-y-2 .text-secondary')
-        ac,dt,bq=[],[],[]
+        ac,dt,cd,bq=[],[],[],['点击展开↓↓↓\n']
         for i in c.items():
-            if re.search(r"导演:|女优:",i.text()):
-                ac.extend(['[a=cr:' + json.dumps({'id': j.attr('href'), 'name': j.text()}) + '/]' + j.text() + '[/a]' for j in i('a').items()])
-            elif '发行商:' in i.text():
-                dt.extend(['[a=cr:' + json.dumps({'id': j.attr('href'), 'name': j.text()}) + '/]' + j.text() + '[/a]' for j in i('a').items()])
-            elif re.search(r"标籤:|系列:|类型:",i.text()):
-                bq.extend(['[a=cr:' + json.dumps({'id': j.attr('href'), 'name': j.text()}) + '/]' + j.text() + '[/a]' for j in i('a').items()])
-        np={'MissAV':urls,'相关视频':self.getfov(ids[0])}
+            xxx=i('span').text()
+            if re.search(r"导演:|发行商:",xxx):
+                dt.extend(['[a=cr:' + json.dumps({'id': j.attr('href').split('/',3)[-1], 'name': j.text()}) + '/]' + j.text() + '[/a]' for j in i('a').items()])
+            elif re.search(r"女优:",xxx):
+                ac.extend(['[a=cr:' + json.dumps({'id': j.attr('href').split('/',3)[-1], 'name': j.text()}) + '/]' + j.text() + '[/a]' for j in i('a').items()])
+            elif re.search(r"类型:|系列:",xxx):
+                bq.extend(['[a=cr:' + json.dumps({'id': j.attr('href').split('/',3)[-1], 'name': j.text()}) + '/]' + j.text() + '[/a]' for j in i('a').items()])
+            elif re.search(r"标籤:",xxx):
+                cd.extend(['[a=cr:' + json.dumps({'id': j.attr('href').split('/',3)[-1], 'name': j.text()}) + '/]' + j.text() + '[/a]' for j in i('a').items()])
+        np={'MissAV':urls,'Recommend':self.getfov(ids[0])}
         vod = {
             'type_name': c.eq(-3)('a').text(),
-            'vod_year': c.eq(0)('span').text(),
-            'vod_remarks': ' '.join(bq),
+            'vod_year': c.eq(0)('time').text(),
+            'vod_remarks': ' '.join(cd),
             'vod_actor': ' '.join(ac),
             'vod_director': ' '.join(dt),
-            'vod_content': v('.text-secondary.break-all').text()
+            'vod_content': f"{' '.join(bq)}\n{v('.text-secondary.break-all').text()}"
         }
         names,plist=[],[]
         for i,j in np.items():
@@ -151,52 +241,29 @@ class Spider(Spider):
         return {'list': [vod]}
 
     def searchContent(self, key, quick, pg="1"):
-        data=self.getpq(f"{self.host}/cn/search/{key}",headers=self.headers,params={'page':pg})
+        req = requests.Request(
+            url=f"{self.host}/search/{key}",
+            params={'page': pg},
+        ).prepare()
+        data = pq(requests.get(f"{self.cfproxy}{req.url}", headers=self.headers, proxies=self.proxy).content)
         return {'list': self.getlist(data('.grid-cols-2.md\\:grid-cols-3 .thumbnail.group')),'page':pg}
 
     def playerContent(self, flag, id, vipFlags):
-        p=0 if '嗅' in flag else 1
-        if '相关' in flag:
+        p=0 if '.m3u8' in id else 1
+        if flag == 'Recommend':
+            urlllll = f"{self.cfproxy}{self.host}/{id}"
             try:
-                v = self.getpq(id, headers=self.headers)
+                v = pq(requests.get(urlllll, headers=self.headers, proxies=self.proxy).content)
                 sctx = v('body script').text()
-                urls = self.execute_js(sctx)
-                if not urls: raise Exception("没有找到地址")
-                p,id=0,urls.split('#')[0].split('$')[-1]
+                url = self.execute_js(sctx)
+                if not url: raise Exception("没有找到地址")
+                p,id=0,url.split('$')[-1]
             except:
-                p=1
-        return {'parse': p, 'url': id, 'header': self.headers}
+                p,id=1,urlllll
+        return {'parse': p, 'url': id if p else f"{self.plp}{id}", 'header': self.headers}
 
     def localProxy(self, param):
         pass
-
-    def josn_to_params(self, params, skip_empty=False):
-        query = []
-        for k, v in params.items():
-            if skip_empty and not v:
-                continue
-            query.append(f"{k}={v}")
-        return "&".join(query)
-
-    def getpq(self, url, headers=None,params='',min=0,max=3):
-        if not min and self.phost in url:
-            url=url.replace(self.phost,self.host)
-        if params=={}:params=''
-        if params:
-            params=f"?{self.josn_to_params(params)}"
-        response=self.fetch(f"{self.pcf}{url}{params}", headers=headers,verify=False)
-        res=response.text
-        if 300 <= response.status_code < 400:
-            if min >= max:raise Exception(f"重定向次数过多: {res}")
-            match = re.search(r"url=['\"](https?://[^'\"]+)['\"]", res)
-            if match:
-                url = match.group(1).replace(self.phost, self.host)
-                return self.getpq(url, headers=headers,params='',min=min+1,max=max)
-        try:
-            return pq(res)
-        except Exception as e:
-            print(f"{str(e)}")
-            return pq(res.encode('utf-8'))
 
     def getlist(self,data):
         videos = []
@@ -209,7 +276,7 @@ class Spider(Spider):
                 ids.append(id)
                 names.append(name)
                 videos.append({
-                    'vod_id': id,
+                    'vod_id': id.split('/',3)[-1],
                     'vod_name': name,
                     'vod_pic': k.eq(0)('img').attr('data-src'),
                     'vod_year': '' if len(list(k.items())) < 3 else k.eq(1).text(),
@@ -221,21 +288,23 @@ class Spider(Spider):
     def gmsca(self,data):
         acts=[]
         for i in data('.grid.grid-cols-2.md\\:grid-cols-3 div').items():
+            id=i('.text-nord13').attr('href')
             acts.append({
-                'vod_id': i('.text-nord13').attr('href'),
+                'vod_id':id.split('/', 3)[-1] if id else id,
                 'vod_name': i('.text-nord13').text(),
                 'vod_pic': '',
                 'vod_remarks': i('.text-nord10').text(),
                 'vod_tag': 'folder',
-                'style': {"type": "rect", "ratio": 1.33}
+                'style': {"type": "rect", "ratio": 2}
             })
         return acts
 
     def actca(self,data):
         acts=[]
         for i in data('.max-w-full ul li').items():
+            id=i('a').attr('href')
             acts.append({
-                'vod_id': i('a').attr('href'),
+                'vod_id': id.split('/', 3)[-1] if id else id,
                 'vod_name': i('img').attr('alt'),
                 'vod_pic': i('img').attr('src'),
                 'vod_year': i('.text-nord10').eq(-1).text(),
@@ -249,7 +318,7 @@ class Spider(Spider):
         try:
             h=self.headers.copy()
             ids=url.split('/')
-            h.update({'referer':f'{url}/'})
+            h.update({'referer':f'{self.host}/{url}/'})
             t=str(int(time.time()))
             params = {
                 'frontend_timestamp': t,
@@ -299,15 +368,15 @@ class Spider(Spider):
                 ],
                 'distinctRecomms': True,
             }
-            data = self.post(f'{self.xhost}/missav-default/batch/', params=params,headers=h, json=json_data).json()
+            data = requests.post(f'{self.xhost}/missav-default/batch/', params=params,headers=h, json=json_data,proxies=self.proxy).json()
             vdata=[]
             for i in data:
                 for j in i['json']['recomms']:
                     if j.get('id'):
-                        vdata.append(f"{j['values']['title_cn']}${self.host}/cn/{j['id']}")
+                        vdata.append(f"{j['values']['title_cn']}${j['id']}")
             return '#'.join(vdata)
         except Exception as e:
-            print(f"获取推荐失败: {e}")
+            self.log(f"获取推荐失败: {e}")
             return ''
 
     def getsign(self, text):
@@ -323,29 +392,16 @@ class Spider(Spider):
         return json.loads(result)
 
     def execute_js(self, jstxt):
-        js_code = re.search(r"eval\(function\(p,a,c,k,e,d\).*?return p\}(.*?)\)\)", jstxt).group(0)
+        js_code = re.search(r"eval\(function\(p,a,c,k,e,d\).*?return p}(.*?)\)\)", jstxt).group(0)
         try:
             from com.whl.quickjs.wrapper import QuickJSContext
             ctx = QuickJSContext.create()
-            ctx.evaluate(js_code)
-            result = []
-            common_vars = ["source", "source842", "source1280"]
-            for var_name in common_vars:
-                try:
-                    value = ctx.getGlobalObject().getProperty(var_name)
-                    if value is not None:
-                        if isinstance(value, str):
-                            value_str = value
-                        else:
-                            value_str = value.toString()
-                        if "http" in value_str:
-                            result.append(f"{var_name}${value_str}")
-                            self.log(f"找到变量 {var_name} = {value_str[:50]}...")
-                except Exception as var_err:
-                    self.log(f"获取变量 {var_name} 失败: {var_err}")
+            result=ctx.evaluate(f"{js_code}\nsource")
             ctx.destroy()
-            return '#'.join(result)
+            return f"多画质${result}"
         except Exception as e:
             self.log(f"执行失败: {e}")
             return None
+
+
 

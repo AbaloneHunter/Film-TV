@@ -143,13 +143,6 @@
       "jar": "./jar/fm.jar"
     },
     {
-      "name": "斯玛特",
-      "type": 3,
-      "api": "./php/txt/smart/smart.py",
-      "epg": "http://diyp5.112114.xyz/?ch={name}&date={date",
-      "ext": ""
-    },
-    {
       "name": "mqitv",
       "type": 3,
       "api": "./py^js/mqitv.py",
