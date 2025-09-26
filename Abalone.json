@@ -27,18 +27,6 @@
       "changeable": 1
     },
     {
-      "key": "老师",
-      "name": "(T.z)🦃奥斯卡",
-      "type": 1,
-      "api": "https://aosikazy.com/api.php/provide/vod/?ac=list",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 0,
-      "header": {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-      }
-    },
-    {
       "key": "4k数毛",
       "name": "4k数毛 𒉽",
       "type": 3,
@@ -145,6 +133,18 @@
       "quickSearch": 0,
       "filterable": 0,
       "changeable": 0
+    },
+    {
+      "key": "奥斯卡",
+      "name": "(T.z)奥斯卡 𒉽",
+      "type": 1,
+      "api": "https://aosikazy.com/api.php/provide/vod/?ac=list",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "header": {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+      }
     },
     {
       "key": "haose",
