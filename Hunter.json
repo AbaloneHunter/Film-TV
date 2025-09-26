@@ -1,7 +1,7 @@
 {
   "spider": "",
   "logo": "./logo/hunter.gif",
-  "wallpaper": "./imgs/Y3.webp",
+  "wallpaper": "https://raw.githubusercontent.com/Hunter-codger/TV/refs/heads/main/imgs/y3.webp",
   "sites": [
     {
       "key": "vod",

@@ -1,21 +1,8 @@
 {
   "spider": "",
   "logo": "./logo/hunter.gif",
-  "wallpaper": "./imgs/Y3.webp",
+  "wallpaper": "https://raw.githubusercontent.com/Hunter-codger/TV/refs/heads/main/imgs/y3.webp",
   "sites": [
-    {
-      "key": "克隆合集",
-      "name": "克隆┃合集",
-      "type": 4,
-      "api": "http://zhangqun66.com/klhj.php",
-      "searchable": 1,
-      "quickSearch": 1,
-      "style": {
-        "type": "rect"
-      },
-      "changeable": 1,
-      "filterable": 0
-    },
     {
       "key": "采集集合",
       "name": "采集┃集合",
@@ -28,8 +15,52 @@
       "changeable": 1
     },
     {
+      "key": "采集全集",
+      "name": "采集全集",
+      "type": 4,
+      "api": "http://zhangqun1818.serv00.net/cj/cjjh.php",
+      "style": {
+        "type": "rect",
+        "ratio": 1.33
+      },
+      "ext": "0",
+      "changeable": 1
+    },
+    {
+      "key": "老师",
+      "name": "(T.z)🦃奥斯卡",
+      "type": 1,
+      "api": "https://aosikazy.com/api.php/provide/vod/?ac=list",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "header": {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+      }
+    },
+    {
+      "key": "4k数毛",
+      "name": "4k数毛 𒉽",
+      "type": 3,
+      "api": "./py^js/4k数毛.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "changeable": 0
+    },
+    {
+      "key": "6v",
+      "name": "6v 𒉽",
+      "type": 3,
+      "api": "./py^js/6v.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "changeable": 0
+    },
+    {
       "key": "lav",
-      "name": "(T.z)lav 𒉽",
+      "name": "lav 𒉽",
       "type": 3,
       "api": "./py^js/lav.py",
       "searchable": 1,
@@ -38,21 +69,8 @@
       "changeable": 0
     },
     {
-      "key": "javxx",
-      "name": "(T.z)javxx 𒉽",
-      "type": 3,
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 0,
-      "api": "./py^js/javxx.py",
-      "ext": {
-        "proxy": {},
-        "plp": ""
-      }
-    },
-    {
       "key": "BadNews",
-      "name": "(T.z)BadNews 𒉽",
+      "name": "BadNews 𒉽",
       "type": 4,
       "api": "https://py.doube.eu.org/spider?site=BadNews",
       "searchable": 1,
@@ -63,6 +81,16 @@
         "type": "rect",
         "ratio": 1.5
       }
+    },
+        {
+      "key": "香蕉",
+      "name": "香蕉 𒉽",
+      "type": 3,
+      "api": "./py^js/香蕉.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "changeable": 0
     },
     {
       "key": "优优",
@@ -75,7 +103,7 @@
     },
     {
       "key": "AiDou",
-      "name": "(T.z)AiDou 𒉽",
+      "name": "AiDou 𒉽",
       "type": 4,
       "api": "https://py.doube.eu.org/spider?site=AiDou",
       "searchable": 1,
@@ -99,11 +127,52 @@
       "jar": "./jar/XYQ.jar;md5;7f11d950239d38c975561a0a673e78e5"
     },
     {
+      "key": "haose",
+      "name": "18av 𒉽",
+      "type": 3,
+      "api": "./py^js/18av.py",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0,
+      "changeable": 0
+    },
+        {
+      "key": "Pornhub",
+      "name": "Pornhub 𒉽",
+      "type": 3,
+      "api": "./py^js/Pornhub.py",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0,
+      "changeable": 0
+    },
+    {
+      "key": "haose",
+      "name": "(T.z)haose 𒉽",
+      "type": 3,
+      "api": "./py^js/haose.py",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0,
+      "changeable": 0
+    },
+    {
+      "key": "Xhm",
+      "name": "(T.z)Xhm 𒉽",
+      "type": 3,
+      "api": "./py^js/Xhm.py",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0,
+      "changeable": 0
+    },
+    {
       "key": "stripchat",
       "name": "(T.z)stripchat 𒉽",
       "type": 3,
       "api": "./py^js/stripchat.py",
       "searchable": 1,
+      "quickSearch": 0,
       "filterable": 0,
       "changeable": 0
     },
@@ -162,7 +231,7 @@
     },
     {
       "key": "missav",
-      "name": "(T.z)missav 𒉽",
+      "name": "missav 𒉽",
       "type": 4,
       "api": "https://py.doube.eu.org/spider?site=Miss",
       "searchable": 1,
@@ -317,14 +386,14 @@
     {
       "name": "MQiTV>jar",
       "api": "csp_MQiTV",
-      "epg": "http://diyp5.112114.xyz/?ch={name}&date={date",
+      "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
       "ext": "https://59.125.210.231:4433",
       "jar": "./jar/fm.jar"
     },
     {
       "name": "MQiTV2>jar",
       "api": "csp_MQiTV",
-      "epg": "http://diyp5.112114.xyz/?ch={name}&date={date",
+      "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
       "ext": "https://60.248.127.232:4433",
       "jar": "./jar/fm.jar"
     },
@@ -332,8 +401,16 @@
       "name": "MQiTV3>py",
       "type": 3,
       "api": "./py^js/live_mqitv.py",
-      "epg": "http://diyp5.112114.xyz/?ch={name}&date={date",
+      "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
       "ext": ""
+    },
+    {
+      "name": "秘密花园",
+      "type": 0,
+      "url": "https://gitee.com/sji820/des/raw/master/0.jpg",
+      "playerType": 1,
+      "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
+      "logo": "http://diyp5.112114.xyz/{name}.png"
     },
     {
       "name": "秘密花园>jpg",
@@ -344,17 +421,9 @@
       "logo": "https://epg.112114.xyz/logo/{name}.png"
     },
     {
-      "name": "秘密花园0>jpg",
-      "type": 0,
-      "url": "https://gitee.com/sji820/des/raw/master/0.jpg",
-      "playerType": 1,
-      "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
-      "logo": "https://epg.112114.xyz/logo/{name}.png"
-    },
-        {
       "name": "秘密花园1>jpg",
       "type": 0,
-      "url": "http://pan.losfer.cn/down.php/b58e676347cde6d2aeab102577121b3d.jpg",
+      "url": "https://down.nigx.cn/mmhy.zzong6599.workers.dev/",
       "playerType": 1,
       "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
       "logo": "https://epg.112114.xyz/logo/{name}.png"
