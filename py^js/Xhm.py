@@ -5,18 +5,46 @@ import sys
 from base64 import b64decode, b64encode
 from pyquery import PyQuery as pq
 from requests import Session
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 sys.path.append('..')
 from base.spider import Spider
 
 
 class Spider(Spider):
 
-    def init(self, extend=""):
+    def init(self, extend="{}"):
+        """初始化并加载代理配置
+        示例：{"proxy":{"http":"http://127.0.0.1:10172","https":"https://127.0.0.1:10172"}}
+        """
+        # 解析代理配置
+        self.proxies = {}
+        if extend:
+            try:
+                config = json.loads(extend)
+                self.proxies = config.get('proxy', {})
+            except Exception as e:
+                print(f"代理配置解析错误: {str(e)}")
+        
+        # 初始化会话（保持原始代码的会话模式）
         self.host = self.gethost()
         self.headers['referer'] = f'{self.host}/'
-        self.session = Session()
+        self.session = self._create_session()
         self.session.headers.update(self.headers)
-        pass
+        self.session.proxies = self.proxies  # 仅在此处添加代理配置
+
+    def _create_session(self):
+        """创建带重试机制的会话，优化连接稳定性"""
+        session = Session()
+        retry_strategy = Retry(
+            total=3,
+            backoff_factor=0.3,
+            status_forcelist=[429, 500, 502, 503, 504]
+        )
+        adapter = HTTPAdapter(max_retries=retry_strategy)
+        session.mount("http://", adapter)
+        session.mount("https://", adapter)
+        return session
 
     def getName(self):
         pass
@@ -28,7 +56,8 @@ class Spider(Spider):
         pass
 
     def destroy(self):
-        pass
+        if hasattr(self, 'session'):
+            self.session.close()
 
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
@@ -157,26 +186,41 @@ class Spider(Spider):
         return {'list': self.getlist(data(".thumb-list--sidebar .thumb-list__item")), 'page': pg}
 
     def playerContent(self, flag, id, vipFlags):
-        p,url=1,id
+        # 完全保留原始代码的播放逻辑，不做本地代理转发
+        p, url = 1, id
         headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.5410.0 Safari/537.36',
             'origin': self.host,
             'referer': f'{self.host}/',
         }
         if id.startswith("666_"):
-            p,url=0,id[4:]
-        return {'parse': p, 'url': url, 'header': headers}
+            p, url = 0, id[4:]
+        
+        # 关键优化：将代理配置传递给播放器
+        return {
+            'parse': p, 
+            'url': url, 
+            'header': headers,
+            'proxy': self.proxies  # 新增：将代理配置传递给播放器
+        }
 
+    # 禁用本地代理转发，保持和原始代码一致
     def localProxy(self, param):
         pass
 
     def gethost(self):
         try:
-            response = self.fetch('https://xhamster.com', headers=self.headers, allow_redirects=False)
-            return response.headers['Location']
+            # 使用带代理的会话获取主机
+            response = self.session.get(
+                'https://xhamster.com',
+                headers=self.headers,
+                allow_redirects=False,
+                timeout=10
+            )
+            return response.headers.get('Location', 'https://xhamster.com')
         except Exception as e:
             print(f"获取主页失败: {str(e)}")
-            return "https://zn.xhamster.com"
+            return "https://xhamster.com"
 
     def e64(self, text):
         try:
@@ -211,11 +255,19 @@ class Spider(Spider):
 
     def getpq(self, path=''):
         h = '' if path.startswith('http') else self.host
-        response = self.session.get(f'{h}{path}')
-        return pq(response.content)
-
+        try:
+            response = self.session.get(f'{h}{path}', timeout=10)
+            response.raise_for_status()
+            return pq(response.content)
+        except Exception as e:
+            print(f"页面请求错误({h}{path}): {str(e)}")
+            return pq('')
 
     def getjsdata(self, data):
         vhtml = data("script[id='initials-script']").text()
-        jst = json.loads(vhtml.split('initials=')[-1][:-1])
-        return jst
+        try:
+            jst = json.loads(vhtml.split('initials=')[-1][:-1])
+            return jst
+        except Exception as e:
+            print(f"解析js数据错误: {str(e)}")
+            return {}

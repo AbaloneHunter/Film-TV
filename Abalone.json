@@ -27,10 +27,41 @@
       "changeable": 1
     },
     {
+      "key": "葡萄5区",
+      "name": "葡萄5区(py)",
+      "type": 3,
+      "api": "./py/葡萄5区.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "order_num": 0,
+      "ext": ""
+    },
+    {
       "key": "4k数毛",
       "name": "4k数毛 𒉽",
       "type": 3,
       "api": "./py^js/4k数毛.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "changeable": 0
+    },
+    {
+      "key": "推特APP",
+      "name": "推特APP 𒉽",
+      "type": 3,
+      "api": "./py^js/推特APP.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "changeable": 0
+    },
+    {
+      "key": "小红薯APP",
+      "name": "小红薯APP 𒉽",
+      "type": 3,
+      "api": "./py^js/小红薯APP.py",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0,
@@ -57,6 +88,16 @@
       "changeable": 0
     },
     {
+      "key": "epo",
+      "name": "epo 𒉽",
+      "type": 3,
+      "api": "./py^js/epo.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "changeable": 0
+    },
+    {
       "key": "BadNews",
       "name": "BadNews 𒉽",
       "type": 4,
@@ -70,7 +111,7 @@
         "ratio": 1.5
       }
     },
-        {
+    {
       "key": "香蕉",
       "name": "香蕉 𒉽",
       "type": 3,
@@ -124,7 +165,17 @@
       "filterable": 0,
       "changeable": 0
     },
-        {
+    {
+      "key": "boyfriend.show",
+      "name": "boyfriend.show 𒉽",
+      "type": 3,
+      "api": "./py^js/boyfriend.show.py",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0,
+      "changeable": 0
+    },
+    {
       "key": "Pornhub",
       "name": "Pornhub 𒉽",
       "type": 3,
@@ -147,10 +198,10 @@
       }
     },
     {
-      "key": "haose",
-      "name": "(T.z)haose 𒉽",
+      "key": "好色TV",
+      "name": "(T.z)好色TV 𒉽",
       "type": 3,
-      "api": "./py^js/haose.py",
+      "api": "./py^js/好色TV.py",
       "searchable": 1,
       "quickSearch": 0,
       "filterable": 0,
