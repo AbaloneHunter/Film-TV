@@ -27,17 +27,6 @@
       "changeable": 1
     },
     {
-      "key": "葡萄5区",
-      "name": "葡萄5区(py)",
-      "type": 3,
-      "api": "./py/葡萄5区.py",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "order_num": 0,
-      "ext": ""
-    },
-    {
       "key": "4k数毛",
       "name": "4k数毛 𒉽",
       "type": 3,
@@ -82,6 +71,70 @@
       "name": "lav 𒉽",
       "type": 3,
       "api": "./py^js/lav.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "changeable": 0
+    },
+        {
+      "key": "hsck",
+      "name": "hsck 𒉽",
+      "type": 3,
+      "api": "./py^js/hsck.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "changeable": 0
+    },
+            {
+      "key": "fullhd",
+      "name": "fullhd 𒉽",
+      "type": 3,
+      "api": "./py^js/fullhd.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "changeable": 0
+    },
+            {
+      "key": "rou",
+      "name": "rou 𒉽",
+      "type": 3,
+      "api": "./py^js/rou.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "changeable": 0
+    },
+    {
+      "key": "javxx",
+      "name": "javxx",
+      "type": 3,
+      "api": "./py^js/javxx.py",
+      "searchable": 1,
+      "filterable": 0,
+      "changeable": 0,
+      "plp": "",
+        "proxy": {
+          "http": "",
+          "https": ""
+        }
+    },
+    {
+      "key": "fm多分类",
+      "name": "小说多分类 𒉽",
+      "type": 3,
+      "api": "./py^js/fm多分类.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "changeable": 0
+    },
+    {
+      "key": "Xvideos",
+      "name": "Xvideos 𒉽",
+      "type": 3,
+      "api": "./py^js/Xvideos.py",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0,
@@ -156,7 +209,7 @@
       "jar": "./jar/XYQ.jar;md5;7f11d950239d38c975561a0a673e78e5"
     },
     {
-      "key": "haose",
+      "key": "18av",
       "name": "18av 𒉽",
       "type": 3,
       "api": "./py^js/18av.py",
