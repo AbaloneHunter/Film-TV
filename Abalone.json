@@ -1,4 +1,9 @@
 {
+  "name": "Abalone",
+  "content": "欢迎使用Abalone数据源",
+  "version": "1.0.0",
+  "author": "@AbaloneHunter^https://t.me/Eat_Abalone",
+  "updateTime": "2025-10-14",
   "spider": "",
   "logo": "./logo/hunter.gif",
   "wallpaper": "https://raw.githubusercontent.com/Hunter-codger/TV/refs/heads/main/imgs/y3.webp",
@@ -27,6 +32,17 @@
       "ext": ""
     },
     {
+      "key": "黑料不打烊",
+      "name": "黑料不打烊 𒉽",
+      "type": 3,
+      "api": "./py^js/Yellow/黑料不打烊.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "order_num": 0,
+      "ext": ""
+    },
+    {
       "key": "禁片天堂",
       "name": "禁片天堂 𒉽",
       "type": 3,
@@ -42,6 +58,17 @@
       "name": "ThePorn 𒉽",
       "type": 3,
       "api": "./py^js/Yellow/ThePorn.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "order_num": 0,
+      "ext": ""
+    },
+    {
+      "key": "黑料",
+      "name": "黑料 𒉽",
+      "type": 3,
+      "api": "./py^js/Yellow/黑料.py",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
@@ -132,10 +159,10 @@
       "changeable": 0
     },
         {
-      "key": "hsck",
-      "name": "hsck 𒉽",
+      "key": "黄色仓库",
+      "name": "黄色仓库 𒉽",
       "type": 3,
-      "api": "./py^js/Yellow/hsck.py",
+      "api": "./py^js/Yellow/黄色仓库.py",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0,

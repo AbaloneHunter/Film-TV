@@ -25,7 +25,7 @@
       "order_num": 0,
       "ext": ""
     },
-        {
+    {
       "key": "绝对影视",
       "name": "绝对影视",
       "type": 3,
@@ -36,7 +36,7 @@
       "order_num": 0,
       "ext": ""
     },
-        {
+    {
       "key": "光速影视",
       "name": "光速影视",
       "type": 3,
@@ -47,7 +47,7 @@
       "order_num": 0,
       "ext": ""
     },
-        {
+    {
       "key": "优酷视频",
       "name": "优酷视频",
       "type": 3,
@@ -58,7 +58,7 @@
       "order_num": 0,
       "ext": ""
     },
-        {
+    {
       "key": "云速影视",
       "name": "云速影视",
       "type": 3,
@@ -69,7 +69,7 @@
       "order_num": 0,
       "ext": ""
     },
-        {
+    {
       "key": "电影猎手",
       "name": "电影猎手",
       "type": 3,
@@ -80,7 +80,7 @@
       "order_num": 0,
       "ext": ""
     },
-        {
+    {
       "key": "界影视",
       "name": "界影视",
       "type": 3,
@@ -91,7 +91,7 @@
       "order_num": 0,
       "ext": ""
     },
-        {
+    {
       "key": "光速APP",
       "name": "光速APP",
       "type": 3,
@@ -102,7 +102,7 @@
       "order_num": 0,
       "ext": ""
     },
-        {
+    {
       "key": "actor",
       "name": "actor",
       "type": 3,
@@ -113,7 +113,18 @@
       "order_num": 0,
       "ext": ""
     },
-        {
+    {
+      "key": "哔哩",
+      "name": "哔哩",
+      "type": 3,
+      "api": "./py^js/Green/bili.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "order_num": 0,
+      "ext": ""
+    },
+    {
       "key": "lives",
       "name": "lives",
       "type": 3,
