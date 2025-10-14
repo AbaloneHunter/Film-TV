@@ -37,32 +37,10 @@
       "ext": ""
     },
     {
-      "key": "光速影视",
-      "name": "光速影视",
-      "type": 3,
-      "api": "./py^js/Green/光速影视.py",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "order_num": 0,
-      "ext": ""
-    },
-    {
       "key": "优酷视频",
       "name": "优酷视频",
       "type": 3,
       "api": "./py^js/Green/优酷视频.py",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "order_num": 0,
-      "ext": ""
-    },
-    {
-      "key": "云速影视",
-      "name": "云速影视",
-      "type": 3,
-      "api": "./py^js/Green/云速影视.py",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
@@ -85,17 +63,6 @@
       "name": "界影视",
       "type": 3,
       "api": "./py^js/Green/界影视.py",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "order_num": 0,
-      "ext": ""
-    },
-    {
-      "key": "光速APP",
-      "name": "光速APP",
-      "type": 3,
-      "api": "./py^js/Green/光速APP.py",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,

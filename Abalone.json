@@ -43,6 +43,28 @@
       "ext": ""
     },
     {
+      "key": "51吸瓜",
+      "name": "51吸瓜 𒉽",
+      "type": 3,
+      "api": "./py^js/Yellow/51吸瓜.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "order_num": 0,
+      "ext": ""
+    },
+    {
+      "key": "91糖心",
+      "name": "91糖心 𒉽",
+      "type": 3,
+      "api": "./py^js/Yellow/91糖心.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "order_num": 0,
+      "ext": ""
+    },
+    {
       "key": "禁片天堂",
       "name": "禁片天堂 𒉽",
       "type": 3,
@@ -322,7 +344,7 @@
     },
     {
       "key": "奥斯卡",
-      "name": "(T.z)奥斯卡 𒉽",
+      "name": "🪜奥斯卡 𒉽",
       "type": 1,
       "api": "https://aosikazy.com/api.php/provide/vod/?ac=list",
       "searchable": 1,
