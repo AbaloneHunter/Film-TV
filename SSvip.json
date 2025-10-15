@@ -19,40 +19,28 @@
       "name": "腾讯｜4K",
       "type": 3,
       "api": "./py^js/lib/drpy2.min.js",
-      "ext": "./py^js/腾讯视频.js",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
+      "ext": "./py^js/腾讯视频.js"
     },
     {
       "key": "芒果视频",
       "name": "芒果｜4K",
       "type": 3,
       "api": "./py^js/lib/drpy2.min.js",
-      "ext": "./py^js/芒果视频.js",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
+      "ext": "./py^js/芒果视频.js"
     },
     {
       "key": "优酷视频",
       "name": "优酷｜1K",
       "type": 3,
       "api": "./py^js/lib/drpy2.min.js",
-      "ext": "./py^js/优酷视频.js",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
+      "ext": "./py^js/优酷视频.js"
     },
     {
       "key": "爱奇艺",
       "name": "爱奇艺｜2K",
       "type": 3,
       "api": "./py^js/lib/drpy2.min.js",
-      "ext": "./py^js/爱奇艺.js",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
+      "ext": "./py^js/爱奇艺.js"
     },
     {
       "key": "哔哩视频JS",
