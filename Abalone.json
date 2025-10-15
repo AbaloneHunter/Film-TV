@@ -10,7 +10,7 @@
     "sites": [
         {
             "key": "采集全集",
-            "name": "采集全集",
+            "name": "💧采集全集💧",
             "type": 4,
             "api": "http://zhangqun1818.serv00.net/cj/cjjh.php",
             "style": {
@@ -21,19 +21,8 @@
             "changeable": 1
         },
         {
-            "key": "韩国色情电影",
-            "name": "🛩️韩国色情电影🛩️",
-            "type": 3,
-            "api": "./py^js/Yellow/韩国色情电影.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "ext": ""
-        },
-        {
             "key": "AVxx",
-            "name": "AVxx",
+            "name": "💧AVxx💧",
             "type": 3,
             "api": "csp_XBPQ",
             "searchable": 1,
@@ -43,7 +32,7 @@
         },
         {
             "key": "AV文件夹",
-            "name": "AV文件夹",
+            "name": "💧AV文件夹💧",
             "type": 3,
             "api": "csp_XBPQ",
             "searchable": 1,
@@ -58,30 +47,8 @@
             "ext": "./py^js/Yellow/AV文件夹.json"
         },
         {
-            "key": "今日看料",
-            "name": "今日看料",
-            "type": 3,
-            "api": "./py^js/Yellow/今日看料.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "ext": ""
-        },
-        {
-            "key": "黑料不打烊",
-            "name": "🛩️黑料不打烊🛩️",
-            "type": 3,
-            "api": "./py^js/Yellow/黑料不打烊.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "ext": ""
-        },
-        {
             "key": "51吸瓜",
-            "name": "51吸瓜",
+            "name": "💧51吸瓜💧",
             "type": 3,
             "api": "./py^js/Yellow/51吸瓜.py",
             "searchable": 1,
@@ -91,41 +58,8 @@
             "ext": ""
         },
         {
-            "key": "禁片天堂",
-            "name": "🛩️禁片天堂🛩️",
-            "type": 3,
-            "api": "./py^js/Yellow/禁片天堂.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "ext": ""
-        },
-        {
-            "key": "ThePorn",
-            "name": "🛩️ThePorn🛩️",
-            "type": 3,
-            "api": "./py^js/Yellow/ThePorn.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "ext": ""
-        },
-        {
-            "key": "黑料",
-            "name": "🛩️黑料🛩️",
-            "type": 3,
-            "api": "./py^js/Yellow/黑料.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "ext": ""
-        },
-        {
             "key": "4k数毛",
-            "name": "4k数毛",
+            "name": "💧4k数毛💧",
             "type": 3,
             "api": "./py^js/Yellow/4k数毛.py",
             "searchable": 1,
@@ -134,52 +68,10 @@
             "changeable": 0
         },
         {
-            "key": "推特APP",
-            "name": "推特APP",
+            "key": "今日看料",
+            "name": "💧今日看料💧",
             "type": 3,
-            "api": "./py^js/Yellow/推特APP.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0
-        },
-        {
-            "key": "小红薯APP",
-            "name": "小红薯APP",
-            "type": 3,
-            "api": "./py^js/Yellow/小红薯APP.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0
-        },
-        {
-            "key": "lsp传媒",
-            "name": "🛩️lsp传媒🛩️",
-            "type": 3,
-            "api": "./py^js/Yellow/lsp传媒.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "ext": ""
-        },
-        {
-            "key": "Xvd",
-            "name": "🛩️Xvd🛩️",
-            "type": 3,
-            "api": "./py^js/Yellow/Xvd.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "ext": ""
-        },
-        {
-            "key": "phb",
-            "name": "🛩️phb🛩️",
-            "type": 3,
-            "api": "./py^js/Yellow/phb.py",
+            "api": "./py^js/Yellow/今日看料.py",
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 1,
@@ -188,7 +80,7 @@
         },
         {
             "key": "6v",
-            "name": "6v",
+            "name": "💧6v💧",
             "type": 3,
             "api": "./py^js/Yellow/6v.py",
             "searchable": 1,
@@ -197,111 +89,8 @@
             "changeable": 0
         },
         {
-            "key": "lav",
-            "name": "lav",
-            "type": 3,
-            "api": "./py^js/Yellow/lav.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0
-        },
-        {
-            "key": "黄色仓库",
-            "name": "黄色仓库",
-            "type": 3,
-            "api": "./py^js/Yellow/黄色仓库.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0
-        },
-        {
-            "key": "fullhd",
-            "name": "fullhd",
-            "type": 3,
-            "api": "./py^js/Yellow/fullhd.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0
-        },
-        {
-            "key": "rou",
-            "name": "🛩️rou🛩️",
-            "type": 3,
-            "api": "./py^js/Yellow/rou.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0
-        },
-        {
-            "key": "fm多分类",
-            "name": "🛩️小说多分类🛩️",
-            "type": 3,
-            "api": "./py^js/Yellow/fm多分类.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0
-        },
-        {
-            "key": "Xvideos",
-            "name": "🛩️Xvideos🛩️",
-            "type": 3,
-            "api": "./py^js/Yellow/Xvideos.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0
-        },
-        {
-            "key": "epo",
-            "name": "🛩️epo🛩️",
-            "type": 3,
-            "api": "./py^js/Yellow/epo.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0
-        },
-        {
-            "key": "BadNews",
-            "name": "BadNews",
-            "type": 4,
-            "api": "https://py.doube.eu.org/spider?site=BadNews",
-            "searchable": 1,
-            "quickSearch": 0,
-            "filterable": 0,
-            "changeable": 0,
-            "style": {
-                "type": "rect",
-                "ratio": 1.5
-            }
-        },
-        {
-            "key": "香蕉",
-            "name": "香蕉",
-            "type": 3,
-            "api": "./py^js/Yellow/香蕉.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0
-        },
-        {
-            "key": "优优",
-            "name": "🛩️yyzyw🛩️",
-            "type": 1,
-            "api": "https://www.yyzywcj.com/api.php/provide/vod/?ac=list",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0
-        },
-        {
             "key": "AiDou",
-            "name": "AiDou",
+            "name": "💧AiDou💧",
             "type": 4,
             "api": "https://py.doube.eu.org/spider?site=AiDou",
             "searchable": 1,
@@ -314,8 +103,229 @@
             }
         },
         {
+            "key": "lav",
+            "name": "💧lav💧",
+            "type": 3,
+            "api": "./py^js/Yellow/lav.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0,
+            "changeable": 0
+        },
+        {
+            "key": "香蕉",
+            "name": "💧香蕉💧",
+            "type": 3,
+            "api": "./py^js/Yellow/香蕉.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0,
+            "changeable": 0
+        },
+        {
+            "key": "黄色仓库",
+            "name": "💧黄色仓库💧",
+            "type": 3,
+            "api": "./py^js/Yellow/黄色仓库.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0,
+            "changeable": 0
+        },
+        {
+            "key": "fullhd",
+            "name": "💧fullhd💧",
+            "type": 3,
+            "api": "./py^js/Yellow/fullhd.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0,
+            "changeable": 0
+        },
+        {
+            "key": "missav",
+            "name": "💧missav💧",
+            "type": 4,
+            "api": "https://py.doube.eu.org/spider?site=Miss",
+            "searchable": 1,
+            "quickSearch": 0,
+            "filterable": 0,
+            "changeable": 0
+        },
+        {
+            "key": "BadNews",
+            "name": "💧BadNews💧",
+            "type": 4,
+            "api": "https://py.doube.eu.org/spider?site=BadNews",
+            "searchable": 1,
+            "quickSearch": 0,
+            "filterable": 0,
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.5
+            }
+        },
+        {
+            "key": "推特APP",
+            "name": "💧推特APP💧",
+            "type": 3,
+            "api": "./py^js/Yellow/推特APP.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0,
+            "changeable": 0
+        },
+        {
+            "key": "小红薯APP",
+            "name": "💧小红薯APP💧",
+            "type": 3,
+            "api": "./py^js/Yellow/小红薯APP.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0,
+            "changeable": 0
+        },
+        {
+            "key": "韩国色情电影",
+            "name": "🎋韩国色情电影🎋",
+            "type": 3,
+            "api": "./py^js/Yellow/韩国色情电影.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
+            "key": "黑料不打烊",
+            "name": "🎋黑料不打烊🎋",
+            "type": 3,
+            "api": "./py^js/Yellow/黑料不打烊.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
+            "key": "禁片天堂",
+            "name": "🎋禁片天堂🎋",
+            "type": 3,
+            "api": "./py^js/Yellow/禁片天堂.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
+            "key": "ThePorn",
+            "name": "🎋ThePorn🎋",
+            "type": 3,
+            "api": "./py^js/Yellow/ThePorn.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
+            "key": "黑料",
+            "name": "🎋黑料🎋",
+            "type": 3,
+            "api": "./py^js/Yellow/黑料.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
+            "key": "lsp传媒",
+            "name": "🎋lsp传媒🎋",
+            "type": 3,
+            "api": "./py^js/Yellow/lsp传媒.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
+            "key": "Xvd",
+            "name": "🎋Xvd🎋",
+            "type": 3,
+            "api": "./py^js/Yellow/Xvd.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
+            "key": "phb",
+            "name": "🎋phb🎋",
+            "type": 3,
+            "api": "./py^js/Yellow/phb.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
+            "key": "rou",
+            "name": "🎋rou🎋",
+            "type": 3,
+            "api": "./py^js/Yellow/rou.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0,
+            "changeable": 0
+        },
+        {
+            "key": "fm多分类",
+            "name": "🎋小说多分类🎋",
+            "type": 3,
+            "api": "./py^js/Yellow/fm多分类.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0,
+            "changeable": 0
+        },
+        {
+            "key": "Xvideos",
+            "name": "🎋Xvideos🎋",
+            "type": 3,
+            "api": "./py^js/Yellow/Xvideos.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0,
+            "changeable": 0
+        },
+        {
+            "key": "epo",
+            "name": "🎋epo🎋",
+            "type": 3,
+            "api": "./py^js/Yellow/epo.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0,
+            "changeable": 0
+        },
+        {
+            "key": "优优",
+            "name": "🎋yyzyw🎋",
+            "type": 1,
+            "api": "https://www.yyzywcj.com/api.php/provide/vod/?ac=list",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0
+        },
+        {
             "key": "18av",
-            "name": "🛩️18av🛩️",
+            "name": "🎋18av🎋",
             "type": 3,
             "api": "./py^js/Yellow/18av.py",
             "searchable": 1,
@@ -325,7 +335,7 @@
         },
         {
             "key": "boyfriend.show",
-            "name": "🛩️boyfriend.show🛩️",
+            "name": "🎋boyfriend.show🎋",
             "type": 3,
             "api": "./py^js/Yellow/boyfriend.show.py",
             "searchable": 1,
@@ -335,7 +345,7 @@
         },
         {
             "key": "Pornhub",
-            "name": "🛩️Pornhub🛩️",
+            "name": "🎋Pornhub🎋",
             "type": 3,
             "api": "./py^js/Yellow/Pornhub.py",
             "searchable": 1,
@@ -345,7 +355,7 @@
         },
         {
             "key": "奥斯卡",
-            "name": "🛩️奥斯卡🛩️",
+            "name": "🎋奥斯卡🎋",
             "type": 1,
             "api": "https://aosikazy.com/api.php/provide/vod/?ac=list",
             "searchable": 1,
@@ -357,7 +367,7 @@
         },
         {
             "key": "好色TV",
-            "name": "🛩️好色TV🛩️",
+            "name": "🎋好色TV🎋",
             "type": 3,
             "api": "./py^js/Yellow/好色TV.py",
             "searchable": 1,
@@ -367,7 +377,7 @@
         },
         {
             "key": "Xhm",
-            "name": "🛩️Xhm🛩️",
+            "name": "🎋Xhm🎋",
             "type": 3,
             "api": "./py^js/Yellow/Xhm.py",
             "searchable": 1,
@@ -377,7 +387,7 @@
         },
         {
             "key": "stripchat",
-            "name": "🛩️stripchat🛩️",
+            "name": "🎋stripchat🎋",
             "type": 3,
             "api": "./py^js/Yellow/stripchat.py",
             "searchable": 1,
@@ -387,7 +397,7 @@
         },
         {
             "key": "jable",
-            "name": "🛩️Jable🛩️",
+            "name": "🎋Jable🎋",
             "jar": "./jar/𒉽.jar",
             "type": 3,
             "quickSearch": 1,
@@ -439,18 +449,8 @@
             }
         },
         {
-            "key": "missav",
-            "name": "missav",
-            "type": 4,
-            "api": "https://py.doube.eu.org/spider?site=Miss",
-            "searchable": 1,
-            "quickSearch": 0,
-            "filterable": 0,
-            "changeable": 0
-        },
-        {
             "key": "Missav",
-            "name": "🛩️Missav1🛩️",
+            "name": "🎋Missav1🎋",
             "type": 3,
             "searchable": 0,
             "quickSearch": 0,
@@ -465,7 +465,7 @@
         },
         {
             "key": "missav2",
-            "name": "🛩️missav2🛩️",
+            "name": "🎋missav2🎋",
             "jar": "./jar/𒉽.jar;md5;875ce871703d1c382e0498711b9d3ba0",
             "type": 3,
             "quickSearch": 1,
@@ -521,7 +521,7 @@
         },
         {
             "key": "XOJAV",
-            "name": "🛩️xojav🛩️",
+            "name": "🎋xojav🎋",
             "jar": "./jar/𒉽.jar;md5;875ce871703d1c382e0498711b9d3ba0",
             "type": 3,
             "quickSearch": 1,

@@ -1,5 +1,5 @@
 {
-    "name": "Hunter",
+    "name": "꒰ঌHunter",
     "content": "欢迎使用Hunter数据源",
     "version": "1.0.0",
     "author": "TG:https://t.me/Eat_Abalone",
@@ -10,7 +10,7 @@
     "sites": [
         {
             "key": "哔哩",
-            "name": "哔哩",
+            "name": "꒰ঌ哔哩໒꒱",
             "type": 3,
             "api": "csp_Bili",
             "style": {
@@ -25,7 +25,7 @@
         },
         {
             "key": "短剧",
-            "name": "短剧",
+            "name": "꒰ঌ短剧໒꒱",
             "type": 4,
             "api": "http://127.0.0.1:1988/lb?lb=2",
             "searchable": 1,
@@ -37,7 +37,7 @@
         },
         {
             "key": "南瓜秒播",
-            "name": "南瓜秒播",
+            "name": "꒰ঌ南瓜秒播໒꒱",
             "type": 3,
             "api": "csp_NanGua",
             "playerType": 2,
@@ -46,7 +46,7 @@
         },
         {
             "key": "py_DianYingTanTang",
-            "name": "电影天堂",
+            "name": "꒰ঌ电影天堂໒꒱",
             "type": 4,
             "api": "https://py.doube.eu.org/spider?site=DianYingTanTang",
             "searchable": 1,
@@ -56,7 +56,7 @@
         },
         {
             "key": "py_OleVod",
-            "name": "欧乐影院",
+            "name": "꒰ঌ欧乐影院໒꒱",
             "type": 4,
             "api": "https://py.doube.eu.org/spider?site=OleVod",
             "searchable": 1,
@@ -66,7 +66,7 @@
         },
         {
             "key": "py_Dm84",
-            "name": "动漫巴士",
+            "name": "꒰ঌ动漫巴士໒꒱",
             "type": 4,
             "api": "https://py.doube.eu.org/spider?site=Dm84",
             "searchable": 1,
@@ -76,7 +76,7 @@
         },
         {
             "key": "悟空影视",
-            "name": "悟空影视",
+            "name": "꒰ঌ悟空影视໒꒱",
             "type": 3,
             "searchable": 1,
             "quickSearch": 1,
@@ -87,7 +87,7 @@
         },
         {
             "key": "奇优影院",
-            "name": "奇优影院",
+            "name": "꒰ঌ奇优影院໒꒱",
             "type": 3,
             "api": "csp_XBPQ",
             "searchable": 1,
@@ -97,7 +97,7 @@
         },
         {
             "key": "柯南影视",
-            "name": "柯南影视",
+            "name": "꒰ঌ柯南影视໒꒱",
             "type": 3,
             "api": "./py^js/Green/柯南影视.py",
             "searchable": 1,
@@ -108,7 +108,7 @@
         },
         {
             "key": "优酷视频",
-            "name": "优酷视频",
+            "name": "꒰ঌ优酷视频໒꒱",
             "type": 3,
             "api": "./py^js/Green/优酷视频.py",
             "searchable": 1,
@@ -119,7 +119,7 @@
         },
         {
             "key": "电影猎手",
-            "name": "电影猎手",
+            "name": "꒰ঌ电影猎手໒꒱",
             "type": 3,
             "api": "./py^js/Green/电影猎手.py",
             "searchable": 1,
@@ -130,7 +130,7 @@
         },
         {
             "key": "界影视",
-            "name": "界影视",
+            "name": "꒰ঌ界影视໒꒱",
             "type": 3,
             "api": "./py^js/Green/界影视.py",
             "searchable": 1,
@@ -141,7 +141,7 @@
         },
         {
             "key": "actor",
-            "name": "actor",
+            "name": "꒰ঌactor໒꒱",
             "type": 3,
             "api": "./py^js/Green/actor.py",
             "searchable": 1,
@@ -152,7 +152,7 @@
         },
         {
             "key": "Mang",
-            "name": "Mang",
+            "name": "꒰ঌMang໒꒱",
             "type": 3,
             "api": "./py^js/Green/Mang.py",
             "searchable": 1,
@@ -163,7 +163,7 @@
         },
         {
             "key": "hohaiemby",
-            "name": "hohai|EMBY",
+            "name": "꒰ঌEMBY໒꒱",
             "type": 3,
             "api": "./py^js/Green/emby.py",
             "searchable": 1,
@@ -184,7 +184,7 @@
         },
         {
             "key": "奇优动漫",
-            "name": "奇优动漫 𒉽",
+            "name": "꒰ঌ奇优动漫໒꒱",
             "type": 3,
             "api": "./py^js/Green/奇优动漫.py",
             "searchable": 1,
@@ -195,7 +195,7 @@
         },
         {
             "key": "苹果",
-            "name": "苹果",
+            "name": "꒰ঌ苹果໒꒱",
             "type": 3,
             "api": "csp_PingGuo",
             "style": {
@@ -206,7 +206,7 @@
         },
         {
             "key": "看球",
-            "name": "看球",
+            "name": "꒰ঌ看球໒꒱",
             "type": 3,
             "api": "csp_Kanqiu",
             "style": {
@@ -217,7 +217,7 @@
         },
         {
             "key": "动漫",
-            "name": "动漫",
+            "name": "꒰ঌ动漫໒꒱",
             "type": 3,
             "api": "csp_YHDM",
             "style": {
@@ -228,7 +228,7 @@
         },
         {
             "key": "采集全集",
-            "name": "采集全集",
+            "name": "꒰ঌ采集全集໒꒱",
             "type": 4,
             "api": "http://zhangqun1818.serv00.net/cj/cjjh.php",
             "style": {
@@ -240,27 +240,27 @@
         },
         {
             "key": "本地",
-            "name": "本地视频",
+            "name": "꒰ঌ本地视频໒꒱",
             "type": 3,
             "api": "csp_Local"
         }
     ],
     "lives": [
         {
-            "name": "冰茶",
+            "name": "꒰ঌ冰茶໒꒱",
             "type": 0,
             "playerType": 2,
             "url": "https://fy.188766.xyz/?ip=&mishitong=true&mima=mianfeidehaimaiqian&json=true",
             "ua": "bingcha/1.1 (mianfeifenxiang) "
         },
         {
-            "name": "咪咕",
+            "name": "꒰ঌ咪咕໒꒱",
             "type": 0,
             "url": "https://down.nigx.cn/raw.githubusercontent.com/develop202/migu_video/refs/heads/main/interface.txt",
             "playerType": 2
         },
         {
-            "name": "肥羊国内直播",
+            "name": "꒰ঌ肥羊国内直播໒꒱",
             "type": 3,
             "api": "csp_Feiyang",
             "url": "tv.m3u",
@@ -268,13 +268,13 @@
             "jar": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar"
         },
         {
-      "name": "电影轮播",
+      "name": "꒰ঌ电影轮播໒꒱",
       "url": "./php/txt/电影轮播.txt",
       "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
       "logo": "https://epg.112114.xyz/logo/{name}.png"
     },
     {
-      "name": "组播",
+      "name": "꒰ঌ组播໒꒱",
       "url": "https://ghfast.top/https://raw.githubusercontent.com/AbaloneHunter/iptv-zb/refs/heads/main/zubo_all.txt",
       "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
       "logo": "https://epg.112114.xyz/logo/{name}.png"
