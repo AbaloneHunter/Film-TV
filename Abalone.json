@@ -32,6 +32,17 @@
       "ext": ""
     },
     {
+      "key": "今日看料",
+      "name": "今日看料 𒉽",
+      "type": 3,
+      "api": "./py^js/Yellow/今日看料.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "order_num": 0,
+      "ext": ""
+    },
+    {
       "key": "黑料不打烊",
       "name": "黑料不打烊 𒉽",
       "type": 3,
@@ -456,7 +467,7 @@
       "filterable": 0,
       "api": "./py^js/Yellow/Missav.py",
       "ext": {
-        "site": "https://missav.ai",
+        "site": "https://missav.ws",
         "cfgo": "./go^lib/cf-proxy-linux-arm64",
         "plp": "",
         "proxy": {}
