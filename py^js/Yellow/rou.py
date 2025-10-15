@@ -131,10 +131,10 @@ class Spider(Spider):
                     'vod_year': '',
                     'vod_area': '',
                     'vod_actor': '',
-                    'vod_director': '书生玩剑',
+                    'vod_director': '好好学习，天天向上！',
                     'vod_content': '',
-                    'vod_play_from': '老僧酿酒',
-                    'vod_play_url': f'名妓读经${play_url}',
+                    'vod_play_from': '肉視頻',
+                    'vod_play_url': f'高清線路${play_url}',
 
                 }
             )
