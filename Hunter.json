@@ -247,8 +247,8 @@
                 "type": "rect",
                 "ratio": 1.33
             },
-            "ext": "0",
-            "changeable": 0
+            "ext": "1",
+            "changeable": 1
         },
         {
             "key": "猎人·直播",
