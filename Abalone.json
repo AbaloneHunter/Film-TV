@@ -565,6 +565,36 @@
                     }
                 }
             }
+        },
+        {
+            "key": "鲍鱼·直播",
+            "name": "💧鲍鱼·直播💧",
+            "type": 4,
+            "api": "http://127.0.0.1:1988/lb?lb=13",
+            "ext": "/storage/emulated/0/Hunter/Film-TV/php/鲍鱼·直播/",
+            "style": {
+                "type": "rect",
+                "ratio": 1.44
+            },
+            "changeable": 1
+        },
+        {
+            "key": "鲍鱼·清单",
+            "name": "💧鲍鱼·清单💧",
+            "type": 4,
+            "api": "http://127.0.0.1:1988/lb?lb=9",
+            "ext": "/storage/emulated/0/Hunter/Film-TV/php/鲍鱼·清单/",
+            "style": {
+                "type": "rect",
+                "ratio": 1.33
+            },
+            "changeable": 1
+        },
+        {
+            "key": "本地",
+            "name": "💧本地视频💧",
+            "type": 3,
+            "api": "csp_Local"
         }
     ],
     "lives": [

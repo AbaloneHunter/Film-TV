@@ -19,8 +19,20 @@
             },
             "ext": {
                 "cookie": "buvid3=6357D22F-F506-31C3-4FF6-D40F2EE03FEB25253infoc;b_nut=1755463825;b_lsid=FBBABD104_198B9CC40C5;bsource=search_bing;_uuid=941057596-99CD-AB36-6AEC-5D4AC4BFA31E27666infoc;bmg_af_switch=1;bmg_src_def_domain=i0.hdslb.com;buvid_fp=987890c5acab261b610302bd5b30c74b;bili_ticket=eyJhbGciOiJIUzI1NiIsImtpZCI6InMwMyIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTU3MjMwMjYsImlhdCI6MTc1NTQ2Mzc2NiwicGx0IjotMX0.FiUhmxoXVIN0x4mksOyg23DfYtIo2Q_2_r-odwCYwvQ;bili_ticket_expires=1755722966;buvid4=0906AF8D-C014-11D6-9E7A-FA4D6D3D694A27298-125081804-O64dDb05Am2odHEXsKsoMQ%3D%3D;SESSDATA=7ee477c6%2C1771016740%2C14c80%2A81CjDn2eXJ-XQoWNNQm7EC0R68I8gL23XUh_Yd5SaXceIkNHlScpLwEc2udThQhtSVbTMSVmZWQXhOZl9fZmhOYWRQeFh2YmtCa0lTN0RaZFJ4MGFVRFBuT0IzRlhJaWlrbzVzWWVoNXNHNVZkOURwY3lJakJ4bXlzSVh0Nld5STh2Z3p4Ums5Qk9BIIEC;bili_jct=a940f3a31584d2d20280e19dd8565488;DedeUserID=490060915;DedeUserID__ckMd5=b9c9bf248ebd429c;sid=8m6wb679",
-                "type": "一口气#沙雕动画#小姐姐#电影#电视剧#4k#8K#音乐#影视"
+                "type": "一口气#沙雕动画#热门短剧＃小姐姐#热门电影#热门电视剧#热门音乐#4k#8K"
             },
+            "changeable": 1
+        },
+        {
+            "key": "油管",
+            "name": "꒰ঌ油管໒꒱",
+            "type": 4,
+            "api": "http://127.0.0.1:1988",
+            "style": {
+                "type": "rect",
+                "ratio": 1.33
+            },
+            "searchable": 1,
             "changeable": 1
         },
         {
@@ -239,6 +251,30 @@
             "changeable": 0
         },
         {
+            "key": "猎人·直播",
+            "name": "꒰ঌ猎人·直播໒꒱",
+            "type": 4,
+            "api": "http://127.0.0.1:1988/lb?lb=13",
+            "ext": "/storage/emulated/0/Hunter/Film-TV/php/猎人·直播/",
+            "style": {
+                "type": "rect",
+                "ratio": 1.44
+            },
+            "changeable": 1
+        },
+        {
+            "key": "猎人·清单",
+            "name": "꒰ঌ猎人·清单໒꒱",
+            "type": 4,
+            "api": "http://127.0.0.1:1988/lb?lb=9",
+            "ext": "/storage/emulated/0/Hunter/Film-TV/php/猎人·清单/",
+            "style": {
+                "type": "rect",
+                "ratio": 1.33
+            },
+            "changeable": 1
+        },
+        {
             "key": "本地",
             "name": "꒰ঌ本地视频໒꒱",
             "type": 3,
@@ -268,16 +304,16 @@
             "jar": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar"
         },
         {
-      "name": "꒰ঌ电影轮播໒꒱",
-      "url": "./php/txt/电影轮播.txt",
-      "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
-      "logo": "https://epg.112114.xyz/logo/{name}.png"
-    },
-    {
-      "name": "꒰ঌ组播໒꒱",
-      "url": "https://ghfast.top/https://raw.githubusercontent.com/AbaloneHunter/iptv-zb/refs/heads/main/zubo_all.txt",
-      "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
-      "logo": "https://epg.112114.xyz/logo/{name}.png"
-    }
+            "name": "꒰ঌ电影轮播໒꒱",
+            "url": "./php/txt/电影轮播.txt",
+            "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
+            "logo": "https://epg.112114.xyz/logo/{name}.png"
+        },
+        {
+            "name": "꒰ঌ组播໒꒱",
+            "url": "https://ghfast.top/https://raw.githubusercontent.com/AbaloneHunter/iptv-zb/refs/heads/main/zubo_all.txt",
+            "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
+            "logo": "https://epg.112114.xyz/logo/{name}.png"
+        }
     ]
 }
