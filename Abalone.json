@@ -3,23 +3,11 @@
     "content": "欢迎使用Abalone数据源",
     "version": "1.0.0",
     "author": "TG:https://t.me/Eat_Abalone",
-    "updateTime": "2025-10-16",
+    "updateTime": "2025-10-18",
     "spider": "./jar/内置Lzgo.jar",
     "logo": "./logo/hunter.gif",
     "wallpaper": "./imgs/y3.webp",
     "sites": [
-        {
-            "key": "采集全集",
-            "name": "💧采集全集💧",
-            "type": 4,
-            "api": "http://zhangqun1818.serv00.net/cj/cjjh.php",
-            "style": {
-                "type": "rect",
-                "ratio": 1.33
-            },
-            "ext": "0",
-            "changeable": 1
-        },
         {
             "key": "AVxx",
             "name": "💧AVxx💧",
@@ -113,6 +101,16 @@
             "changeable": 0
         },
         {
+            "key": "js_madou",
+            "name": "💧麻豆(js)💧",
+            "type": 3,
+            "api": "./py^js/Yellow/madou.js",
+            "searchable": 1,
+            "quickSearch": 0,
+            "filterable": 0,
+            "changeable": 0
+        },
+        {
             "key": "香蕉",
             "name": "💧香蕉💧",
             "type": 3,
@@ -187,6 +185,18 @@
             "changeable": 0
         },
         {
+            "key": "采集全集",
+            "name": "💧采集全集💧",
+            "type": 4,
+            "api": "http://zhangqun1818.serv00.net/cj/cjjh.php",
+            "style": {
+                "type": "rect",
+                "ratio": 1.33
+            },
+            "ext": "0",
+            "changeable": 1
+        },
+        {
             "key": "韩国色情电影",
             "name": "🎋韩国色情电影🎋",
             "type": 3,
@@ -224,6 +234,17 @@
             "name": "🎋ThePorn🎋",
             "type": 3,
             "api": "./py^js/Yellow/ThePorn.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
+            "key": "熊猫",
+            "name": "🎋熊猫🎋",
+            "type": 3,
+            "api": "./py^js/Yellow/熊猫.py",
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 1,
@@ -383,7 +404,10 @@
             "searchable": 1,
             "quickSearch": 0,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "ext": {
+                "type": "最新#日韩#无码#中文字幕#AI"
+            }
         },
         {
             "key": "stripchat",
@@ -603,6 +627,200 @@
             "url": "https://gitee.com/sji820/des/raw/master/0.jpg",
             "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
             "logo": "https://epg.112114.xyz/logo/{name}.png"
+        }
+    ],
+    "hosts": [
+        "cache.ott.*.itv.cmvideo.cn=base-v4-free-mghy.e.cdn.chinamobile.com",
+        "cache.ott.ystenlive.itv.cmvideo.cn=base-v4-free-mghy.e.cdn.chinamobile.com",
+        "cache.ott.bestlive.itv.cmvideo.cn=base-v4-free-mghy.e.cdn.chinamobile.com",
+        "cache.ott.wasulive.itv.cmvideo.cn=base-v4-free-mghy.e.cdn.chinamobile.com",
+        "cache.ott.fifalive.itv.cmvideo.cn=base-v4-free-mghy.e.cdn.chinamobile.com",
+        "cache.ott.hnbblive.itv.cmvideo.cn=base-v4-free-mghy.e.cdn.chinamobile.com"
+    ],
+    "flags": [
+        "youku",
+        "优酷",
+        "优 酷",
+        "优酷视频",
+        "qq",
+        "腾讯",
+        "腾 讯",
+        "腾讯视频",
+        "iqiyi",
+        "qiyi",
+        "奇艺",
+        "爱奇艺",
+        "爱 奇 艺",
+        "mgtv",
+        "芒果",
+        "imgo",
+        "芒果TV",
+        "芒 果 T V",
+        "bilibili",
+        "哔 哩",
+        "B站",
+        "哔 哩 哔 哩"
+    ],
+    "ijk": [
+        {
+            "group": "软解码",
+            "options": [
+                {
+                    "category": 4,
+                    "name": "opensles",
+                    "value": "0"
+                },
+                {
+                    "category": 4,
+                    "name": "overlay-format",
+                    "value": "842225234"
+                },
+                {
+                    "category": 4,
+                    "name": "framedrop",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "soundtouch",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "start-on-prepared",
+                    "value": "1"
+                },
+                {
+                    "category": 1,
+                    "name": "http-detect-range-support",
+                    "value": "0"
+                },
+                {
+                    "category": 1,
+                    "name": "fflags",
+                    "value": "fastseek"
+                },
+                {
+                    "category": 2,
+                    "name": "skip_loop_filter",
+                    "value": "48"
+                },
+                {
+                    "category": 4,
+                    "name": "reconnect",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "enable-accurate-seek",
+                    "value": "0"
+                },
+                {
+                    "category": 4,
+                    "name": "mediacodec",
+                    "value": "0"
+                },
+                {
+                    "category": 4,
+                    "name": "mediacodec-auto-rotate",
+                    "value": "0"
+                },
+                {
+                    "category": 4,
+                    "name": "mediacodec-handle-resolution-change",
+                    "value": "0"
+                },
+                {
+                    "category": 4,
+                    "name": "mediacodec-hevc",
+                    "value": "0"
+                },
+                {
+                    "category": 1,
+                    "name": "dns_cache_timeout",
+                    "value": "600000000"
+                }
+            ]
+        },
+        {
+            "group": "硬解码",
+            "options": [
+                {
+                    "category": 4,
+                    "name": "opensles",
+                    "value": "0"
+                },
+                {
+                    "category": 4,
+                    "name": "overlay-format",
+                    "value": "842225234"
+                },
+                {
+                    "category": 4,
+                    "name": "framedrop",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "soundtouch",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "start-on-prepared",
+                    "value": "1"
+                },
+                {
+                    "category": 1,
+                    "name": "http-detect-range-support",
+                    "value": "0"
+                },
+                {
+                    "category": 1,
+                    "name": "fflags",
+                    "value": "fastseek"
+                },
+                {
+                    "category": 2,
+                    "name": "skip_loop_filter",
+                    "value": "48"
+                },
+                {
+                    "category": 4,
+                    "name": "reconnect",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "enable-accurate-seek",
+                    "value": "0"
+                },
+                {
+                    "category": 4,
+                    "name": "mediacodec",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "mediacodec-auto-rotate",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "mediacodec-handle-resolution-change",
+                    "value": "1"
+                },
+                {
+                    "category": 4,
+                    "name": "mediacodec-hevc",
+                    "value": "1"
+                },
+                {
+                    "category": 1,
+                    "name": "dns_cache_timeout",
+                    "value": "600000000"
+                }
+            ]
         }
     ]
 }
