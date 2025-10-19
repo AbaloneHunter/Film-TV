@@ -48,6 +48,114 @@
             "changeable": 1
         },
         {
+            "key": "苹果",
+            "name": "꒰ঌ苹果໒꒱",
+            "type": 3,
+            "api": "csp_PingGuo",
+            "style": {
+                "type": "rect",
+                "ratio": 1.33
+            },
+            "changeable": 1
+        },
+        {
+            "key": "看球",
+            "name": "꒰ঌ看球໒꒱",
+            "type": 3,
+            "api": "csp_Kanqiu",
+            "style": {
+                "type": "rect",
+                "ratio": 1.33
+            },
+            "changeable": 1
+        },
+        {
+            "key": "动漫",
+            "name": "꒰ঌ动漫໒꒱",
+            "type": 3,
+            "api": "csp_YHDM",
+            "style": {
+                "type": "rect",
+                "ratio": 1.33
+            },
+            "changeable": 1
+        },
+        {
+            "key": "界影视",
+            "name": "꒰ঌ界影视໒꒱",
+            "type": 3,
+            "api": "./py^js/Green/界影视.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
+            "key": "Uvod",
+            "name": "꒰ঌUvod໒꒱",
+            "type": 3,
+            "api": "./py^js/Green/Uvod.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
+            "key": "actor",
+            "name": "꒰ঌactor໒꒱",
+            "type": 3,
+            "api": "./py^js/Green/actor.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
+            "key": "Mang",
+            "name": "꒰ঌMang໒꒱",
+            "type": 3,
+            "api": "./py^js/Green/Mang.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
+            "key": "hohaiemby",
+            "name": "꒰ঌEMBY໒꒱",
+            "type": 3,
+            "api": "./py^js/Green/emby.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "changeable": 1,
+            "ext": {
+                "server": "https://emby.hohai.eu.org:443",
+                "username": "chuxin666",
+                "password": "ycc123456",
+                "proxy": "",
+                "thread": 0,
+                "device_name": "My Computer",
+                "client": "Hills Windows",
+                "client_version": "0.3.2",
+                "device_id": "a9f74849-83d5-4a28-8b85-a087af1402e3"
+            }
+        },
+        {
+            "key": "js_en_gf",
+            "name": "꒰ঌ官方采集(js)໒꒱",
+            "type": 3,
+            "api": "./py^js/Green/en_gf.js",
+            "searchable": 1,
+            "quickSearch": 0,
+            "filterable": 0,
+            "changeable": 0
+        },
+        {
             "key": "南瓜秒播",
             "name": "꒰ঌ南瓜秒播໒꒱",
             "type": 3,
@@ -152,81 +260,6 @@
             "ext": ""
         },
         {
-            "key": "界影视",
-            "name": "꒰ঌ界影视໒꒱",
-            "type": 3,
-            "api": "./py^js/Green/界影视.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "ext": ""
-        },
-        {
-            "key": "Uvod",
-            "name": "꒰ঌUvod໒꒱",
-            "type": 3,
-            "api": "./py^js/Green/Uvod.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "ext": ""
-        },
-        {
-            "key": "actor",
-            "name": "꒰ঌactor໒꒱",
-            "type": 3,
-            "api": "./py^js/Green/actor.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "ext": ""
-        },
-        {
-            "key": "js_en_gf",
-            "name": "꒰ঌ官方采集(js)໒꒱",
-            "type": 3,
-            "api": "./py^js/Green/en_gf.js",
-            "searchable": 1,
-            "quickSearch": 0,
-            "filterable": 0,
-            "changeable": 0
-        },
-        {
-            "key": "Mang",
-            "name": "꒰ঌMang໒꒱",
-            "type": 3,
-            "api": "./py^js/Green/Mang.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "ext": ""
-        },
-        {
-            "key": "hohaiemby",
-            "name": "꒰ঌEMBY໒꒱",
-            "type": 3,
-            "api": "./py^js/Green/emby.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "changeable": 1,
-            "ext": {
-                "server": "https://emby.hohai.eu.org:443",
-                "username": "chuxin666",
-                "password": "ycc123456",
-                "proxy": "",
-                "thread": 0,
-                "device_name": "My Computer",
-                "client": "Hills Windows",
-                "client_version": "0.3.2",
-                "device_id": "a9f74849-83d5-4a28-8b85-a087af1402e3"
-            }
-        },
-        {
             "key": "奇优动漫",
             "name": "꒰ঌ奇优动漫໒꒱",
             "type": 3,
@@ -236,39 +269,6 @@
             "filterable": 1,
             "order_num": 0,
             "ext": ""
-        },
-        {
-            "key": "苹果",
-            "name": "꒰ঌ苹果໒꒱",
-            "type": 3,
-            "api": "csp_PingGuo",
-            "style": {
-                "type": "rect",
-                "ratio": 1.33
-            },
-            "changeable": 1
-        },
-        {
-            "key": "看球",
-            "name": "꒰ঌ看球໒꒱",
-            "type": 3,
-            "api": "csp_Kanqiu",
-            "style": {
-                "type": "rect",
-                "ratio": 1.33
-            },
-            "changeable": 1
-        },
-        {
-            "key": "动漫",
-            "name": "꒰ঌ动漫໒꒱",
-            "type": 3,
-            "api": "csp_YHDM",
-            "style": {
-                "type": "rect",
-                "ratio": 1.33
-            },
-            "changeable": 1
         },
         {
             "key": "甜圈短剧",
