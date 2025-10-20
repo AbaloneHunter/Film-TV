@@ -390,6 +390,38 @@
             "url": "https://ghfast.top/https://raw.githubusercontent.com/AbaloneHunter/iptv-zb/refs/heads/main/zubo_all.txt",
             "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
             "logo": "https://epg.112114.xyz/logo/{name}.png"
+        },
+        {
+            "name": "꒰ঌ虎牙໒꒱",
+            "url": "https://sub.ottiptv.cc/huyayqk.m3u",
+            "header": {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                "Referer": "https://sub.ottiptv.cc/"
+            }
+        },
+        {
+            "name": "꒰ঌ斗鱼໒꒱",
+            "url": "https://sub.ottiptv.cc/douyuyqk.m3u",
+            "header": {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                "Referer": "https://sub.ottiptv.cc/"
+            }
+        },
+        {
+            "name": "꒰ঌyy໒꒱",
+            "url": "https://sub.ottiptv.cc/yylunbo.m3u",
+            "header": {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                "Referer": "https://sub.ottiptv.cc/"
+            }
+        },
+        {
+            "name": "꒰ঌ哔哩哔哩໒꒱",
+            "url": "https://sub.ottiptv.cc/bililive.m3u",
+            "header": {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                "Referer": "https://sub.ottiptv.cc/"
+            }
         }
     ],
     "parses": [

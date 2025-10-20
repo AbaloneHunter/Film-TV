@@ -627,6 +627,35 @@
             "url": "https://gitee.com/sji820/des/raw/master/0.jpg",
             "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
             "logo": "https://epg.112114.xyz/logo/{name}.png"
+        },
+        {
+            "name": "黄色(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "url": "https://down.nigx.cn/mpimg.cn/down.php/25da10b0cb7b90d422ae22852bd7d414.txt",
+            "header": {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+                "Referer": "",
+                "cookie": ""
+            }
+        },
+        {
+            "name": "日本(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "url": "https://down.nigx.cn/raw.githubusercontent.com/luongz/iptv-jp/refs/heads/main/jp_clean.m3u",
+            "header": {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+                "Referer": "",
+                "cookie": ""
+            }
+        },
+        {
+            "name": "日本1(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "url": "https://down.nigx.cn/raw.githubusercontent.com/luongz/iptv-jp/refs/heads/main/jp.m3u",
+            "header": {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+                "Referer": "",
+                "cookie": ""
+            },
+            "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
+            "logo": "http://diyp5.112114.xyz/{name}.png"
         }
     ],
     "parses": [],
