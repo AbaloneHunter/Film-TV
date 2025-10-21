@@ -10,7 +10,7 @@
     "sites": [
         {
             "key": "AVxx",
-            "name": "AVxx(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅AVxx",
             "type": 3,
             "api": "csp_XBPQ",
             "searchable": 1,
@@ -20,7 +20,7 @@
         },
         {
             "key": "AV文件夹",
-            "name": "AV文件夹(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅AV文件夹",
             "type": 3,
             "api": "csp_XBPQ",
             "searchable": 1,
@@ -36,7 +36,7 @@
         },
         {
             "key": "51吸瓜",
-            "name": "51吸瓜(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅51吸瓜",
             "type": 3,
             "api": "./py^js/Yellow/51吸瓜.py",
             "searchable": 1,
@@ -47,7 +47,7 @@
         },
         {
             "key": "4k数毛",
-            "name": "4k数毛(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅4k数毛",
             "type": 3,
             "api": "./py^js/Yellow/4k数毛.py",
             "searchable": 1,
@@ -57,7 +57,7 @@
         },
         {
             "key": "今日看料",
-            "name": "今日看料(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅今日看料",
             "type": 3,
             "api": "./py^js/Yellow/今日看料.py",
             "searchable": 1,
@@ -68,7 +68,7 @@
         },
         {
             "key": "6v",
-            "name": "6v(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅6v",
             "type": 3,
             "api": "./py^js/Yellow/6v.py",
             "searchable": 1,
@@ -78,7 +78,7 @@
         },
         {
             "key": "AiDou",
-            "name": "AiDou(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅AiDou",
             "type": 4,
             "api": "https://py.doube.eu.org/spider?site=AiDou",
             "searchable": 1,
@@ -92,7 +92,7 @@
         },
         {
             "key": "lav",
-            "name": "lav(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅lav",
             "type": 3,
             "api": "./py^js/Yellow/lav.py",
             "searchable": 1,
@@ -102,7 +102,7 @@
         },
         {
             "key": "js_madou",
-            "name": "麻豆js(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅麻豆js",
             "type": 3,
             "api": "./py^js/Yellow/madou.js",
             "searchable": 1,
@@ -112,7 +112,7 @@
         },
         {
             "key": "香蕉",
-            "name": "香蕉(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅香蕉",
             "type": 3,
             "api": "./py^js/Yellow/香蕉.py",
             "searchable": 1,
@@ -122,7 +122,7 @@
         },
         {
             "key": "黄色仓库",
-            "name": "黄色仓库(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅黄色仓库",
             "type": 3,
             "api": "./py^js/Yellow/黄色仓库.py",
             "searchable": 1,
@@ -132,7 +132,7 @@
         },
         {
             "key": "fullhd",
-            "name": "fullhd(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅fullhd",
             "type": 3,
             "api": "./py^js/Yellow/fullhd.py",
             "searchable": 1,
@@ -142,7 +142,7 @@
         },
         {
             "key": "missav",
-            "name": "missav(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅missav",
             "type": 4,
             "api": "https://py.doube.eu.org/spider?site=Miss",
             "searchable": 1,
@@ -152,7 +152,7 @@
         },
         {
             "key": "BadNews",
-            "name": "BadNews(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅BadNews",
             "type": 4,
             "api": "https://py.doube.eu.org/spider?site=BadNews",
             "searchable": 1,
@@ -166,7 +166,7 @@
         },
         {
             "key": "推特APP",
-            "name": "推特APP(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅推特APP",
             "type": 3,
             "api": "./py^js/Yellow/推特APP.py",
             "searchable": 1,
@@ -176,7 +176,7 @@
         },
         {
             "key": "小红薯APP",
-            "name": "小红薯APP(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅小红薯APP",
             "type": 3,
             "api": "./py^js/Yellow/小红薯APP.py",
             "searchable": 1,
@@ -185,8 +185,19 @@
             "changeable": 0
         },
         {
+            "key": "js_ying_hua",
+            "name": "❅樱花视频",
+            "type": 3,
+            "api": "./py^js/Yellow/樱花视频.js",
+            "searchable": 1,
+            "quickSearch": 0,
+            "filterable": 0,
+            "changeable": 0,
+            "ext": {}
+        },
+        {
             "key": "采集全集",
-            "name": "采集全集(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅采集全集",
             "type": 4,
             "api": "http://zhangqun1818.serv00.net/cj/cjjh.php",
             "style": {
@@ -198,7 +209,7 @@
         },
         {
             "key": "韩国色情电影",
-            "name": "ദ്ദി˶•̀֊•́)✧韩国色情电影",
+            "name": "ദ്ദി韩国色情电影",
             "type": 3,
             "api": "./py^js/Yellow/韩国色情电影.py",
             "searchable": 1,
@@ -209,7 +220,7 @@
         },
         {
             "key": "黑料不打烊",
-            "name": "ദ്ദി˶•̀֊•́)✧黑料不打烊",
+            "name": "ദ്ദി黑料不打烊",
             "type": 3,
             "api": "./py^js/Yellow/黑料不打烊.py",
             "searchable": 1,
@@ -220,7 +231,7 @@
         },
         {
             "key": "禁片天堂",
-            "name": "ദ്ദി˶•̀֊•́)✧禁片天堂",
+            "name": "ദ്ദി禁片天堂",
             "type": 3,
             "api": "./py^js/Yellow/禁片天堂.py",
             "searchable": 1,
@@ -231,7 +242,7 @@
         },
         {
             "key": "ThePorn",
-            "name": "ദ്ദി˶•̀֊•́)✧ThePorn",
+            "name": "ദ്ദിThePorn",
             "type": 3,
             "api": "./py^js/Yellow/ThePorn.py",
             "searchable": 1,
@@ -242,7 +253,7 @@
         },
         {
             "key": "熊猫",
-            "name": "ദ്ദി˶•̀֊•́)✧熊猫",
+            "name": "ദ്ദി熊猫",
             "type": 3,
             "api": "./py^js/Yellow/熊猫.py",
             "searchable": 1,
@@ -253,7 +264,7 @@
         },
         {
             "key": "黑料",
-            "name": "ദ്ദി˶•̀֊•́)✧黑料",
+            "name": "ദ്ദി黑料",
             "type": 3,
             "api": "./py^js/Yellow/黑料.py",
             "searchable": 1,
@@ -264,7 +275,7 @@
         },
         {
             "key": "lsp传媒",
-            "name": "ദ്ദി˶•̀֊•́)✧lsp传媒",
+            "name": "ദ്ദിlsp传媒",
             "type": 3,
             "api": "./py^js/Yellow/lsp传媒.py",
             "searchable": 1,
@@ -274,30 +285,8 @@
             "ext": ""
         },
         {
-            "key": "Xvd",
-            "name": "ദ്ദി˶•̀֊•́)✧Xvd",
-            "type": 3,
-            "api": "./py^js/Yellow/Xvd.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "ext": ""
-        },
-        {
-            "key": "phb",
-            "name": "ദ്ദി˶•̀֊•́)✧phb",
-            "type": 3,
-            "api": "./py^js/Yellow/phb.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "ext": ""
-        },
-        {
             "key": "rou",
-            "name": "ദ്ദി˶•̀֊•́)✧rou",
+            "name": "ദ്ദിrou",
             "type": 3,
             "api": "./py^js/Yellow/rou.py",
             "searchable": 1,
@@ -307,7 +296,7 @@
         },
         {
             "key": "fm多分类",
-            "name": "ദ്ദി˶•̀֊•́)✧小说多分类",
+            "name": "ദ്ദി小说多分类",
             "type": 3,
             "api": "./py^js/Yellow/fm多分类.py",
             "searchable": 1,
@@ -317,7 +306,7 @@
         },
         {
             "key": "Xvideos",
-            "name": "ദ്ദി˶•̀֊•́)✧Xvideos",
+            "name": "ദ്ദിXvideos",
             "type": 3,
             "api": "./py^js/Yellow/Xvideos.py",
             "searchable": 1,
@@ -327,7 +316,7 @@
         },
         {
             "key": "epo",
-            "name": "ദ്ദി˶•̀֊•́)✧epo",
+            "name": "ദ്ദിepo",
             "type": 3,
             "api": "./py^js/Yellow/epo.py",
             "searchable": 1,
@@ -337,7 +326,7 @@
         },
         {
             "key": "优优",
-            "name": "ദ്ദി˶•̀֊•́)✧yyzyw",
+            "name": "ദ്ദിyyzyw",
             "type": 1,
             "api": "https://www.yyzywcj.com/api.php/provide/vod/?ac=list",
             "searchable": 1,
@@ -346,7 +335,7 @@
         },
         {
             "key": "18av",
-            "name": "ദ്ദി˶•̀֊•́)✧18av",
+            "name": "ദ്ദി18av",
             "type": 3,
             "api": "./py^js/Yellow/18av.py",
             "searchable": 1,
@@ -356,7 +345,7 @@
         },
         {
             "key": "boyfriend.show",
-            "name": "ദ്ദി˶•̀֊•́)✧boyfriend.show",
+            "name": "ദ്ദിboyfriend.show",
             "type": 3,
             "api": "./py^js/Yellow/boyfriend.show.py",
             "searchable": 1,
@@ -366,7 +355,7 @@
         },
         {
             "key": "Pornhub",
-            "name": "ദ്ദി˶•̀֊•́)✧Pornhub",
+            "name": "ദ്ദിPornhub",
             "type": 3,
             "api": "./py^js/Yellow/Pornhub.py",
             "searchable": 1,
@@ -376,7 +365,7 @@
         },
         {
             "key": "奥斯卡",
-            "name": "ദ്ദി˶•̀֊•́)✧奥斯卡",
+            "name": "ദ്ദി奥斯卡",
             "type": 1,
             "api": "https://aosikazy.com/api.php/provide/vod/?ac=list",
             "searchable": 1,
@@ -388,7 +377,7 @@
         },
         {
             "key": "好色TV",
-            "name": "ദ്ദി˶•̀֊•́)✧好色TV",
+            "name": "ദ്ദി好色TV",
             "type": 3,
             "api": "./py^js/Yellow/好色TV.py",
             "searchable": 1,
@@ -398,7 +387,7 @@
         },
         {
             "key": "Xhm",
-            "name": "ദ്ദി˶•̀֊•́)✧Xhm",
+            "name": "ദ്ദിXhm",
             "type": 3,
             "api": "./py^js/Yellow/Xhm.py",
             "searchable": 1,
@@ -411,7 +400,7 @@
         },
         {
             "key": "stripchat",
-            "name": "ദ്ദി˶•̀֊•́)✧stripchat",
+            "name": "ദ്ദിstripchat",
             "type": 3,
             "api": "./py^js/Yellow/stripchat.py",
             "searchable": 1,
@@ -421,7 +410,7 @@
         },
         {
             "key": "jable",
-            "name": "ദ്ദി˶•̀֊•́)✧Jable",
+            "name": "ദ്ദിJable",
             "jar": "./jar/𒉽.jar",
             "type": 3,
             "quickSearch": 1,
@@ -474,7 +463,7 @@
         },
         {
             "key": "Missav",
-            "name": "ദ്ദി˶•̀֊•́)✧Missav1",
+            "name": "ദ്ദിMissav1",
             "type": 3,
             "searchable": 0,
             "quickSearch": 0,
@@ -489,7 +478,7 @@
         },
         {
             "key": "missav2",
-            "name": "ദ്ദി˶•̀֊•́)✧missav2",
+            "name": "ദ്ദിmissav2",
             "jar": "./jar/𒉽.jar;md5;875ce871703d1c382e0498711b9d3ba0",
             "type": 3,
             "quickSearch": 1,
@@ -545,7 +534,7 @@
         },
         {
             "key": "XOJAV",
-            "name": "ദ്ദി˶•̀֊•́)✧xojav",
+            "name": "ദ്ദിxojav",
             "jar": "./jar/𒉽.jar;md5;875ce871703d1c382e0498711b9d3ba0",
             "type": 3,
             "quickSearch": 1,
@@ -592,7 +581,7 @@
         },
         {
             "key": "鲍鱼·直播",
-            "name": "鲍鱼·直播(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅鲍鱼·直播",
             "type": 4,
             "api": "http://127.0.0.1:1988/lb?lb=13",
             "ext": "/storage/emulated/0/Hunter/Film-TV/php/鲍鱼·直播/",
@@ -604,7 +593,7 @@
         },
         {
             "key": "鲍鱼·清单",
-            "name": "鲍鱼·清单(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅鲍鱼·清单",
             "type": 4,
             "api": "http://127.0.0.1:1988/lb?lb=9",
             "ext": "/storage/emulated/0/Hunter/Film-TV/php/鲍鱼·清单/",
@@ -616,20 +605,20 @@
         },
         {
             "key": "本地",
-            "name": "本地视频(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅本地视频",
             "type": 3,
             "api": "csp_Local"
         }
     ],
     "lives": [
         {
-            "name": "秘密花园(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅秘密花园",
             "url": "https://gitee.com/sji820/des/raw/master/0.jpg",
             "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
             "logo": "https://epg.112114.xyz/logo/{name}.png"
         },
         {
-            "name": "黄色(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅黄色",
             "url": "https://down.nigx.cn/mpimg.cn/down.php/25da10b0cb7b90d422ae22852bd7d414.txt",
             "header": {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
@@ -638,7 +627,7 @@
             }
         },
         {
-            "name": "日本(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅日本",
             "url": "https://down.nigx.cn/raw.githubusercontent.com/luongz/iptv-jp/refs/heads/main/jp_clean.m3u",
             "header": {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
@@ -647,7 +636,7 @@
             }
         },
         {
-            "name": "日本1(៸៸᳐⦁⩊⦁៸៸᳐ )੭",
+            "name": "❅日本1",
             "url": "https://down.nigx.cn/raw.githubusercontent.com/luongz/iptv-jp/refs/heads/main/jp.m3u",
             "header": {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",

@@ -147,7 +147,7 @@
         },
         {
             "key": "js_en_gf",
-            "name": "꒰ঌ官方采集(js)໒꒱",
+            "name": "꒰ঌ官方采集໒꒱",
             "type": 3,
             "api": "./py^js/Green/en_gf.js",
             "searchable": 1,
