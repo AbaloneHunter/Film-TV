@@ -358,14 +358,6 @@
             "jar": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar"
         },
         {
-            "name": "꒰ঌSMT直播py໒꒱",
-            "type": 3,
-            "api": "./py^js/Green/SMT.py",
-            "ext": {
-                "proxy": "http://192.168.31.13:10808"
-            }
-        },
-        {
             "name": "꒰ঌ极速໒꒱",
             "type": 0,
             "url": "https://pastebin.com/raw/rmGTuRZL",
