@@ -35,6 +35,14 @@
             "ext": "./py^js/Yellow/AV文件夹.json"
         },
         {
+            "key": "17AV",
+            "name": "❅17AV",
+            "type": 3,
+            "api": "csp_XBPQ",
+            "searchable": 1,
+            "ext": "./py^js/Yellow/17av.json"
+        },
+        {
             "key": "51吸瓜",
             "name": "❅51吸瓜",
             "type": 3,

@@ -195,6 +195,17 @@
             "changeable": 0
         },
         {
+            "key": "云云影视",
+            "name": "꒰ঌ云云影视໒꒱",
+            "type": 3,
+            "api": "./py^js/Green/云云影视.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
             "key": "努努影院",
             "name": "꒰ঌ努努影院໒꒱",
             "type": 3,
