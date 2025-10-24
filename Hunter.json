@@ -4,10 +4,19 @@
     "version": "1.0.0",
     "author": "TG:https://t.me/Eat_Abalone",
     "updateTime": "2025-10-18",
-    "spider": "./jar/内置Lzgo.jar",
+    "spider": "./jar/内置Lzgo^php.jar",
     "logo": "./logo/hunter.gif",
     "wallpaper": "./imgs/y3.webp",
     "sites": [
+        {
+            "key": "php_server",
+            "name": "PHP爬虫",
+            "type": 3,
+            "api": "csp_PhpServer",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1
+        },
         {
             "key": "哔哩",
             "name": "꒰ঌ哔哩໒꒱",
