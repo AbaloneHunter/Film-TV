@@ -4,19 +4,10 @@
     "version": "1.0.0",
     "author": "TG:https://t.me/Eat_Abalone",
     "updateTime": "2025-10-18",
-    "spider": "./jar/内置Lzgo^php.jar",
+    "spider": "./jar/内置Lzgo.jar",
     "logo": "./logo/hunter.gif",
     "wallpaper": "./imgs/y3.webp",
     "sites": [
-        {
-            "key": "php_server",
-            "name": "PHP爬虫",
-            "type": 3,
-            "api": "csp_PhpServer",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1
-        },
         {
             "key": "哔哩",
             "name": "꒰ঌ哔哩໒꒱",
@@ -329,7 +320,7 @@
             "name": "꒰ঌ猎人·直播໒꒱",
             "type": 4,
             "api": "http://127.0.0.1:1988/lb?lb=13",
-            "ext": "/storage/emulated/0/Hunter/Film-TV/php/猎人·直播/",
+            "ext": "/storage/emulated/0/Film-TV/php/猎人·直播/",
             "style": {
                 "type": "rect",
                 "ratio": 1.44
@@ -341,7 +332,7 @@
             "name": "꒰ঌ猎人·清单໒꒱",
             "type": 4,
             "api": "http://127.0.0.1:1988/lb?lb=9",
-            "ext": "/storage/emulated/0/Hunter/Film-TV/php/猎人·清单/",
+            "ext": "/storage/emulated/0/Film-TV/php/猎人·清单/",
             "style": {
                 "type": "rect",
                 "ratio": 1.33

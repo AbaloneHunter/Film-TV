@@ -9,6 +9,16 @@
     "wallpaper": "./imgs/y3.webp",
     "sites": [
         {
+            "key": "php_server",
+            "name": "PHP爬虫",
+            "type": 3,
+            "api": "csp_PhpServer",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "jar": "./jar/fm_xMydev.jar"
+        },
+        {
             "key": "AVxx",
             "name": "❅AVxx",
             "type": 3,
@@ -592,7 +602,7 @@
             "name": "❅鲍鱼·直播",
             "type": 4,
             "api": "http://127.0.0.1:1988/lb?lb=13",
-            "ext": "/storage/emulated/0/Hunter/Film-TV/php/鲍鱼·直播/",
+            "ext": "/storage/emulated/0/Film-TV/php/鲍鱼·直播/",
             "style": {
                 "type": "rect",
                 "ratio": 1.44
@@ -604,7 +614,7 @@
             "name": "❅鲍鱼·清单",
             "type": 4,
             "api": "http://127.0.0.1:1988/lb?lb=9",
-            "ext": "/storage/emulated/0/Hunter/Film-TV/php/鲍鱼·清单/",
+            "ext": "/storage/emulated/0/Film-TV/php/鲍鱼·清单/",
             "style": {
                 "type": "rect",
                 "ratio": 1.33
