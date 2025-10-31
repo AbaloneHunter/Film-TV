@@ -29,7 +29,7 @@ switch ($ac) {
     case 'detail':
         if (!empty($ids)) {
             // 视频详情
-            echo json_encode([
+            $data = [
                 'list' => [
                     [
                         'vod_id' => $ids,
@@ -40,7 +40,8 @@ switch ($ac) {
                         'vod_play_url' => '第1集$12767287836095919439#第2集$https://example.com/play2.m3u8$$$第1集$https://example2.com/play1.m3u8'
                     ]
                 ]
-            ]);
+            ];
+            echo json_encode($data, JSON_UNESCAPED_UNICODE);
         } elseif (!empty($t)) {
             // 分类列表
             $filters = !empty($f) ? json_decode($f, true) : [];
@@ -50,7 +51,7 @@ switch ($ac) {
             
             if ($isSubRequest) {
                 // 二级分类：返回实际内容
-                echo json_encode([
+                $data = [
                     'list' => [
                         ['vod_id' => 'sub_1', 'vod_name' => '二级内容1', 'vod_pic' => 'https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2578045524.jpg'],
                         ['vod_id' => 'sub_2', 'vod_name' => '二级内容2', 'vod_pic' => 'https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2921303452.jpg']
@@ -64,10 +65,11 @@ switch ($ac) {
                         'type' => 'oval',
                         'ratio' => 0.75
                     ]
-                ]);
+                ];
+                echo json_encode($data, JSON_UNESCAPED_UNICODE);
             } elseif ($t == '1') {
                 // 演示：电影分类包含二级分类，设置根级is_sub=true
-                echo json_encode([
+                $data = [
                     'is_sub' => true,   // 标识这是二级分类列表
                     'list' => [
                         ['vod_id' => 'movie_action', 'vod_name' => '动作片', 'vod_pic' => 'https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2578045524.jpg'],
@@ -82,10 +84,11 @@ switch ($ac) {
                         'type' => 'rect',
                         'ratio' => 2.0
                     ]
-                ]);
+                ];
+                echo json_encode($data, JSON_UNESCAPED_UNICODE);
             } else {
                 // 普通分类列表
-                echo json_encode([
+                $data = [
                     'list' => [
                         ['vod_id' => '1', 'vod_name' => '清凉视频', 'vod_pic' => 'https://2uspicc12tche.hitv.app/350/upload/vod/20240415-1/2636d5210e5cf7a6f0cff5c737e6c7b5.webp'],
                         ['vod_id' => '2', 'vod_name' => '测试视频2', 'vod_pic' => 'https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2921303452.jpg']
@@ -103,16 +106,21 @@ switch ($ac) {
                     'pagecount' => 10,
                     'limit' => 20,
                     'total' => 200,
-                ]);
+                ];
+                echo json_encode($data, JSON_UNESCAPED_UNICODE);
             }
         } else {
             // 首页分类
-            echo json_encode([
+            $data = [
                 'class' => [
                     ['type_id' => '1', 'type_name' => '电影'],
                     ['type_id' => '2', 'type_name' => '电视剧'],
                     ['type_id' => '3', 'type_name' => '综艺'],
                     ['type_id' => '4', 'type_name' => '动漫']
+                ],
+                'list' => [
+                    ['vod_id' => 'home_1', 'vod_name' => '首页推荐视频1', 'vod_pic' => 'https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2578045524.jpg', 'vod_remarks' => '演示备注1'],
+                    ['vod_id' => 'home_2', 'vod_name' => '首页推荐视频2', 'vod_pic' => 'https://img3.doubanio.com/view/photo/m_ratio_poster/public/p2921303452.jpg', 'vod_remarks' => '演示备注2']
                 ],
                 'filters' => [
                     '1' => [
@@ -128,12 +136,13 @@ switch ($ac) {
                     'type' => 'rect',
                     'ratio' => 1.33
                 ]
-            ]);
+            ];
+            echo json_encode($data, JSON_UNESCAPED_UNICODE);
         }
         break;
     
     case 'search':
-        echo json_encode([
+        $data = [
             'list' => [
                 ['vod_id' => 's1', 'vod_name' => '搜索结果: ' . $wd, 'vod_pic' => 'https://2uspicc12tche.hitv.app/350/upload/vod/20240415-1/2636d5210e5cf7a6f0cff5c737e6c7b5.webp']
             ],
@@ -141,18 +150,21 @@ switch ($ac) {
             'pagecount' => 1,
             'limit' => 20,
             'total' => 1
-        ]);
+        ];
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
         break;
         
     case 'play':
-        echo json_encode([
+        $data = [
             'parse' => 1,  // 0=直接播放, 1=需要解析
             'playUrl' => '',  // 如果 parse=0，这里填实际播放地址
             'url' => 'https://haokan.baidu.com/v?vid=' . $id  // 如果 parse=1，这里填需要解析的地址
-        ]);
+        ];
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
         break;
     
     default:
-        echo json_encode(['error' => 'Unknown action: ' . $ac]);
+        $data = ['error' => 'Unknown action: ' . $ac];
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
 }
 ?>

@@ -417,6 +417,19 @@
             }
         },
         {
+            "key": "javxx",
+            "name": "ദ്ദിjavxx",
+            "type": 3,
+            "api": "./py^js/Yellow/javxx.py",
+            "searchable": 1,
+            "quickSearch": 0,
+            "filterable": 0,
+            "ext": {
+                "proxy": {},
+                "plp": ""
+            }
+        },
+        {
             "key": "stripchat",
             "name": "ദ്ദിstripchat",
             "type": 3,
@@ -497,7 +510,7 @@
         {
             "key": "missav2",
             "name": "ദ്ദിmissav2",
-            "jar": "./jar/𒉽.jar;md5;875ce871703d1c382e0498711b9d3ba0",
+            "jar": "./jar/𒉽.jar",
             "type": 3,
             "quickSearch": 1,
             "searchable": 1,
@@ -553,7 +566,7 @@
         {
             "key": "XOJAV",
             "name": "ദ്ദിxojav",
-            "jar": "./jar/𒉽.jar;md5;875ce871703d1c382e0498711b9d3ba0",
+            "jar": "./jar/𒉽.jar",
             "type": 3,
             "quickSearch": 1,
             "searchable": 1,

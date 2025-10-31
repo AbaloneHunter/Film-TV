@@ -361,6 +361,13 @@
             "playerType": 2
         },
         {
+            "name": "jacktv",
+            "url": "https://php.946985.filegear-sg.me/jackTV.m3u",
+            "header": {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            }
+        },
+        {
             "name": "꒰ঌ肥羊国内直播໒꒱",
             "type": 3,
             "api": "csp_Feiyang",
