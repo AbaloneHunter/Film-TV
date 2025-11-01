@@ -1,12 +1,10 @@
 {
     "name": "Hunter",
-    "notice": "欢迎使用Hunter数据源",
-    "version": "1.0.0",
+    "notice": "欢迎使用Hunter数据源,更新于2025.11.01",
     "author": "TG:https://t.me/Eat_Abalone",
-    "updateTime": "2025-10-18",
     "spider": "./jar/内置Lzgo.jar",
     "logo": "./logo/hunter.gif",
-    "wallpaper": "./imgs/y3.webp",
+    "wallpaper": "./imgs/V1.jpg",
     "sites": [
         {
             "key": "哔哩",
