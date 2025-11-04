@@ -442,10 +442,10 @@
             "name": "ദ്ദിJable",
             "jar": "./jar/𒉽.jar",
             "type": 3,
-            "quickSearch": 1,
+            "quickSearch": 0,
             "searchable": 1,
-            "changeable": 1,
-            "filterable": 1,
+            "changeable": 0,
+            "filterable": 0,
             "timeout": 60,
             "style": {
                 "type": "rect",

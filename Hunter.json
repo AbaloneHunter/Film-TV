@@ -1,6 +1,6 @@
 {
     "name": "Hunter",
-    "notice": "欢迎使用Hunter数据源,更新于2025.11.01",
+    "notice": "欢迎使用Hunter数据源,更新于2025.11.04",
     "author": "TG:https://t.me/Eat_Abalone",
     "spider": "./jar/内置Lzgo.jar",
     "logo": "./logo/hunter.gif",
@@ -44,6 +44,19 @@
                 "ratio": 1.33
             },
             "changeable": 1
+        },
+        {
+            "key": "py集合",
+            "name": "꒰ঌpy集合໒꒱",
+            "type": 4,
+            "api": "http://zhangqun1818.serv00.net/py.php",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+             "style": {
+                "type": "rect",
+                "ratio": 1.33
+            }
         },
         {
             "key": "苹果",
@@ -94,6 +107,17 @@
             "name": "꒰ঌUvod໒꒱",
             "type": 3,
             "api": "./py^js/Green/Uvod.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
+            "key": "4KFS",
+            "name": "꒰ঌ4KFS໒꒱",
+            "type": 3,
+            "api": "./py^js/Green/4KFS.py",
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 1,
