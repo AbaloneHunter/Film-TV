@@ -7,16 +7,6 @@
     "wallpaper": "./imgs/y3.webp",
     "sites": [
         {
-            "key": "php_server",
-            "name": "PHP爬虫",
-            "type": 3,
-            "api": "csp_PhpServer",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "jar": "./jar/fm_xMydev.jar"
-        },
-        {
             "key": "AVxx",
             "name": "❅AVxx",
             "type": 3,

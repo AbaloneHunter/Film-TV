@@ -59,6 +59,17 @@
             }
         },
         {
+            "key": "小苹果",
+            "name": "꒰ঌ小苹果໒꒱",
+            "type": 3,
+            "api": "./py^js/Green/小苹果.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
             "key": "苹果",
             "name": "꒰ঌ苹果໒꒱",
             "type": 3,
@@ -96,6 +107,17 @@
             "name": "꒰ঌ界影视໒꒱",
             "type": 3,
             "api": "./py^js/Green/界影视.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
+        },
+        {
+            "key": "飞快",
+            "name": "꒰ঌ飞快໒꒱",
+            "type": 3,
+            "api": "./py^js/Green/飞快.py",
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 1,
@@ -195,6 +217,17 @@
             "quickSearch": 0,
             "filterable": 0,
             "changeable": 0
+        },
+        {
+            "key": "兄弟影视",
+            "name": "꒰ঌ兄弟影视໒꒱",
+            "type": 3,
+            "api": "./py^js/Green/兄弟影视.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": ""
         },
         {
             "key": "py_OleVod",
@@ -413,7 +446,7 @@
         },
         {
             "name": "꒰ঌ电影轮播໒꒱",
-            "url": "./php/猎人·直播/虎牙轮播.txt",
+            "url": "./php/猎人·直播/php~虎牙轮播.txt",
             "epg": "http://diyp5.112114.xyz/?ch={name}&date={date}",
             "logo": "https://epg.112114.xyz/logo/{name}.png"
         },
