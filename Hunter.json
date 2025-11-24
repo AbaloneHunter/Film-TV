@@ -17,7 +17,7 @@
             },
             "ext": {
                 "cookie": "buvid3=6357D22F-F506-31C3-4FF6-D40F2EE03FEB25253infoc;b_nut=1755463825;b_lsid=FBBABD104_198B9CC40C5;bsource=search_bing;_uuid=941057596-99CD-AB36-6AEC-5D4AC4BFA31E27666infoc;bmg_af_switch=1;bmg_src_def_domain=i0.hdslb.com;buvid_fp=987890c5acab261b610302bd5b30c74b;bili_ticket=eyJhbGciOiJIUzI1NiIsImtpZCI6InMwMyIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTU3MjMwMjYsImlhdCI6MTc1NTQ2Mzc2NiwicGx0IjotMX0.FiUhmxoXVIN0x4mksOyg23DfYtIo2Q_2_r-odwCYwvQ;bili_ticket_expires=1755722966;buvid4=0906AF8D-C014-11D6-9E7A-FA4D6D3D694A27298-125081804-O64dDb05Am2odHEXsKsoMQ%3D%3D;SESSDATA=7ee477c6%2C1771016740%2C14c80%2A81CjDn2eXJ-XQoWNNQm7EC0R68I8gL23XUh_Yd5SaXceIkNHlScpLwEc2udThQhtSVbTMSVmZWQXhOZl9fZmhOYWRQeFh2YmtCa0lTN0RaZFJ4MGFVRFBuT0IzRlhJaWlrbzVzWWVoNXNHNVZkOURwY3lJakJ4bXlzSVh0Nld5STh2Z3p4Ums5Qk9BIIEC;bili_jct=a940f3a31584d2d20280e19dd8565488;DedeUserID=490060915;DedeUserID__ckMd5=b9c9bf248ebd429c;sid=8m6wb679",
-                "type": "一口气#沙雕动画#热播动漫#热播短剧#热播电影#热播电视剧#热播音乐#小姐姐#AI#4k#8K"
+                "type": "一口气#沙雕动画#动态漫#热播短剧#热播电影#热播电视剧#热播音乐#小姐姐#AI#4k#8K"
             },
             "changeable": 1
         },
@@ -53,7 +53,7 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 1,
-             "style": {
+            "style": {
                 "type": "rect",
                 "ratio": 1.33
             }
@@ -413,6 +413,18 @@
             "name": "꒰ঌ咪咕໒꒱",
             "type": 0,
             "url": "https://down.nigx.cn/raw.githubusercontent.com/develop202/migu_video/refs/heads/main/interface.txt",
+            "playerType": 2
+        },
+        {
+            "name": "宫殿TV",
+            "type": 0,
+            "url": "https://gongdian.top/tv/develop202",
+            "playerType": 2
+        },
+        {
+            "name": "Smt",
+            "type": 0,
+            "url": "https://tmxk.pp.ua/smart-cn.m3u",
             "playerType": 2
         },
         {
