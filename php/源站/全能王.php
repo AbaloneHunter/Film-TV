@@ -1,10 +1,41 @@
 <?php
 /**
- * TVBox PHP 爬虫脚本 - 磁力增强版
+ * TVBox PHP 爬虫脚本 - 磁力增强版 + 全数据库兼容
  * 支持JSON/TXT/M3U/DB文件格式 + 磁力链接 + ed2k链接
  * 完整磁力文件夹扫描和智能命名功能
+ * 增强数据库兼容：支持市面上大多数数据库格式
  */
 ini_set('memory_limit', '-1');
+
+// ==================== 数据库兼容配置 ====================
+define('DB_COMPAT_MODE', true);
+define('MAX_DB_RESULTS', 5000); // 最大数据库结果数
+define('DB_SCAN_DEPTH', 10);    // 数据库扫描深度
+
+// 支持的数据库表名模式（正则表达式）
+$SUPPORTED_DB_TABLES = [
+    'video' => '/^(videos?|film|movie|tv|series|影视|视频)/i',
+    'category' => '/^(categor(y|ies)|type|分类|类型)/i',
+    'magnet' => '/^(magnet|bt|torrent|种子|磁力)/i',
+    'channel' => '/^(channel|tv_channel|live|频道|直播)/i'
+];
+
+// 数据库字段映射配置
+$DB_FIELD_MAPPING = [
+    'id' => ['id', 'vid', 'video_id', 'film_id'],
+    'name' => ['name', 'title', 'video_name', 'film_name', 'vod_name'],
+    'url' => ['url', 'link', 'play_url', 'video_url', 'vod_url'],
+    'magnet' => ['magnet', 'magnet_url', 'magnet_link', 'bt_url'],
+    'image' => ['image', 'pic', 'cover', 'poster', 'vod_pic'],
+    'category' => ['category', 'type', 'class', 'vod_type'],
+    'year' => ['year', 'vod_year'],
+    'area' => ['area', 'region', 'vod_area'],
+    'actor' => ['actor', 'star', 'vod_actor'],
+    'director' => ['director', 'vod_director'],
+    'content' => ['content', 'desc', 'description', 'vod_content']
+];
+// ==================== 数据库兼容配置结束 ====================
+
 // 获取请求参数
 $操作类型 = $_GET['ac'] ?? 'detail';
 $分类标识 = $_GET['t'] ?? '';
@@ -18,7 +49,7 @@ $播放标识 = $_GET['id'] ?? '';
 header('Content-Type: application/json; charset=utf-8');
 
 // 性能优化 - 增加超时时间
-@set_time_limit(30);
+@set_time_limit(120);
 
 // 根据不同 action 返回数据
 switch ($操作类型) {
@@ -45,7 +76,6 @@ switch ($操作类型) {
 }
 
 echo json_encode($结果, JSON_UNESCAPED_UNICODE);
-
 /**
  * 递归扫描目录 - 支持无限级子文件夹
  */
@@ -98,7 +128,7 @@ function 递归扫描目录($目录, $文件类型, $当前深度 = 0, $最大�
 }
 
 /**
- * 获取所有文件列表 - 增强磁力文件夹支持
+ * 获取所有文件列表 - 增强磁力文件夹和数据库支持
  */
 function 获取所有文件() {
     static $所有文件 = null;
@@ -113,12 +143,14 @@ function 获取所有文件() {
             递归扫描目录('/storage/emulated/0/江湖/wj/', ['m3u'])
         );
         
-        // 增强数据库文件扫描，包含bt磁力文件夹
+        // 增强数据库文件扫描，包含所有可能的数据库路径
         $数据库文件 = array_merge(
-            递归扫描目录('/storage/emulated/0/江湖/json/影视/', ['db']),
-            递归扫描目录('/storage/emulated/0/江湖/wj/', ['db']),
-            递归扫描目录('/storage/emulated/0/江湖/db/', ['db']),
-            递归扫描目录('/storage/emulated/0/江湖/wj/bt/', ['db'])
+            递归扫描目录('/storage/emulated/0/江湖/json/影视/', ['db', 'sqlite', 'sqlite3', 'db3']),
+            递归扫描目录('/storage/emulated/0/江湖/wj/', ['db', 'sqlite', 'sqlite3', 'db3']),
+            递归扫描目录('/storage/emulated/0/江湖/db/', ['db', 'sqlite', 'sqlite3', 'db3']),
+            递归扫描目录('/storage/emulated/0/江湖/wj/bt/', ['db', 'sqlite', 'sqlite3', 'db3']),
+            递归扫描目录('/storage/emulated/0/江湖/data/', ['db', 'sqlite', 'sqlite3', 'db3']),
+            递归扫描目录('/storage/emulated/0/江湖/数据库/', ['db', 'sqlite', 'sqlite3', 'db3'])
         );
         
         $所有文件 = array_merge($JSON文件, $TXT文件, $M3U文件, $数据库文件);
@@ -159,6 +191,9 @@ function 估算文件视频数量($文件) {
             $数量 = min($行数, 5000);
             break;
         case 'db':
+        case 'sqlite':
+        case 'sqlite3':
+        case 'db3':
             $数量 = $文件大小 > 500 ? intval($文件大小 / 500) : 1;
             break;
         default:
@@ -167,7 +202,6 @@ function 估算文件视频数量($文件) {
     
     return $数量;
 }
-
 /**
  * 获取分类列表
  */
@@ -202,6 +236,7 @@ function 获取分类列表() {
             
             $文件类型 = '';
             $类型图标 = '';
+            $数量显示 = '';
             
             switch ($文件['type']) {
                 case 'json':
@@ -217,9 +252,34 @@ function 获取分类列表() {
                     $类型图标 = '📺 ';
                     break;
                 case 'db':
+                case 'sqlite':
+                case 'sqlite3':
+                case 'db3':
                     $文件类型 = '[数据库] ';
                     $类型图标 = '🗃️ ';
+                    
+                    // 尝试获取数据库中的表数量
+                    try {
+                        if (file_exists($文件['path']) && extension_loaded('pdo_sqlite')) {
+                            $数据库 = new PDO("sqlite:" . $文件['path']);
+                            $表列表 = $数据库->query("SELECT name FROM sqlite_master WHERE type='table'")->fetchAll(PDO::FETCH_COLUMN);
+                            $表数量 = count($表列表);
+                            $数据库 = null;
+                            
+                            $数量显示 = ' (' . $表数量 . '个表)';
+                        } else {
+                            $数量显示 = ' (数据库)';
+                        }
+                    } catch (Exception $e) {
+                        $数量显示 = ' (数据库)';
+                    }
                     break;
+            }
+            
+            // 如果没有数量显示，使用估算的视频数量
+            if (empty($数量显示)) {
+                $视频数量 = 估算文件视频数量($文件);
+                $数量显示 = $视频数量 > 0 ? ' (' . number_format($视频数量) . '个视频)' : '';
             }
             
             // 磁力文件夹标识
@@ -235,17 +295,13 @@ function 获取分类列表() {
                 $文件夹信息 = ' 📁 ' . $文件夹路径;
             }
             
-            // 估算每个文件的视频数量
-            $视频数量 = 估算文件视频数量($文件);
-            $数量显示 = $视频数量 > 0 ? ' (' . number_format($视频数量) . '个视频)' : '';
-            
             $分类列表[] = [
                 'type_id' => (string)($索引 + 1),
                 'type_name' => $类型图标 . $文件类型 . $文件['filename'] . $数量显示 . $文件夹信息,
                 'type_file' => $文件['name'],
                 'source_path' => $文件['path'],
                 'source_type' => $文件['type'],
-                'video_count' => $视频数量,
+                'video_count' => 估算文件视频数量($文件),
                 'is_magnet_folder' => $文件['is_magnet_folder']
             ];
         }
@@ -265,9 +321,116 @@ function 获取分类列表() {
 }
 
 /**
- * 解析SQLite数据库文件内容 - 增强磁力链接和JSON支持
+ * 获取热门推荐视频 - 从所有分类中随机获取
+ */
+function 获取热门视频($页码, $每页数量 = 15) {
+    static $所有热门视频 = null;
+    static $已使用视频标识 = [];
+    
+    if ($页码 == 1) {
+        $已使用视频标识 = [];
+    }
+    
+    if ($所有热门视频 === null) {
+        $所有热门视频 = [];
+        $所有文件 = 获取所有文件();
+        
+        foreach ($所有文件 as $文件) {
+            if (!file_exists($文件['path'])) {
+                continue;
+            }
+            
+            $视频列表 = [];
+            switch ($文件['type']) {
+                case 'json':
+                    $视频列表 = 解析JSON文件($文件['path']);
+                    break;
+                case 'txt':
+                    $视频列表 = 解析TXT文件($文件['path']);
+                    break;
+                case 'm3u':
+                    $视频列表 = 解析M3U文件($文件['path']);
+                    break;
+                case 'db':
+                case 'sqlite':
+                case 'sqlite3':
+                case 'db3':
+                    $视频列表 = 解析数据库文件($文件['path']);
+                    break;
+            }
+            
+            if (isset($视频列表['错误'])) {
+                continue;
+            }
+            
+            if (count($视频列表) > 100) {
+                $视频列表 = array_slice($视频列表, 0, 100);
+            }
+            
+            $所有热门视频 = array_merge($所有热门视频, $视频列表);
+            
+            if (count($所有热门视频) > 1000) {
+                break;
+            }
+        }
+    }
+    
+    if (empty($所有热门视频)) {
+        return [];
+    }
+    
+    $可用视频 = [];
+    foreach ($所有热门视频 as $视频) {
+        $视频标识 = $视频['vod_id'] ?? '';
+        if (!in_array($视频标识, $已使用视频标识)) {
+            $可用视频[] = $视频;
+        }
+    }
+    
+    if (empty($可用视频)) {
+        $已使用视频标识 = [];
+        $可用视频 = $所有热门视频;
+    }
+    
+    $选中视频 = [];
+    $需要数量 = min($每页数量, count($可用视频));
+    
+    if ($需要数量 > 0) {
+        $随机键 = array_rand($可用视频, $需要数量);
+        if (!is_array($随机键)) {
+            $随机键 = [$随机键];
+        }
+        
+        foreach ($随机键 as $键) {
+            $选中视频项 = $可用视频[$键];
+            $选中视频[] = $选中视频项;
+            $已使用视频标识[] = $选中视频项['vod_id'] ?? '';
+        }
+    }
+    
+    return $选中视频;
+}
+
+/**
+ * 首页数据
+ */
+function 获取首页() {
+    $分类列表 = 获取分类列表();
+    
+    if (empty($分类列表)) {
+        return ['错误' => '未找到任何文件'];
+    }
+    
+    return [
+        'class' => $分类列表
+    ];
+}
+/**
+ * 增强版数据库解析 - 支持市面上大多数数据库格式
  */
 function 解析数据库文件($文件路径) {
+    global $SUPPORTED_DB_TABLES, $DB_FIELD_MAPPING;
+    
     if (!file_exists($文件路径)) {
         return ['错误' => '数据库文件不存在: ' . basename($文件路径)];
     }
@@ -291,20 +454,67 @@ function 解析数据库文件($文件路径) {
         $数据库 = new PDO("sqlite:" . $文件路径);
         $数据库->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        // 首先检查是否是视频分类数据库
+        // 获取所有表
         $表列表 = $数据库->query("SELECT name FROM sqlite_master WHERE type='table'")->fetchAll(PDO::FETCH_COLUMN);
         
-        if (in_array('videos', $表列表) && in_array('categories', $表列表)) {
-            // 这是视频分类数据库，使用专门的解析函数
-            return 解析视频分类数据库($数据库, $文件路径);
-        } else {
-            // 这是磁力数据库，使用原来的解析逻辑
-            return 解析磁力数据库($数据库, $文件路径);
+        if (empty($表列表)) {
+            return ['错误' => '数据库中未找到任何数据表'];
+        }
+        
+        // 智能识别数据库类型并解析
+        $数据库类型 = 识别数据库类型($表列表, $数据库);
+        
+        switch ($数据库类型) {
+            case 'video_category':
+                return 解析视频分类数据库($数据库, $文件路径);
+            case 'magnet_database':
+                return 解析磁力数据库($数据库, $文件路径);
+            case 'live_channel':
+                return 解析直播频道数据库($数据库, $文件路径);
+            case 'universal_video':
+                return 解析通用视频数据库($数据库, $文件路径);
+            default:
+                return 解析自动识别数据库($数据库, $文件路径, $表列表);
         }
         
     } catch (PDOException $异常) {
         return ['错误' => '数据库读取失败: ' . $异常->getMessage()];
     }
+}
+
+/**
+ * 智能识别数据库类型
+ */
+function 识别数据库类型($表列表, $数据库) {
+    global $SUPPORTED_DB_TABLES;
+    
+    // 检查是否是视频分类数据库
+    if (in_array('videos', $表列表) && in_array('categories', $表列表)) {
+        return 'video_category';
+    }
+    
+    // 检查是否是磁力数据库
+    foreach ($表列表 as $表名) {
+        if (preg_match($SUPPORTED_DB_TABLES['magnet'], $表名)) {
+            return 'magnet_database';
+        }
+    }
+    
+    // 检查是否是直播频道数据库
+    foreach ($表列表 as $表名) {
+        if (preg_match($SUPPORTED_DB_TABLES['channel'], $表名)) {
+            return 'live_channel';
+        }
+    }
+    
+    // 检查是否是通用视频数据库
+    foreach ($表列表 as $表名) {
+        if (preg_match($SUPPORTED_DB_TABLES['video'], $表名)) {
+            return 'universal_video';
+        }
+    }
+    
+    return 'auto_detect';
 }
 
 /**
@@ -321,10 +531,12 @@ function 解析视频分类数据库($数据库, $文件路径) {
     }
     
     // 获取视频数据
-    $视频结果 = $数据库->query("SELECT id, category_id, name, image, actor, director, remarks, pubdate, area, year, content, play_url FROM videos")->fetchAll(PDO::FETCH_ASSOC);
+    $视频结果 = $数据库->query("SELECT id, category_id, name, image, actor, director, remarks, pubdate, area, year, content, play_url FROM videos LIMIT " . MAX_DB_RESULTS)->fetchAll(PDO::FETCH_ASSOC);
     
     $默认图片 = [
-        'https://www.252035.xyz/imgs?t=1335527662'
+        'https://www.252035.xyz/imgs?t=1335527662',
+        'https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2640235365.jpg',
+        'https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2640235366.jpg'
     ];
     
     foreach ($视频结果 as $索引 => $视频数据) {
@@ -365,7 +577,7 @@ function 解析视频分类数据库($数据库, $文件路径) {
             'vod_play_url' => '正片$' . $播放地址
         ];
         
-        if (count($视频列表) >= 1000) {
+        if (count($视频列表) >= MAX_DB_RESULTS) {
             break;
         }
     }
@@ -386,7 +598,9 @@ function 解析磁力数据库($数据库, $文件路径) {
     }
     
     $默认图片 = [
-        'https://www.252035.xyz/imgs?t=1335527662'
+        'https://www.252035.xyz/imgs?t=1335527662',
+        'https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2640235365.jpg',
+        'https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2640235366.jpg'
     ];
     
     foreach ($表列表 as $表名) {
@@ -397,7 +611,7 @@ function 解析磁力数据库($数据库, $文件路径) {
         
         // 特殊处理：如果表有data字段，假设它包含JSON数据
         if (in_array('data', $字段名称)) {
-            $结果集 = $数据库->query("SELECT data FROM $表名")->fetchAll(PDO::FETCH_COLUMN);
+            $结果集 = $数据库->query("SELECT data FROM $表名 LIMIT " . MAX_DB_RESULTS)->fetchAll(PDO::FETCH_COLUMN);
             
             foreach ($结果集 as $索引 => $json数据) {
                 if (empty($json数据)) continue;
@@ -444,6 +658,10 @@ function 解析磁力数据库($数据库, $文件路径) {
                         'vod_play_from' => $播放来源,
                         'vod_play_url' => '正片$' . $视频链接
                     ];
+                    
+                    if (count($视频列表) >= MAX_DB_RESULTS) {
+                        break 2;
+                    }
                 }
             }
         } else {  
@@ -491,7 +709,7 @@ function 解析磁力数据库($数据库, $文件路径) {
                 if ($地区字段) $选择字段[] = $地区字段;
                 if ($JSON字段) $选择字段[] = $JSON字段;
                 
-                $查询SQL = "SELECT " . implode(', ', $选择字段) . " FROM $表名";
+                $查询SQL = "SELECT " . implode(', ', $选择字段) . " FROM $表名 LIMIT " . MAX_DB_RESULTS;
                 
                 $语句 = $数据库->query($查询SQL);
                 $结果集 = $语句->fetchAll(PDO::FETCH_ASSOC);
@@ -560,7 +778,7 @@ function 解析磁力数据库($数据库, $文件路径) {
                         'vod_play_url' => '正片$' . $视频链接
                     ];
                     
-                    if (count($视频列表) >= 1000) {
+                    if (count($视频列表) >= MAX_DB_RESULTS) {
                         break 2;
                     }
                 }
@@ -572,7 +790,373 @@ function 解析磁力数据库($数据库, $文件路径) {
     
     return $视频列表;
 }
+/**
+ * 解析通用视频数据库 - 支持大多数视频数据库格式
+ */
+function 解析通用视频数据库($数据库, $文件路径) {
+    global $DB_FIELD_MAPPING;
+    
+    $视频列表 = [];
+    $表列表 = $数据库->query("SELECT name FROM sqlite_master WHERE type='table'")->fetchAll(PDO::FETCH_COLUMN);
+    
+    $默认图片 = [
+        'https://www.252035.xyz/imgs?t=1335527662',
+        'https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2640235365.jpg',
+        'https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2640235366.jpg'
+    ];
+    
+    foreach ($表列表 as $表名) {
+        if (strpos($表名, 'sqlite_') === 0) continue;
+        
+        // 获取表结构
+        $字段信息 = $数据库->query("PRAGMA table_info($表名)")->fetchAll(PDO::FETCH_ASSOC);
+        $字段名称 = array_column($字段信息, 'name');
+        
+        // 映射字段
+        $映射字段 = [];
+        foreach ($DB_FIELD_MAPPING as $标准字段 => $可能字段) {
+            foreach ($可能字段 as $候选字段) {
+                if (in_array($候选字段, $字段名称)) {
+                    $映射字段[$标准字段] = $候选字段;
+                    break;
+                }
+            }
+        }
+        
+        if (empty($映射字段['name']) || (empty($映射字段['url']) && empty($映射字段['magnet']))) {
+            continue; // 跳过没有名称和链接的表
+        }
+        
+        // 构建查询
+        $选择字段 = array_values($映射字段);
+        $查询SQL = "SELECT " . implode(', ', $选择字段) . " FROM $表名 LIMIT " . MAX_DB_RESULTS;
+        
+        try {
+            $语句 = $数据库->query($查询SQL);
+            $结果集 = $语句->fetchAll(PDO::FETCH_ASSOC);
+            
+            foreach ($结果集 as $索引 => $行数据) {
+                $视频名称 = $行数据[$映射字段['name']] ?? '未知视频';
+                $视频链接 = '';
+                $播放来源 = '数据库源';
+                
+                // 优先使用磁力链接
+                if (!empty($映射字段['magnet']) && !empty($行数据[$映射字段['magnet']])) {
+                    $视频链接 = $行数据[$映射字段['magnet']];
+                    $播放来源 = '🧲磁力链接';
+                } elseif (!empty($映射字段['url']) && !empty($行数据[$映射字段['url']])) {
+                    $视频链接 = $行数据[$映射字段['url']];
+                    if (strpos($视频链接, 'magnet:') === 0) {
+                        $播放来源 = '🧲磁力链接';
+                    } elseif (strpos($视频链接, 'ed2k://') === 0) {
+                        $播放来源 = '⚡电驴链接';
+                    } elseif (strpos($视频链接, 'http') === 0) {
+                        $播放来源 = '在线播放';
+                    }
+                }
+                
+                if (empty($视频链接)) {
+                    continue;
+                }
+                
+                // 构建视频信息
+                $视频封面 = '';
+                if (!empty($映射字段['image']) && !empty($行数据[$映射字段['image']])) {
+                    $视频封面 = $行数据[$映射字段['image']];
+                } else {
+                    $视频封面 = $默认图片[$索引 % count($默认图片)];
+                }
+                
+                $视频信息 = [
+                    'vod_id' => 'db_' . md5($文件路径) . '_' . $表名 . '_' . $索引,
+                    'vod_name' => $视频名称,
+                    'vod_pic' => $视频封面,
+                    'vod_remarks' => '高清',
+                    'vod_year' => !empty($映射字段['year']) ? ($行数据[$映射字段['year']] ?? date('Y')) : date('Y'),
+                    'vod_area' => !empty($映射字段['area']) ? ($行数据[$映射字段['area']] ?? '中国大陆') : '中国大陆',
+                    'vod_content' => !empty($映射字段['content']) ? ($行数据[$映射字段['content']] ?? $视频名称 . '的精彩内容') : $视频名称 . '的精彩内容',
+                    'vod_play_from' => $播放来源,
+                    'vod_play_url' => '正片$' . $视频链接
+                ];
+                
+                // 添加可选字段
+                if (!empty($映射字段['actor']) && !empty($行数据[$映射字段['actor']])) {
+                    $视频信息['vod_actor'] = $行数据[$映射字段['actor']];
+                }
+                
+                if (!empty($映射字段['director']) && !empty($行数据[$映射字段['director']])) {
+                    $视频信息['vod_director'] = $行数据[$映射字段['director']];
+                }
+                
+                $视频列表[] = $视频信息;
+                
+                if (count($视频列表) >= MAX_DB_RESULTS) {
+                    break 2;
+                }
+            }
+        } catch (Exception $e) {
+            // 跳过有问题的表
+            continue;
+        }
+    }
+    
+    $数据库 = null;
+    return $视频列表;
+}
 
+/**
+ * 解析直播频道数据库
+ */
+function 解析直播频道数据库($数据库, $文件路径) {
+    $视频列表 = [];
+    $表列表 = $数据库->query("SELECT name FROM sqlite_master WHERE type='table'")->fetchAll(PDO::FETCH_COLUMN);
+    
+    $默认图片 = [
+        'https://www.252035.xyz/imgs?t=1335527662'
+    ];
+    
+    foreach ($表列表 as $表名) {
+        if (strpos($表名, 'sqlite_') === 0) continue;
+        
+        $字段信息 = $数据库->query("PRAGMA table_info($表名)")->fetchAll(PDO::FETCH_ASSOC);
+        $字段名称 = array_column($字段信息, 'name');
+        
+        $名称字段 = null;
+        $链接字段 = null;
+        $分组字段 = null;
+        $图标字段 = null;
+        
+        foreach ($字段名称 as $字段) {
+            $小写字段 = strtolower($字段);
+            if (in_array($小写字段, ['name', 'title', 'channel_name', 'channel_title'])) {
+                $名称字段 = $字段;
+            } elseif (in_array($小写字段, ['url', 'link', 'channel_url', 'play_url'])) {
+                $链接字段 = $字段;
+            } elseif (in_array($小写字段, ['group', 'category', 'type'])) {
+                $分组字段 = $字段;
+            } elseif (in_array($小写字段, ['logo', 'icon', 'image'])) {
+                $图标字段 = $字段;
+            }
+        }
+        
+        if (!$名称字段 || !$链接字段) {
+            continue;
+        }
+        
+        $选择字段 = [$名称字段, $链接字段];
+        if ($分组字段) $选择字段[] = $分组字段;
+        if ($图标字段) $选择字段[] = $图标字段;
+        
+        $查询SQL = "SELECT " . implode(', ', $选择字段) . " FROM $表名 LIMIT 1000";
+        
+        try {
+            $语句 = $数据库->query($查询SQL);
+            $结果集 = $语句->fetchAll(PDO::FETCH_ASSOC);
+            
+            foreach ($结果集 as $索引 => $行数据) {
+                $频道名称 = $行数据[$名称字段] ?? '未知频道';
+                $频道链接 = $行数据[$链接字段] ?? '';
+                $频道分组 = $分组字段 ? ($行数据[$分组字段] ?? '直播频道') : '直播频道';
+                $频道图标 = $图标字段 ? ($行数据[$图标字段] ?? '') : '';
+                
+                if (empty($频道链接)) {
+                    continue;
+                }
+                
+                $视频封面 = $频道图标 ?: $默认图片[$索引 % count($默认图片)];
+                
+                $视频列表[] = [
+                    'vod_id' => 'live_' . md5($文件路径) . '_' . $表名 . '_' . $索引,
+                    'vod_name' => $频道名称,
+                    'vod_pic' => $视频封面,
+                    'vod_remarks' => '直播',
+                    'vod_year' => date('Y'),
+                    'vod_area' => '中国大陆',
+                    'vod_content' => $频道名称 . '直播频道',
+                    'vod_play_from' => $频道分组,
+                    'vod_play_url' => '直播$' . $频道链接
+                ];
+                
+                if (count($视频列表) >= 1000) {
+                    break 2;
+                }
+            }
+        } catch (Exception $e) {
+            continue;
+        }
+    }
+    
+    $数据库 = null;
+    return $视频列表;
+}
+
+/**
+ * 自动识别并解析数据库
+ */
+function 解析自动识别数据库($数据库, $文件路径, $表列表) {
+    $视频列表 = [];
+    
+    // 尝试多种解析方式
+    foreach ($表列表 as $表名) {
+        if (strpos($表名, 'sqlite_') === 0) continue;
+        
+        // 方法1: 检查是否有常见的视频字段
+        $视频列表 = array_merge($视频列表, 尝试解析通用表($数据库, $文件路径, $表名));
+        
+        // 方法2: 检查是否有JSON数据字段
+        $视频列表 = array_merge($视频列表, 尝试解析JSON表($数据库, $文件路径, $表名));
+        
+        if (count($视频列表) >= MAX_DB_RESULTS) {
+            break;
+        }
+    }
+    
+    $数据库 = null;
+    return $视频列表;
+}
+
+/**
+ * 尝试解析通用表结构
+ */
+function 尝试解析通用表($数据库, $文件路径, $表名) {
+    $视频列表 = [];
+    
+    try {
+        $字段信息 = $数据库->query("PRAGMA table_info($表名)")->fetchAll(PDO::FETCH_ASSOC);
+        $字段名称 = array_column($字段信息, 'name');
+        
+        // 查找可能的名称和链接字段
+        $可能名称字段 = [];
+        $可能链接字段 = [];
+        
+        foreach ($字段名称 as $字段) {
+            $小写字段 = strtolower($字段);
+            if (strpos($小写字段, 'name') !== false || strpos($小写字段, 'title') !== false) {
+                $可能名称字段[] = $字段;
+            }
+            if (strpos($小写字段, 'url') !== false || strpos($小写字段, 'link') !== false || 
+                strpos($小写字段, 'magnet') !== false) {
+                $可能链接字段[] = $字段;
+            }
+        }
+        
+        if (empty($可能名称字段) || empty($可能链接字段)) {
+            return $视频列表;
+        }
+        
+        $名称字段 = $可能名称字段[0];
+        $链接字段 = $可能链接字段[0];
+        
+        $查询SQL = "SELECT $名称字段, $链接字段 FROM $表名 LIMIT 500";
+        $语句 = $数据库->query($查询SQL);
+        $结果集 = $语句->fetchAll(PDO::FETCH_ASSOC);
+        
+        $默认图片 = ['https://www.252035.xyz/imgs?t=1335527662'];
+        
+        foreach ($结果集 as $索引 => $行数据) {
+            $视频名称 = $行数据[$名称字段] ?? '未知视频';
+            $视频链接 = $行数据[$链接字段] ?? '';
+            
+            if (empty($视频链接)) {
+                continue;
+            }
+            
+            $播放来源 = '数据库源';
+            if (strpos($视频链接, 'magnet:') === 0) {
+                $播放来源 = '🧲磁力链接';
+            } elseif (strpos($视频链接, 'ed2k://') === 0) {
+                $播放来源 = '⚡电驴链接';
+            }
+            
+            $视频列表[] = [
+                'vod_id' => 'auto_' . md5($文件路径) . '_' . $表名 . '_' . $索引,
+                'vod_name' => $视频名称,
+                'vod_pic' => $默认图片[$索引 % count($默认图片)],
+                'vod_remarks' => '高清',
+                'vod_year' => date('Y'),
+                'vod_area' => '中国大陆',
+                'vod_content' => $视频名称 . '的精彩内容',
+                'vod_play_from' => $播放来源,
+                'vod_play_url' => '正片$' . $视频链接
+            ];
+        }
+    } catch (Exception $e) {
+        // 跳过解析失败的表
+    }
+    
+    return $视频列表;
+}
+
+/**
+ * 尝试解析JSON表
+ */
+function 尝试解析JSON表($数据库, $文件路径, $表名) {
+    $视频列表 = [];
+    
+    try {
+        $字段信息 = $数据库->query("PRAGMA table_info($表名)")->fetchAll(PDO::FETCH_ASSOC);
+        $字段名称 = array_column($字段信息, 'name');
+        
+        // 查找可能的JSON字段
+        $JSON字段 = null;
+        foreach ($字段名称 as $字段) {
+            $小写字段 = strtolower($字段);
+            if (in_array($小写字段, ['json', 'data', 'info', 'content'])) {
+                $JSON字段 = $字段;
+                break;
+            }
+        }
+        
+        if (!$JSON字段) {
+            return $视频列表;
+        }
+        
+        $查询SQL = "SELECT $JSON字段 FROM $表名 LIMIT 300";
+        $语句 = $数据库->query($查询SQL);
+        $结果集 = $语句->fetchAll(PDO::FETCH_COLUMN);
+        
+        $默认图片 = ['https://www.252035.xyz/imgs?t=1335527662'];
+        
+        foreach ($结果集 as $索引 => $json数据) {
+            if (empty($json数据)) continue;
+            
+            $视频数据 = json_decode($json数据, true);
+            if (!$视频数据 || !is_array($视频数据)) continue;
+            
+            $视频名称 = $视频数据['title'] ?? $视频数据['name'] ?? '未知视频';
+            $视频链接 = $视频数据['url'] ?? $视频数据['magnet'] ?? $视频数据['link'] ?? '';
+            
+            if (empty($视频链接)) continue;
+            
+            $播放来源 = '数据库源';
+            if (strpos($视频链接, 'magnet:') === 0) {
+                $播放来源 = '🧲磁力链接';
+            } elseif (strpos($视频链接, 'ed2k://') === 0) {
+                $播放来源 = '⚡电驴链接';
+            }
+            
+            $视频列表[] = [
+                'vod_id' => 'json_' . md5($文件路径) . '_' . $表名 . '_' . $索引,
+                'vod_name' => $视频名称,
+                'vod_pic' => $视频数据['image'] ?? $视频数据['pic'] ?? $视频数据['cover'] ?? $默认图片[$索引 % count($默认图片)],
+                'vod_remarks' => '高清',
+                'vod_year' => $视频数据['year'] ?? date('Y'),
+                'vod_area' => $视频数据['area'] ?? '中国大陆',
+                'vod_content' => $视频数据['desc'] ?? $视频数据['description'] ?? $视频数据['content'] ?? $视频名称 . '的精彩内容',
+                'vod_play_from' => $播放来源,
+                'vod_play_url' => '正片$' . $视频链接
+            ];
+            
+            if (count($视频列表) >= 300) {
+                break;
+            }
+        }
+    } catch (Exception $e) {
+        // 跳过解析失败的表
+    }
+    
+    return $视频列表;
+}
 /**
  * 解析JSON文件内容 - 完整加载
  */
@@ -721,7 +1305,7 @@ function 解析TXT文件($文件路径) {
             'vod_remarks' => '高清',
             'vod_year' => date('Y'),
             'vod_area' => '中国大陆',
-            'vod_content' => '《' . $视频名称 . '》的精彩内容',
+            'vod_content' => '《' . $名称 . '》的精彩内容',
             'vod_play_from' => $播放来源,
             'vod_play_url' => '正片$' . $链接
         ];
@@ -862,110 +1446,6 @@ function 解析M3U文件($文件路径) {
     
     return $视频列表;
 }
-
-/**
- * 获取热门推荐视频 - 从所有分类中随机获取
- */
-function 获取热门视频($页码, $每页数量 = 15) {
-    static $所有热门视频 = null;
-    static $已使用视频标识 = [];
-    
-    if ($页码 == 1) {
-        $已使用视频标识 = [];
-    }
-    
-    if ($所有热门视频 === null) {
-        $所有热门视频 = [];
-        $所有文件 = 获取所有文件();
-        
-        foreach ($所有文件 as $文件) {
-            if (!file_exists($文件['path'])) {
-                continue;
-            }
-            
-            $视频列表 = [];
-            switch ($文件['type']) {
-                case 'json':
-                    $视频列表 = 解析JSON文件($文件['path']);
-                    break;
-                case 'txt':
-                    $视频列表 = 解析TXT文件($文件['path']);
-                    break;
-                case 'm3u':
-                    $视频列表 = 解析M3U文件($文件['path']);
-                    break;
-                case 'db':
-                    $视频列表 = 解析数据库文件($文件['path']);
-                    break;
-            }
-            
-            if (isset($视频列表['错误'])) {
-                continue;
-            }
-            
-            if (count($视频列表) > 100) {
-                $视频列表 = array_slice($视频列表, 0, 100);
-            }
-            
-            $所有热门视频 = array_merge($所有热门视频, $视频列表);
-            
-            if (count($所有热门视频) > 1000) {
-                break;
-            }
-        }
-    }
-    
-    if (empty($所有热门视频)) {
-        return [];
-    }
-    
-    $可用视频 = [];
-    foreach ($所有热门视频 as $视频) {
-        $视频标识 = $视频['vod_id'] ?? '';
-        if (!in_array($视频标识, $已使用视频标识)) {
-            $可用视频[] = $视频;
-        }
-    }
-    
-    if (empty($可用视频)) {
-        $已使用视频标识 = [];
-        $可用视频 = $所有热门视频;
-    }
-    
-    $选中视频 = [];
-    $需要数量 = min($每页数量, count($可用视频));
-    
-    if ($需要数量 > 0) {
-        $随机键 = array_rand($可用视频, $需要数量);
-        if (!is_array($随机键)) {
-            $随机键 = [$随机键];
-        }
-        
-        foreach ($随机键 as $键) {
-            $选中视频项 = $可用视频[$键];
-            $选中视频[] = $选中视频项;
-            $已使用视频标识[] = $选中视频项['vod_id'] ?? '';
-        }
-    }
-    
-    return $选中视频;
-}
-
-/**
- * 首页数据
- */
-function 获取首页() {
-    $分类列表 = 获取分类列表();
-    
-    if (empty($分类列表)) {
-        return ['错误' => '未找到任何文件'];
-    }
-    
-    return [
-        'class' => $分类列表
-    ];
-}
-
 /**
  * 分类列表
  */
@@ -1042,6 +1522,9 @@ function 获取分类($分类标识, $页码) {
                 $分类视频 = 解析M3U文件($目标分类['source_path']);
                 break;
             case 'db':
+            case 'sqlite':
+            case 'sqlite3':
+            case 'db3':
                 $分类视频 = 解析数据库文件($目标分类['source_path']);
                 break;
         }
@@ -1159,7 +1642,7 @@ function 按标识查找视频($标识) {
             $视频索引 = $部分[3];
             
             foreach ($所有文件 as $文件) {
-                if ($文件['type'] === 'db' && md5($文件['path']) === $文件哈希) {
+                if (in_array($文件['type'], ['db', 'sqlite', 'sqlite3', 'db3']) && md5($文件['path']) === $文件哈希) {
                     return 按索引查找数据库视频($文件['path'], $表名, $视频索引);
                 }
             }
@@ -1168,6 +1651,48 @@ function 按标识查找视频($标识) {
         // 视频分类数据库的视频查找
         $视频ID = substr($标识, 6); // 去掉 'video_' 前缀
         return 按ID查找分类视频($视频ID);
+    } elseif (strpos($标识, 'auto_') === 0) {
+        // 自动识别数据库的视频查找
+        $部分 = explode('_', $标识);
+        if (count($部分) >= 4) {
+            $文件哈希 = $部分[1];
+            $表名 = $部分[2];
+            $视频索引 = $部分[3];
+            
+            foreach ($所有文件 as $文件) {
+                if (in_array($文件['type'], ['db', 'sqlite', 'sqlite3', 'db3']) && md5($文件['path']) === $文件哈希) {
+                    return 按索引查找数据库视频($文件['path'], $表名, $视频索引);
+                }
+            }
+        }
+    } elseif (strpos($标识, 'json_') === 0) {
+        // JSON数据库的视频查找
+        $部分 = explode('_', $标识);
+        if (count($部分) >= 4) {
+            $文件哈希 = $部分[1];
+            $表名 = $部分[2];
+            $视频索引 = $部分[3];
+            
+            foreach ($所有文件 as $文件) {
+                if (in_array($文件['type'], ['db', 'sqlite', 'sqlite3', 'db3']) && md5($文件['path']) === $文件哈希) {
+                    return 按索引查找数据库视频($文件['path'], $表名, $视频索引);
+                }
+            }
+        }
+    } elseif (strpos($标识, 'live_') === 0) {
+        // 直播数据库的视频查找
+        $部分 = explode('_', $标识);
+        if (count($部分) >= 4) {
+            $文件哈希 = $部分[1];
+            $表名 = $部分[2];
+            $视频索引 = $部分[3];
+            
+            foreach ($所有文件 as $文件) {
+                if (in_array($文件['type'], ['db', 'sqlite', 'sqlite3', 'db3']) && md5($文件['path']) === $文件哈希) {
+                    return 按索引查找数据库视频($文件['path'], $表名, $视频索引);
+                }
+            }
+        }
     } else {
         foreach ($所有文件 as $文件) {
             if ($文件['type'] === 'json') {
@@ -1191,7 +1716,7 @@ function 按ID查找分类视频($视频ID) {
     $所有文件 = 获取所有文件();
     
     foreach ($所有文件 as $文件) {
-        if ($文件['type'] === 'db') {
+        if (in_array($文件['type'], ['db', 'sqlite', 'sqlite3', 'db3'])) {
             if (!file_exists($文件['path']) || !extension_loaded('pdo_sqlite')) {
                 continue;
             }
@@ -1463,39 +1988,48 @@ function 按索引查找数据库视频($文件路径, $表名, $视频索引) {
         $数据库->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
         // 查询指定行的data字段
-        $查询SQL = "SELECT data FROM $表名 LIMIT 1 OFFSET " . intval($视频索引);
+        $查询SQL = "SELECT * FROM $表名 LIMIT 1 OFFSET " . intval($视频索引);
         $语句 = $数据库->query($查询SQL);
         $行数据 = $语句->fetch(PDO::FETCH_ASSOC);
         
-        if ($行数据 && !empty($行数据['data'])) {
-            $视频数据 = json_decode($行数据['data'], true);
-            if ($视频数据 && is_array($视频数据)) {
-                $默认图片 = ['https://www.252035.xyz/imgs?t=1335527662'];
-                
-                $视频名称 = $视频数据['title'] ?? $视频数据['name'] ?? '未知视频';
-                $视频链接 = $视频数据['magnet'] ?? $视频数据['torrent'] ?? '';
-                $播放来源 = !empty($视频数据['magnet']) ? '🧲磁力链接' : '🔗种子链接';
-                
-                if (empty($视频链接)) {
-                    $数据库 = null;
-                    return null;
-                }
-                
-                $视频 = [
-                    'vod_id' => 'db_' . md5($文件路径) . '_' . $表名 . '_' . $视频索引,
-                    'vod_name' => $视频名称,
-                    'vod_pic' => $默认图片[intval($视频索引) % count($默认图片)],
-                    'vod_remarks' => '高清',
-                    'vod_year' => $视频数据['year'] ?? date('Y'),
-                    'vod_area' => '欧美',
-                    'vod_content' => $视频名称 . '的精彩内容',
-                    'vod_play_from' => $播放来源,
-                    'vod_play_url' => '正片$' . $视频链接
-                ];
-                
-                $数据库 = null;
-                return $视频;
+        if ($行数据) {
+            $默认图片 = ['https://www.252035.xyz/imgs?t=1335527662'];
+            
+            // 尝试多种字段组合
+            $视频名称 = $行数据['name'] ?? $行数据['title'] ?? $行数据['vod_name'] ?? '未知视频';
+            $视频链接 = $行数据['magnet'] ?? $行数据['url'] ?? $行数据['link'] ?? $行数据['play_url'] ?? '';
+            $播放来源 = '数据库源';
+            
+            if (strpos($视频链接, 'magnet:') === 0) {
+                $播放来源 = '🧲磁力链接';
+            } elseif (strpos($视频链接, 'ed2k://') === 0) {
+                $播放来源 = '⚡电驴链接';
             }
+            
+            if (empty($视频链接)) {
+                $数据库 = null;
+                return null;
+            }
+            
+            $视频封面 = $行数据['image'] ?? $行数据['pic'] ?? $行数据['cover'] ?? $行数据['vod_pic'] ?? $默认图片[intval($视频索引) % count($默认图片)];
+            $视频描述 = $行数据['content'] ?? $行数据['desc'] ?? $行数据['description'] ?? $行数据['vod_content'] ?? $视频名称 . '的精彩内容';
+            $视频年份 = $行数据['year'] ?? $行数据['vod_year'] ?? date('Y');
+            $视频地区 = $行数据['area'] ?? $行数据['region'] ?? $行数据['vod_area'] ?? '中国大陆';
+            
+            $视频 = [
+                'vod_id' => 'db_' . md5($文件路径) . '_' . $表名 . '_' . $视频索引,
+                'vod_name' => $视频名称,
+                'vod_pic' => $视频封面,
+                'vod_remarks' => '高清',
+                'vod_year' => $视频年份,
+                'vod_area' => $视频地区,
+                'vod_content' => $视频描述,
+                'vod_play_from' => $播放来源,
+                'vod_play_url' => '正片$' . $视频链接
+            ];
+            
+            $数据库 = null;
+            return $视频;
         }
         
         $数据库 = null;
@@ -1505,7 +2039,6 @@ function 按索引查找数据库视频($文件路径, $表名, $视频索引) {
         return null;
     }
 }
-
 /**
  * 智能搜索匹配函数
  */
@@ -1539,7 +2072,7 @@ function 搜索匹配($文本, $关键词) {
 }
 
 /**
- * 搜索 - 修复版
+ * 搜索 - 极限优化版（最大程度放宽限制）
  */
 function 搜索($关键词, $页码) {
     if (empty($关键词)) {
@@ -1549,8 +2082,8 @@ function 搜索($关键词, $页码) {
     $搜索结果 = [];
     $所有文件 = 获取所有文件();
     
-    // 放宽搜索限制，增加搜索文件数量
-    $搜索限制 = 10; // 从3增加到10
+    // 极限放宽搜索限制
+    $搜索限制 = 1000; // 从100增加到1000，搜索大量文件
     $已搜索文件 = 0;
     
     // 记录搜索过程用于调试
@@ -1558,20 +2091,21 @@ function 搜索($关键词, $页码) {
     
     foreach ($所有文件 as $文件索引 => $文件) {
         if ($已搜索文件 >= $搜索限制) {
+            $搜索日志[] = "达到搜索文件数量限制: {$搜索限制}";
             break;
         }
         
         $搜索日志[] = "搜索文件: " . $文件['name'] . " (类型: " . $文件['type'] . ")";
         
-        // 跳过可能的大文件或问题文件
+        // 跳过可能的问题文件
         if (!file_exists($文件['path'])) {
             $搜索日志[] = "文件不存在，跳过";
             continue;
         }
         
-        // 检查文件大小，避免处理过大文件
+        // 极限放宽文件大小限制到300MB
         $文件大小 = filesize($文件['path']);
-        if ($文件大小 > 10 * 1024 * 1024) { // 超过10MB跳过
+        if ($文件大小 > 300 * 1024 * 1024) { // 从100MB增加到300MB
             $搜索日志[] = "文件过大(" . round($文件大小/1024/1024, 2) . "MB)，跳过";
             continue;
         }
@@ -1589,10 +2123,14 @@ function 搜索($关键词, $页码) {
                     $视频列表 = 解析M3U文件($文件['path']);
                     break;
                 case 'db':
+                case 'sqlite':
+                case 'sqlite3':
+                case 'db3':
                     $视频列表 = 解析数据库文件($文件['path']);
                     break;
                 default:
-                    continue 2; // 跳过未知类型
+                    $搜索日志[] = "未知文件类型，跳过";
+                    continue 2;
             }
         } catch (Exception $e) {
             $搜索日志[] = "文件解析失败: " . $e->getMessage();
@@ -1610,6 +2148,8 @@ function 搜索($关键词, $页码) {
             continue;
         }
         
+        $搜索日志[] = "本文件包含 " . count($视频列表) . " 个视频";
+        
         $文件匹配数 = 0;
         foreach ($视频列表 as $视频索引 => $视频) {
             // 更宽松的匹配条件
@@ -1624,13 +2164,15 @@ function 搜索($关键词, $页码) {
                 $搜索结果[] = $格式化视频;
                 $文件匹配数++;
                 
-                // 限制单个文件的搜索结果数量
-                if ($文件匹配数 >= 20) {
+                // 放宽单文件结果限制
+                if ($文件匹配数 >= 100) { // 保持100条
+                    $搜索日志[] = "达到单文件结果限制100条";
                     break;
                 }
                 
-                // 总结果数量限制
-                if (count($搜索结果) >= 50) {
+                // 极限放宽总结果数量限制
+                if (count($搜索结果) >= 1000) { // 从500增加到1000
+                    $搜索日志[] = "达到总结果数量限制1000条";
                     break 2;
                 }
             }
@@ -1648,7 +2190,7 @@ function 搜索($关键词, $页码) {
                 '关键词' => $关键词,
                 '搜索文件数' => $已搜索文件,
                 '总文件数' => count($所有文件),
-                '搜索日志' => $搜索日志
+                '搜索日志' => array_slice($搜索日志, 0, 20) // 只显示前20条日志
             ]
         ];
     }
@@ -1665,8 +2207,8 @@ function 搜索($关键词, $页码) {
     }
     $搜索结果 = $去重结果;
     
-    // 分页处理
-    $每页大小 = 10;
+    // 大幅增加每页显示数量
+    $每页大小 = 50; // 从30增加到50
     $总数 = count($搜索结果);
     $总页数 = ceil($总数 / $每页大小);
     $当前页码 = intval($页码);
@@ -1677,12 +2219,28 @@ function 搜索($关键词, $页码) {
     $起始位置 = ($当前页码 - 1) * $每页大小;
     $分页结果 = array_slice($搜索结果, $起始位置, $每页大小);
     
+    // 添加搜索统计信息
+    $搜索统计 = [
+        '搜索文件数' => $已搜索文件,
+        '总结果数' => $总数,
+        '去重后结果数' => count($去重结果),
+        '总页数' => $总页数,
+        '限制设置' => [
+            '最大搜索文件数' => 1000,
+            '最大文件大小' => '300MB',
+            '单文件结果限制' => 100,
+            '总结果限制' => 1000,
+            '每页显示数量' => 50
+        ]
+    ];
+    
     return [
         'page' => $当前页码,
         'pagecount' => $总页数,
         'limit' => $每页大小,
         'total' => $总数,
-        'list' => $分页结果
+        'list' => $分页结果,
+        'search_info' => $搜索统计
     ];
 }
 

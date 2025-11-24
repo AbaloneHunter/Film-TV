@@ -1,11 +1,21 @@
 {
     "name": "Abalone",
-    "notice": "欢迎使用Abalone数据源,更新于2025.11.14",
+    "notice": "欢迎使用Abalone数据源,更新于2025.11.24",
     "author": "TG:https://t.me/Eat_Abalone",
     "spider": "./jar/内置Lzgo.jar",
     "logo": "./logo/hunter.gif",
     "wallpaper": "./imgs/y3.webp",
     "sites": [
+        {
+      "key": "php_server",
+      "name": "PHP爬虫", 
+      "type": 3,
+      "api": "csp_PhpServer",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "jar": "./jar/fm_xMydev.jar"
+        },
         {
             "key": "AVxx",
             "name": "❅AVxx",

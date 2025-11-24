@@ -1,6 +1,6 @@
 {
     "name": "Hunter",
-    "notice": "欢迎使用Hunter数据源,更新于2025.11.14",
+    "notice": "欢迎使用Hunter数据源,更新于2025.11.24",
     "author": "TG:https://t.me/Eat_Abalone",
     "spider": "./jar/内置Lzgo.jar",
     "logo": "./logo/hunter.gif",

@@ -3,7 +3,7 @@
 ini_set('memory_limit', '-1');  // 设置内存限制为无限制
 @set_time_limit(300);  // 设置脚本执行时间限制为300秒
 // 基础扫描路径 - 媒体文件和数据库文件的根目录
-define('BASE_SCAN_PATH', '/storage/emulated/0/lg/autoloader/php');  // 自定义基础扫描路径常量
+define('BASE_SCAN_PATH', '/storage/emulated/0/Film-TV');  // 自定义基础扫描路径常量
 // 最大扫描深度 - 文件夹递归扫描的最大层级，防止无限递归
 define('MAX_SCAN_DEPTH', 50);  // 定义最大扫描深度常量
 // 数据库兼容模式 - 是否启用数据库兼容性处理
