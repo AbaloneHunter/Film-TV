@@ -1,0 +1,166 @@
+{
+  "recommend": [],
+  "panTools": [],
+  "vod": [
+    {
+      "name": "꒰ঌ哔哩໒꒱",
+      "api": "csp_Bili",
+      "remark": "B站内容",
+      "noHistory": false,
+      "userAgent": "",
+      "displayClassList": [],
+      "blockClassList": [],
+      "isLock": false,
+      "uiType": 0,
+      "ext": "{\"cookie\":\"buvid3=6357D22F-F506-31C3-4FF6-D40F2EE03FEB25253infoc;b_nut=1755463825;b_lsid=FBBABD104_198B9CC40C5;bsource=search_bing;_uuid=941057596-99CD-AB36-6AEC-5D4AC4BFA31E27666infoc;bmg_af_switch=1;bmg_src_def_domain=i0.hdslb.com;buvid_fp=987890c5acab261b610302bd5b30c74b;bili_ticket=eyJhbGciOiJIUzI1NiIsImtpZCI6InMwMyIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTU3MjMwMjYsImlhdCI6MTc1NTQ2Mzc2NiwicGx0IjotMX0.FiUhmxoXVIN0x4mksOyg23DfYtIo2Q_2_r-odwCYwvQ;bili_ticket_expires=1755722966;buvid4=0906AF8D-C014-11D6-9E7A-FA4D6D3D694A27298-125081804-O64dDb05Am2odHEXsKsoMQ%3D%3D;SESSDATA=7ee477c6%2C1771016740%2C14c80%2A81CjDn2eXJ-XQoWNNQm7EC0R68I8gL23XUh_Yd5SaXceIkNHlScpLwEc2udThQhtSVbTMSVmZWQXhOZl9fZmhOYWRQeFh2YmtCa0lTN0RaZFJ4M0GFVRFBuT0IzRlhJaWlrbzVzWWVoNXNHNVZkOURwY3lJakJ4bXlzSVh0Nld5STh2Z3p4Ums5Qk9BIIEC;bili_jct=a940f3a31584d2d20280e19dd8565488;DedeUserID=490060915;DedeUserID__ckMd5=b9c9bf248ebd429c;sid=8m6wb679\",\"type\":\"一口气#沙雕动画#动态漫#热播短剧#热播电影#热播电视剧#热播音乐#小姐姐#AI#4k#8K\"}"
+    },
+    {
+      "name": "꒰ঌ苹果໒꒱",
+      "api": "csp_PingGuo",
+      "remark": "苹果影视资源",
+      "noHistory": false,
+      "userAgent": "",
+      "displayClassList": [],
+      "blockClassList": [],
+      "isLock": false,
+      "uiType": 0
+    },
+    {
+      "name": "꒰ঌ看球໒꒱",
+      "api": "csp_Kanqiu",
+      "remark": "体育赛事",
+      "noHistory": false,
+      "userAgent": "",
+      "displayClassList": [],
+      "blockClassList": [],
+      "isLock": false,
+      "uiType": 0
+    },
+    {
+      "name": "꒰ঌ动漫໒꒱",
+      "api": "csp_YHDM",
+      "remark": "樱花动漫",
+      "noHistory": false,
+      "userAgent": "",
+      "displayClassList": [],
+      "blockClassList": [],
+      "isLock": false,
+      "uiType": 0
+    },
+    {
+      "name": "꒰ঌ南瓜秒播໒꒱",
+      "api": "csp_NanGua",
+      "remark": "南瓜影视",
+      "noHistory": false,
+      "userAgent": "",
+      "displayClassList": [],
+      "blockClassList": [],
+      "isLock": false,
+      "uiType": 0,
+      "ext": "7lj763gg0939795i017ii486k512jkihhilg9g0h96j865740113"
+    },
+    {
+      "name": "꒰ঌ悟空影视໒꒱",
+      "api": "csp_XBPQ",
+      "remark": "悟空资源",
+      "noHistory": false,
+      "userAgent": "",
+      "displayClassList": [],
+      "blockClassList": [],
+      "isLock": false,
+      "uiType": 0,
+      "ext": "./py^js/Green/悟空影视.json"
+    },
+    {
+      "name": "꒰ঌ奇优影院໒꒱",
+      "api": "csp_XBPQ",
+      "remark": "奇优影视",
+      "noHistory": false,
+      "userAgent": "",
+      "displayClassList": [],
+      "blockClassList": [],
+      "isLock": false,
+      "uiType": 0,
+      "ext": "./py^js/Green/奇优影院.json"
+    },
+    {
+      "name": "꒰ঌ电影天堂໒꒱",
+      "api": "https://py.doube.eu.org/spider?site=DianYingTanTang",
+      "remark": "电影资源",
+      "noHistory": false,
+      "userAgent": "",
+      "displayClassList": [],
+      "blockClassList": [],
+      "isLock": false,
+      "uiType": 0
+    },
+    {
+      "name": "꒰ঌ欧乐影院໒꒱",
+      "api": "https://py.doube.eu.org/spider?site=OleVod",
+      "remark": "欧乐影视",
+      "noHistory": false,
+      "userAgent": "",
+      "displayClassList": [],
+      "blockClassList": [],
+      "isLock": false,
+      "uiType": 0
+    },
+    {
+      "name": "꒰ঌ动漫巴士໒꒱",
+      "api": "https://py.doube.eu.org/spider?site=Dm84",
+      "remark": "动漫资源",
+      "noHistory": false,
+      "userAgent": "",
+      "displayClassList": [],
+      "blockClassList": [],
+      "isLock": false,
+      "uiType": 0
+    },
+    {
+      "name": "꒰ঌEMBY໒꒱",
+      "api": "./py^js/Green/emby.py",
+      "remark": "私有媒体库",
+      "noHistory": false,
+      "userAgent": "",
+      "displayClassList": [],
+      "blockClassList": [],
+      "isLock": false,
+      "uiType": 0,
+      "ext": "{\"server\":\"https://emby.hohai.eu.org:443\",\"username\":\"chuxin666\",\"password\":\"ycc123456\",\"proxy\":\"\",\"thread\":0,\"device_name\":\"My Computer\",\"client\":\"Hills Windows\",\"client_version\":\"0.3.2\",\"device_id\":\"a9f74849-83d5-4a28-8b85-a087af1402e3\"}"
+    },
+    {
+      "name": "꒰ঌ官方采集໒꒱",
+      "api": "./py^js/Green/en_gf.js",
+      "remark": "官方资源采集",
+      "noHistory": false,
+      "userAgent": "",
+      "displayClassList": [],
+      "blockClassList": [],
+      "isLock": false,
+      "uiType": 0
+    },
+    {
+      "name": "꒰ঌ采集全集໒꒱",
+      "api": "http://zhangqun1818.serv00.net/cj/cjjh.php",
+      "remark": "全集采集资源",
+      "noHistory": false,
+      "userAgent": "",
+      "displayClassList": [],
+      "blockClassList": [],
+      "isLock": false,
+      "uiType": 0,
+      "ext": "1"
+    },
+    {
+      "name": "꒰ঌpy集合໒꒱",
+      "api": "http://zhangqun1818.serv00.net/py.php",
+      "remark": "Python采集集合",
+      "noHistory": false,
+      "userAgent": "",
+      "displayClassList": [],
+      "blockClassList": [],
+      "isLock": false,
+      "uiType": 0
+    }
+  ]
+}
