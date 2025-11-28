@@ -7,14 +7,14 @@
     "wallpaper": "./imgs/y3.webp",
     "sites": [
         {
-      "key": "php_server",
-      "name": "PHP爬虫", 
-      "type": 3,
-      "api": "csp_PhpServer",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "jar": "./jar/fm_xMydev.jar"
+            "key": "php_server",
+            "name": "PHP爬虫",
+            "type": 3,
+            "api": "csp_PhpServer",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "jar": "./jar/fm_xMydev.jar"
         },
         {
             "key": "AVxx",
@@ -83,22 +83,12 @@
             "ext": ""
         },
         {
-            "key": "6v",
-            "name": "❅6v",
-            "type": 3,
-            "api": "./py^js/Yellow/6v.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0
-        },
-        {
             "key": "AiDou",
             "name": "❅AiDou",
             "type": 4,
             "api": "https://py.doube.eu.org/spider?site=AiDou",
             "searchable": 1,
-            "quickSearch": 0,
+            "quickSearch": 1,
             "filterable": 0,
             "changeable": 0,
             "style": {
@@ -122,7 +112,7 @@
             "type": 3,
             "api": "./py^js/Yellow/madou.js",
             "searchable": 1,
-            "quickSearch": 0,
+            "quickSearch": 1,
             "filterable": 0,
             "changeable": 0
         },
@@ -162,7 +152,7 @@
             "type": 4,
             "api": "https://py.doube.eu.org/spider?site=Miss",
             "searchable": 1,
-            "quickSearch": 0,
+            "quickSearch": 1,
             "filterable": 0,
             "changeable": 0
         },
@@ -172,7 +162,7 @@
             "type": 4,
             "api": "https://py.doube.eu.org/spider?site=BadNews",
             "searchable": 1,
-            "quickSearch": 0,
+            "quickSearch": 1,
             "filterable": 0,
             "changeable": 0,
             "style": {
@@ -206,7 +196,7 @@
             "type": 3,
             "api": "./py^js/Yellow/樱花视频.js",
             "searchable": 1,
-            "quickSearch": 0,
+            "quickSearch": 1,
             "filterable": 0,
             "changeable": 0,
             "ext": {}
@@ -355,7 +345,7 @@
             "type": 3,
             "api": "./py^js/Yellow/18av.py",
             "searchable": 1,
-            "quickSearch": 0,
+            "quickSearch": 1,
             "filterable": 0,
             "changeable": 0
         },
@@ -387,7 +377,7 @@
             "type": 3,
             "api": "./py^js/Yellow/boyfriend.show.py",
             "searchable": 1,
-            "quickSearch": 0,
+            "quickSearch": 1,
             "filterable": 0,
             "changeable": 0
         },
@@ -397,7 +387,7 @@
             "type": 3,
             "api": "./py^js/Yellow/Pornhub.py",
             "searchable": 1,
-            "quickSearch": 0,
+            "quickSearch": 1,
             "filterable": 0,
             "changeable": 0
         },
@@ -419,7 +409,7 @@
             "type": 3,
             "api": "./py^js/Yellow/好色TV.py",
             "searchable": 1,
-            "quickSearch": 0,
+            "quickSearch": 1,
             "filterable": 0,
             "changeable": 0
         },
@@ -429,7 +419,7 @@
             "type": 3,
             "api": "./py^js/Yellow/Xhm.py",
             "searchable": 1,
-            "quickSearch": 0,
+            "quickSearch": 1,
             "filterable": 0,
             "changeable": 0,
             "ext": {
@@ -442,7 +432,7 @@
             "type": 3,
             "api": "./py^js/Yellow/javxx.py",
             "searchable": 1,
-            "quickSearch": 0,
+            "quickSearch": 1,
             "filterable": 0,
             "ext": {
                 "proxy": {},
@@ -455,7 +445,7 @@
             "type": 3,
             "api": "./py^js/Yellow/stripchat.py",
             "searchable": 1,
-            "quickSearch": 0,
+            "quickSearch": 1,
             "filterable": 0,
             "changeable": 0
         },
@@ -464,7 +454,7 @@
             "name": "ദ്ദിJable",
             "jar": "./jar/𒉽.jar",
             "type": 3,
-            "quickSearch": 0,
+            "quickSearch": 1,
             "searchable": 1,
             "changeable": 0,
             "filterable": 0,
@@ -516,8 +506,8 @@
             "key": "Missav",
             "name": "ദ്ദിMissav1",
             "type": 3,
-            "searchable": 0,
-            "quickSearch": 0,
+            "searchable": 1,
+            "quickSearch": 1,
             "filterable": 0,
             "api": "./py^js/Yellow/Missav.py",
             "ext": {
