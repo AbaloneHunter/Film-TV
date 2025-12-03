@@ -1,6 +1,6 @@
 {
     "name": "Hunter",
-    "notice": "欢迎使用Hunter数据源,更新于2025.11.25",
+    "notice": "欢迎使用Hunter数据源,更新于2025.12.03",
     "author": "TG:https://t.me/Eat_Abalone",
     "spider": "./jar/内置Lzgo.jar",
     "logo": "./logo/hunter.gif",
@@ -13,7 +13,7 @@
             "api": "csp_Bili",
             "style": {
                 "type": "rect",
-                "ratio": 1.33
+                "ratio": 1.80
             },
             "ext": {
                 "cookie": "buvid3=6357D22F-F506-31C3-4FF6-D40F2EE03FEB25253infoc;b_nut=1755463825;b_lsid=FBBABD104_198B9CC40C5;bsource=search_bing;_uuid=941057596-99CD-AB36-6AEC-5D4AC4BFA31E27666infoc;bmg_af_switch=1;bmg_src_def_domain=i0.hdslb.com;buvid_fp=987890c5acab261b610302bd5b30c74b;bili_ticket=eyJhbGciOiJIUzI1NiIsImtpZCI6InMwMyIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTU3MjMwMjYsImlhdCI6MTc1NTQ2Mzc2NiwicGx0IjotMX0.FiUhmxoXVIN0x4mksOyg23DfYtIo2Q_2_r-odwCYwvQ;bili_ticket_expires=1755722966;buvid4=0906AF8D-C014-11D6-9E7A-FA4D6D3D694A27298-125081804-O64dDb05Am2odHEXsKsoMQ%3D%3D;SESSDATA=7ee477c6%2C1771016740%2C14c80%2A81CjDn2eXJ-XQoWNNQm7EC0R68I8gL23XUh_Yd5SaXceIkNHlScpLwEc2udThQhtSVbTMSVmZWQXhOZl9fZmhOYWRQeFh2YmtCa0lTN0RaZFJ4MGFVRFBuT0IzRlhJaWlrbzVzWWVoNXNHNVZkOURwY3lJakJ4bXlzSVh0Nld5STh2Z3p4Ums5Qk9BIIEC;bili_jct=a940f3a31584d2d20280e19dd8565488;DedeUserID=490060915;DedeUserID__ckMd5=b9c9bf248ebd429c;sid=8m6wb679",
@@ -28,7 +28,7 @@
             "api": "http://127.0.0.1:1988",
             "style": {
                 "type": "rect",
-                "ratio": 1.33
+                "ratio": 1.80
             },
             "searchable": 1,
             "changeable": 1
@@ -41,7 +41,7 @@
             "searchable": 1,
             "style": {
                 "type": "rect",
-                "ratio": 1.33
+                "ratio": 1.80
             },
             "changeable": 1
         },
@@ -55,7 +55,7 @@
             "filterable": 1,
             "style": {
                 "type": "rect",
-                "ratio": 1.33
+                "ratio": 1.80
             }
         },
         {
@@ -67,6 +67,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -76,7 +80,7 @@
             "api": "csp_PingGuo",
             "style": {
                 "type": "rect",
-                "ratio": 1.33
+                "ratio": 1.80
             },
             "changeable": 1
         },
@@ -87,7 +91,7 @@
             "api": "csp_Kanqiu",
             "style": {
                 "type": "rect",
-                "ratio": 1.33
+                "ratio": 1.80
             },
             "changeable": 1
         },
@@ -98,7 +102,7 @@
             "api": "csp_YHDM",
             "style": {
                 "type": "rect",
-                "ratio": 1.33
+                "ratio": 1.80
             },
             "changeable": 1
         },
@@ -111,6 +115,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -122,6 +130,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -133,6 +145,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -144,6 +160,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -155,6 +175,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -166,6 +190,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -177,6 +205,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "changeable": 1,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": {
                 "server": "https://emby.hohai.eu.org:443",
                 "username": "chuxin666",
@@ -197,7 +229,11 @@
             "searchable": 1,
             "quickSearch": 0,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "南瓜秒播",
@@ -205,18 +241,71 @@
             "type": 3,
             "api": "csp_NanGua",
             "playerType": 2,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": "7lj763gg0939795i017ii486k512jkihhilg9g0h96j865740113",
             "jar": "./jar/南瓜秒播.jar"
         },
         {
-            "key": "py_DianYingTanTang",
+            "key": "t1_dian_ying_tian_tang",
             "name": "꒰ঌ电影天堂໒꒱",
-            "type": 4,
-            "api": "https://py.doube.eu.org/spider?site=DianYingTanTang",
+            "type": 1,
+            "api": "http://caiji.dyttzyapi.com/api.php/provide/vod/from/dyttm3u8/at/json/?ac=list",
+            "searchable": 1,
+            "quickSearch": 0,
+            "filterable": 0,
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
+            "playUrl": "json:https://py.doube.eu.org/parse_dytt?url=",
+            "categories": [
+                "动作片",
+                "喜剧片",
+                "爱情片",
+                "科幻片",
+                "恐怖片",
+                "剧情片",
+                "战争片",
+                "国产剧",
+                "香港剧",
+                "韩国剧",
+                "欧美剧",
+                "记录片",
+                "台湾剧",
+                "日本剧",
+                "海外剧",
+                "泰国剧",
+                "大陆综艺",
+                "港台综艺",
+                "日韩综艺",
+                "欧美综艺",
+                "国产动漫",
+                "日韩动漫",
+                "欧美动漫",
+                "港台动漫",
+                "伦理片",
+                "短剧",
+                "动画片"
+            ]
+        },
+        {
+            "key": "电影云集",
+            "name": "꒰ঌ电影云集໒꒱",
+            "type": 3,
+            "api": "./py^js/Green/电影云集.py",
             "searchable": 1,
             "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0
+            "filterable": 1,
+            "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
+            "ext": ""
         },
         {
             "key": "兄弟影视",
@@ -227,6 +316,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -237,6 +330,10 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "changeable": 0
         },
         {
@@ -247,6 +344,10 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "changeable": 0
         },
         {
@@ -258,6 +359,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -269,6 +374,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -279,6 +388,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "changeable": 1,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "api": "csp_XBPQ",
             "ext": "./py^js/Green/悟空影视.json"
         },
@@ -290,6 +403,10 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 1,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": "./py^js/Green/奇优影院.json"
         },
         {
@@ -301,6 +418,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -312,6 +433,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -323,6 +448,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -334,6 +463,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -345,6 +478,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -356,6 +493,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -365,7 +506,7 @@
             "api": "http://zhangqun1818.serv00.net/cj/cjjh.php",
             "style": {
                 "type": "rect",
-                "ratio": 1.33
+                "ratio": 1.80
             },
             "ext": "1",
             "changeable": 1
@@ -378,7 +519,7 @@
             "ext": "/storage/emulated/0/Film-TV/php/猎人·直播/",
             "style": {
                 "type": "rect",
-                "ratio": 1.44
+                "ratio": 1.80
             },
             "changeable": 1
         },
@@ -390,7 +531,7 @@
             "ext": "/storage/emulated/0/Film-TV/php/猎人·清单/",
             "style": {
                 "type": "rect",
-                "ratio": 1.33
+                "ratio": 1.80
             },
             "changeable": 1
         },

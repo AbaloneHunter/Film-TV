@@ -1,6 +1,6 @@
 {
     "name": "Abalone",
-    "notice": "欢迎使用Abalone数据源,更新于2025.11.25",
+    "notice": "欢迎使用Abalone数据源,更新于2025.12.03",
     "author": "TG:https://t.me/Eat_Abalone",
     "spider": "./jar/内置Lzgo.jar",
     "logo": "./logo/hunter.gif",
@@ -24,7 +24,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 1,
-            "ext": "./py^js/Yellow/AVxx.json"
+            "ext": "./py^js/Yellow/AVxx.json",
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "AV文件夹",
@@ -38,7 +42,7 @@
             "timeout": 60,
             "style": {
                 "type": "rect",
-                "ratio": 0.75
+                "ratio": 1.80
             },
             "ext": "./py^js/Yellow/AV文件夹.json"
         },
@@ -48,7 +52,11 @@
             "type": 3,
             "api": "csp_XBPQ",
             "searchable": 1,
-            "ext": "./py^js/Yellow/17av.json"
+            "ext": "./py^js/Yellow/17av.json",
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "51吸瓜",
@@ -59,7 +67,11 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
-            "ext": ""
+            "ext": "",
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "4k数毛",
@@ -69,7 +81,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "今日看料",
@@ -80,7 +96,11 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
-            "ext": ""
+            "ext": "",
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "AiDou",
@@ -93,7 +113,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.5
+                "ratio": 1.80
             }
         },
         {
@@ -104,7 +124,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "js_madou",
@@ -114,7 +138,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "香蕉",
@@ -124,7 +152,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "黄色仓库",
@@ -134,7 +166,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "fullhd",
@@ -144,7 +180,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "missav",
@@ -154,7 +194,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "BadNews",
@@ -167,7 +211,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.5
+                "ratio": 1.80
             }
         },
         {
@@ -178,7 +222,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "小红薯APP",
@@ -188,7 +236,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "js_ying_hua",
@@ -199,7 +251,11 @@
             "quickSearch": 1,
             "filterable": 0,
             "changeable": 0,
-            "ext": {}
+            "ext": {},
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "采集全集",
@@ -208,7 +264,7 @@
             "api": "http://zhangqun1818.serv00.net/cj/cjjh.php",
             "style": {
                 "type": "rect",
-                "ratio": 1.33
+                "ratio": 1.80
             },
             "ext": "0",
             "changeable": 1
@@ -222,7 +278,11 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
-            "ext": ""
+            "ext": "",
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "黑料不打烊",
@@ -233,7 +293,11 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
-            "ext": ""
+            "ext": "",
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "禁片天堂",
@@ -244,7 +308,11 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
-            "ext": ""
+            "ext": "",
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "ThePorn",
@@ -255,7 +323,11 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
-            "ext": ""
+            "ext": "",
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "熊猫",
@@ -266,7 +338,11 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
-            "ext": ""
+            "ext": "",
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "黑料",
@@ -277,7 +353,11 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
-            "ext": ""
+            "ext": "",
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "lsp传媒",
@@ -288,6 +368,10 @@
             "quickSearch": 1,
             "filterable": 1,
             "order_num": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "ext": ""
         },
         {
@@ -298,7 +382,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "fm多分类",
@@ -308,7 +396,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "Xvideos",
@@ -318,7 +410,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "epo",
@@ -328,7 +424,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "优优",
@@ -337,7 +437,11 @@
             "api": "https://www.yyzywcj.com/api.php/provide/vod/?ac=list",
             "searchable": 1,
             "quickSearch": 1,
-            "filterable": 0
+            "filterable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "18av",
@@ -347,7 +451,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "csp_SOAV",
@@ -356,7 +464,7 @@
             "api": "csp_XBPQ",
             "style": {
                 "type": "rect",
-                "ratio": 1.5
+                "ratio": 1.80
             },
             "ext": {
                 "主页url": "https://777115.xyz",
@@ -379,7 +487,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "Pornhub",
@@ -389,7 +501,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "奥斯卡",
@@ -399,6 +515,10 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "header": {
                 "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
             }
@@ -411,7 +531,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "Xhm",
@@ -424,6 +548,10 @@
             "changeable": 0,
             "ext": {
                 "type": "最新#日韩#无码#中文字幕#AI"
+            },
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
             }
         },
         {
@@ -437,6 +565,10 @@
             "ext": {
                 "proxy": {},
                 "plp": ""
+            },
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
             }
         },
         {
@@ -447,7 +579,11 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            }
         },
         {
             "key": "jable",
@@ -461,7 +597,7 @@
             "timeout": 60,
             "style": {
                 "type": "rect",
-                "ratio": 1.48
+                "ratio": 1.80
             },
             "api": "csp_GM",
             "ext": {
@@ -509,6 +645,10 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.80
+            },
             "api": "./py^js/Yellow/Missav.py",
             "ext": {
                 "site": "https://missav.ws",
@@ -529,7 +669,7 @@
             "timeout": 60,
             "style": {
                 "type": "rect",
-                "ratio": 1.49
+                "ratio": 1.80
             },
             "api": "csp_GM",
             "ext": {
@@ -585,7 +725,7 @@
             "timeout": 60,
             "style": {
                 "type": "rect",
-                "ratio": 1.78
+                "ratio": 1.80
             },
             "api": "csp_GM",
             "ext": {
@@ -628,7 +768,7 @@
             "ext": "/storage/emulated/0/Film-TV/php/鲍鱼·直播/",
             "style": {
                 "type": "rect",
-                "ratio": 1.44
+                "ratio": 1.80
             },
             "changeable": 1
         },
@@ -640,7 +780,7 @@
             "ext": "/storage/emulated/0/Film-TV/php/鲍鱼·清单/",
             "style": {
                 "type": "rect",
-                "ratio": 1.33
+                "ratio": 1.80
             },
             "changeable": 1
         },
