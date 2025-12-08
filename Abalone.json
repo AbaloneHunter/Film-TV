@@ -27,7 +27,7 @@
             "ext": "./py^js/Yellow/AVxx.json",
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -42,7 +42,7 @@
             "timeout": 60,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             },
             "ext": "./py^js/Yellow/AV文件夹.json"
         },
@@ -55,7 +55,7 @@
             "ext": "./py^js/Yellow/17av.json",
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -70,7 +70,7 @@
             "ext": "",
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -84,7 +84,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -99,7 +99,7 @@
             "ext": "",
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -113,7 +113,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -127,7 +127,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -141,7 +141,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -155,7 +155,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -169,7 +169,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -183,7 +183,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -197,7 +197,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -211,7 +211,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -225,7 +225,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -239,7 +239,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -254,7 +254,7 @@
             "ext": {},
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -264,7 +264,7 @@
             "api": "http://zhangqun1818.serv00.net/cj/cjjh.php",
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             },
             "ext": "0",
             "changeable": 1
@@ -281,7 +281,7 @@
             "ext": "",
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -296,7 +296,7 @@
             "ext": "",
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -311,8 +311,18 @@
             "ext": "",
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
+        },
+        {
+            "key": "motv.py",
+            "name": "ദ്ദിmotv",
+            "type": 3,
+            "api": "./py^js/Yellow/motv.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "changeable": 0
         },
         {
             "key": "ThePorn",
@@ -326,7 +336,7 @@
             "ext": "",
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -341,7 +351,7 @@
             "ext": "",
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -356,7 +366,7 @@
             "ext": "",
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -370,7 +380,7 @@
             "order_num": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             },
             "ext": ""
         },
@@ -385,7 +395,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -399,7 +409,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -413,7 +423,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -427,7 +437,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -440,7 +450,7 @@
             "filterable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -454,7 +464,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -464,7 +474,7 @@
             "api": "csp_XBPQ",
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             },
             "ext": {
                 "主页url": "https://777115.xyz",
@@ -490,7 +500,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -504,7 +514,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -517,7 +527,7 @@
             "filterable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             },
             "header": {
                 "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
@@ -534,7 +544,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -551,7 +561,7 @@
             },
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -568,7 +578,7 @@
             },
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -582,7 +592,7 @@
             "changeable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             }
         },
         {
@@ -597,7 +607,7 @@
             "timeout": 60,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             },
             "api": "csp_GM",
             "ext": {
@@ -647,7 +657,7 @@
             "filterable": 0,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             },
             "api": "./py^js/Yellow/Missav.py",
             "ext": {
@@ -669,7 +679,7 @@
             "timeout": 60,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             },
             "api": "csp_GM",
             "ext": {
@@ -725,7 +735,7 @@
             "timeout": 60,
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             },
             "api": "csp_GM",
             "ext": {
@@ -768,7 +778,7 @@
             "ext": "/storage/emulated/0/Film-TV/php/鲍鱼·直播/",
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             },
             "changeable": 1
         },
@@ -780,7 +790,7 @@
             "ext": "/storage/emulated/0/Film-TV/php/鲍鱼·清单/",
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.48
             },
             "changeable": 1
         },

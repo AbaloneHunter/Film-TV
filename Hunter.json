@@ -27,8 +27,7 @@
             "type": 4,
             "api": "http://127.0.0.1:1988",
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "searchable": 1,
             "changeable": 1
@@ -40,8 +39,7 @@
             "api": "http://127.0.0.1:1988/lb?lb=2",
             "searchable": 1,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "changeable": 1
         },
@@ -54,8 +52,7 @@
             "quickSearch": 1,
             "filterable": 1,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             }
         },
         {
@@ -68,8 +65,7 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
         },
@@ -79,8 +75,7 @@
             "type": 3,
             "api": "csp_PingGuo",
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "changeable": 1
         },
@@ -101,8 +96,7 @@
             "type": 3,
             "api": "csp_YHDM",
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "changeable": 1
         },
@@ -116,8 +110,7 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
         },
@@ -131,8 +124,7 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
         },
@@ -146,8 +138,7 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
         },
@@ -161,8 +152,7 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
         },
@@ -176,8 +166,7 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
         },
@@ -191,8 +180,7 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
         },
@@ -206,8 +194,7 @@
             "filterable": 1,
             "changeable": 1,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": {
                 "server": "https://emby.hohai.eu.org:443",
@@ -231,8 +218,7 @@
             "filterable": 0,
             "changeable": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             }
         },
         {
@@ -242,8 +228,7 @@
             "api": "csp_NanGua",
             "playerType": 2,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": "7lj763gg0939795i017ii486k512jkihhilg9g0h96j865740113",
             "jar": "./jar/南瓜秒播.jar"
@@ -258,8 +243,7 @@
             "filterable": 0,
             "changeable": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "playUrl": "json:https://py.doube.eu.org/parse_dytt?url=",
             "categories": [
@@ -302,10 +286,16 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
+        },
+        {
+            "key": "高清电影",
+            "name": "꒰ঌ高清电影໒꒱",
+            "type": 3,
+            "searchable": 1,
+            "api": "./py^js/Green/高清电影.py"
         },
         {
             "key": "兄弟影视",
@@ -317,8 +307,7 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
         },
@@ -331,8 +320,7 @@
             "quickSearch": 1,
             "filterable": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "changeable": 0
         },
@@ -345,8 +333,7 @@
             "quickSearch": 1,
             "filterable": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "changeable": 0
         },
@@ -360,8 +347,7 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
         },
@@ -375,8 +361,7 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
         },
@@ -389,8 +374,7 @@
             "filterable": 1,
             "changeable": 1,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "api": "csp_XBPQ",
             "ext": "./py^js/Green/悟空影视.json"
@@ -404,8 +388,7 @@
             "quickSearch": 1,
             "filterable": 1,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": "./py^js/Green/奇优影院.json"
         },
@@ -419,8 +402,7 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
         },
@@ -434,8 +416,7 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
         },
@@ -449,8 +430,7 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
         },
@@ -464,8 +444,7 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
         },
@@ -479,8 +458,7 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
         },
@@ -494,8 +472,7 @@
             "filterable": 1,
             "order_num": 0,
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": ""
         },
@@ -505,8 +482,7 @@
             "type": 4,
             "api": "http://zhangqun1818.serv00.net/cj/cjjh.php",
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "ext": "1",
             "changeable": 1
@@ -518,8 +494,7 @@
             "api": "http://127.0.0.1:1988/lb?lb=13",
             "ext": "/storage/emulated/0/Film-TV/php/猎人·直播/",
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "changeable": 1
         },
@@ -530,8 +505,7 @@
             "api": "http://127.0.0.1:1988/lb?lb=9",
             "ext": "/storage/emulated/0/Film-TV/php/猎人·清单/",
             "style": {
-                "type": "rect",
-                "ratio": 1.80
+                "type": "rect"
             },
             "changeable": 1
         },
