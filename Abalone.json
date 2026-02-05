@@ -157,6 +157,19 @@
                 "type": "rect",
                 "ratio": 1.48
             }
+        },{
+            "key": "hsck",
+            "name": "❅HSCK",
+            "type": 3,
+            "api": "./py^js/Yellow/hsck.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0,
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.48
+            }
         },
         {
             "key": "黄色仓库",
@@ -187,18 +200,29 @@
             }
         },
         {
-            "key": "missav",
-            "name": "❅missav",
-            "type": 4,
-            "api": "https://py.doube.eu.org/spider?site=Miss",
+            "key": "missav-js",
+            "name": "missav-js",
+            "type": 3,
+            "api": "./py^js/Yellow/missav.js",
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
-            "changeable": 0,
+            "changeable": 1,
             "style": {
                 "type": "rect",
                 "ratio": 1.48
             }
+        },
+        {
+            "key": "missav",
+            "name": "❅missav",
+            "type": 3,
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "api": "./py^js/Yellow/爱AV.py",
+            "order_num": 5,
+            "ext": ""
         },
         {
             "key": "BadNews",
@@ -576,20 +600,6 @@
                 "proxy": {},
                 "plp": ""
             },
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            }
-        },
-        {
-            "key": "stripchat",
-            "name": "ദ്ദിstripchat",
-            "type": 3,
-            "api": "./py^js/Yellow/stripchat.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0,
             "style": {
                 "type": "rect",
                 "ratio": 1.48
