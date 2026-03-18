@@ -103,34 +103,6 @@
             }
         },
         {
-            "key": "AiDou",
-            "name": "❅AiDou",
-            "type": 4,
-            "api": "https://py.doube.eu.org/spider?site=AiDou",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0,
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            }
-        },
-        {
-            "key": "lav",
-            "name": "❅lav",
-            "type": 3,
-            "api": "./py^js/Yellow/lav.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0,
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            }
-        },
-        {
             "key": "js_madou",
             "name": "❅麻豆js",
             "type": 3,
@@ -172,20 +144,6 @@
             }
         },
         {
-            "key": "黄色仓库",
-            "name": "❅黄色仓库",
-            "type": 3,
-            "api": "./py^js/Yellow/黄色仓库.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0,
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            }
-        },
-        {
             "key": "fullhd",
             "name": "❅fullhd",
             "type": 3,
@@ -194,20 +152,6 @@
             "quickSearch": 1,
             "filterable": 0,
             "changeable": 0,
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            }
-        },
-        {
-            "key": "missav-js",
-            "name": "missav-js",
-            "type": 3,
-            "api": "./py^js/Yellow/missav.js",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 1,
             "style": {
                 "type": "rect",
                 "ratio": 1.48
@@ -223,20 +167,6 @@
             "api": "./py^js/Yellow/爱AV.py",
             "order_num": 5,
             "ext": ""
-        },
-        {
-            "key": "BadNews",
-            "name": "❅BadNews",
-            "type": 4,
-            "api": "https://py.doube.eu.org/spider?site=BadNews",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0,
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            }
         },
         {
             "key": "推特APP",
@@ -339,31 +269,6 @@
             }
         },
         {
-            "key": "motv.py",
-            "name": "ദ്ദിmotv",
-            "type": 3,
-            "api": "./py^js/Yellow/motv.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "changeable": 0
-        },
-        {
-            "key": "ThePorn",
-            "name": "ദ്ദിThePorn",
-            "type": 3,
-            "api": "./py^js/Yellow/ThePorn.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "ext": "",
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            }
-        },
-        {
             "key": "熊猫",
             "name": "ദ്ദി熊猫",
             "type": 3,
@@ -388,49 +293,6 @@
             "filterable": 1,
             "order_num": 0,
             "ext": "",
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            }
-        },
-        {
-            "key": "lsp传媒",
-            "name": "ദ്ദിlsp传媒",
-            "type": 3,
-            "api": "./py^js/Yellow/lsp传媒.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            },
-            "ext": ""
-        },
-        {
-            "key": "rou",
-            "name": "ദ്ദിrou",
-            "type": 3,
-            "api": "./py^js/Yellow/rou.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0,
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            }
-        },
-        {
-            "key": "fm多分类",
-            "name": "ദ്ദി小说多分类",
-            "type": 3,
-            "api": "./py^js/Yellow/fm多分类.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0,
             "style": {
                 "type": "rect",
                 "ratio": 1.48
@@ -489,28 +351,6 @@
             "style": {
                 "type": "rect",
                 "ratio": 1.48
-            }
-        },
-        {
-            "key": "csp_SOAV",
-            "name": "ദ്ദിSOAV视频",
-            "type": 3,
-            "api": "csp_XBPQ",
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            },
-            "ext": {
-                "主页url": "https://777115.xyz",
-                "搜索url": "https://777115.xyz/?s={wd}",
-                "数组": "data-video-id=&&</div>",
-                "图片": "data-src=\"&&\"",
-                "标题": "alt=\"&&\"",
-                "副标题": "</i>&&</span>",
-                "链接": "href=\"&&\"",
-                "简介": "",
-                "分类url": "https://777115.xyz/{cateId}/page/{catePg}/;;z",
-                "分类": "探花約炮$%e6%8e%a2%e8%8a%b1%e7%b4%84%e7%82%ae#日韓视频$%e6%97%a5%e9%9f%a9%e8%a7%86%e9%a2%91#国产嫩妹$%e5%9c%8b%e7%94%a2%e5%ab%a9%e5%a6%b9#歐美專區$%e6%ad%90%e7%be%8e%e4%b8%ad%e5%ad%97#國產視頻$%e5%9b%bd%e4%ba%a7%e8%a7%86%e9%a2%91#網紅主播$%e7%b6%b2%e7%b4%85%e4%b8%bb%e6%92%ad#吃瓜黑料$%e5%90%83%e7%93%9c%e9%bb%91%e6%96%99#日本无码$%e6%97%a5%e6%9c%ac%e6%97%a0%e7%a0%81"
             }
         },
         {
@@ -659,27 +499,8 @@
             }
         },
         {
-            "key": "Missav",
-            "name": "ദ്ദിMissav1",
-            "type": 3,
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            },
-            "api": "./py^js/Yellow/Missav.py",
-            "ext": {
-                "site": "https://missav.ws",
-                "cfgo": "./go^lib/cf-proxy-linux-arm64",
-                "plp": "",
-                "proxy": {}
-            }
-        },
-        {
-            "key": "missav2",
-            "name": "ദ്ദിmissav2",
+            "key": "missav",
+            "name": "ദ്ദിmissav",
             "jar": "./jar/𒉽.jar",
             "type": 3,
             "quickSearch": 1,

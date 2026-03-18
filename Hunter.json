@@ -56,12 +56,6 @@
             }
         },
         {
-            "key": "T4-yinyue5",
-            "name": "🎵大全｜音乐",
-            "type": 4,
-            "api": "https://catbox.n13.club/t9/yinyue5.php"
-        },
-        {
             "key": "小苹果",
             "name": "꒰ঌ小苹果໒꒱",
             "type": 3,
@@ -76,16 +70,6 @@
             "ext": ""
         },
         {
-            "key": "苹果",
-            "name": "꒰ঌ苹果໒꒱",
-            "type": 3,
-            "api": "csp_PingGuo",
-            "style": {
-                "type": "rect"
-            },
-            "changeable": 1
-        },
-        {
             "key": "看球",
             "name": "꒰ঌ看球໒꒱",
             "type": 3,
@@ -93,16 +77,6 @@
             "style": {
                 "type": "rect",
                 "ratio": 1.80
-            },
-            "changeable": 1
-        },
-        {
-            "key": "动漫",
-            "name": "꒰ঌ动漫໒꒱",
-            "type": 3,
-            "api": "csp_YHDM",
-            "style": {
-                "type": "rect"
             },
             "changeable": 1
         },
@@ -149,20 +123,6 @@
             "ext": ""
         },
         {
-            "key": "4KFS",
-            "name": "꒰ঌ4KFS໒꒱",
-            "type": 3,
-            "api": "./py^js/Green/4KFS.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "style": {
-                "type": "rect"
-            },
-            "ext": ""
-        },
-        {
             "key": "actor",
             "name": "꒰ঌactor໒꒱",
             "type": 3,
@@ -191,30 +151,6 @@
             "ext": ""
         },
         {
-            "key": "hohaiemby",
-            "name": "꒰ঌEMBY໒꒱",
-            "type": 3,
-            "api": "./py^js/Green/emby.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "changeable": 1,
-            "style": {
-                "type": "rect"
-            },
-            "ext": {
-                "server": "https://emby.hohai.eu.org:443",
-                "username": "chuxin666",
-                "password": "ycc123456",
-                "proxy": "",
-                "thread": 0,
-                "device_name": "My Computer",
-                "client": "Hills Windows",
-                "client_version": "0.3.2",
-                "device_id": "a9f74849-83d5-4a28-8b85-a087af1402e3"
-            }
-        },
-        {
             "key": "js_en_gf",
             "name": "꒰ঌ官方采集໒꒱",
             "type": 3,
@@ -226,18 +162,6 @@
             "style": {
                 "type": "rect"
             }
-        },
-        {
-            "key": "南瓜秒播",
-            "name": "꒰ঌ南瓜秒播໒꒱",
-            "type": 3,
-            "api": "csp_NanGua",
-            "playerType": 2,
-            "style": {
-                "type": "rect"
-            },
-            "ext": "7lj763gg0939795i017ii486k512jkihhilg9g0h96j865740113",
-            "jar": "./jar/南瓜秒播.jar"
         },
         {
             "key": "t1_dian_ying_tian_tang",
@@ -304,60 +228,6 @@
             "api": "./py^js/Green/高清电影.py"
         },
         {
-            "key": "兄弟影视",
-            "name": "꒰ঌ兄弟影视໒꒱",
-            "type": 3,
-            "api": "./py^js/Green/兄弟影视.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "style": {
-                "type": "rect"
-            },
-            "ext": ""
-        },
-        {
-            "key": "py_OleVod",
-            "name": "꒰ঌ欧乐影院໒꒱",
-            "type": 4,
-            "api": "https://py.doube.eu.org/spider?site=OleVod",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "style": {
-                "type": "rect"
-            },
-            "changeable": 0
-        },
-        {
-            "key": "py_Dm84",
-            "name": "꒰ঌ动漫巴士໒꒱",
-            "type": 4,
-            "api": "https://py.doube.eu.org/spider?site=Dm84",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "style": {
-                "type": "rect"
-            },
-            "changeable": 0
-        },
-        {
-            "key": "云云影视",
-            "name": "꒰ঌ云云影视໒꒱",
-            "type": 3,
-            "api": "./py^js/Green/云云影视.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "style": {
-                "type": "rect"
-            },
-            "ext": ""
-        },
-        {
             "key": "努努影院",
             "name": "꒰ঌ努努影院໒꒱",
             "type": 3,
@@ -397,20 +267,6 @@
                 "type": "rect"
             },
             "ext": "./py^js/Green/奇优影院.json"
-        },
-        {
-            "key": "柯南影视",
-            "name": "꒰ঌ柯南影视໒꒱",
-            "type": 3,
-            "api": "./py^js/Green/柯南影视.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "style": {
-                "type": "rect"
-            },
-            "ext": ""
         },
         {
             "key": "优酷视频",
