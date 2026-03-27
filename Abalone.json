@@ -129,7 +129,8 @@
                 "type": "rect",
                 "ratio": 1.48
             }
-        },{
+        },
+        {
             "key": "hsck",
             "name": "❅HSCK",
             "type": 3,
@@ -254,6 +255,20 @@
             }
         },
         {
+            "key": "撸一天",
+            "name": "❅撸一天",
+            "type": 3,
+            "api": "./py^js/Yellow/撸一天.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0,
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.48
+            }
+        },
+        {
             "key": "禁片天堂",
             "name": "ദ്ദി禁片天堂",
             "type": 3,
@@ -288,6 +303,36 @@
             "name": "ദ്ദി黑料",
             "type": 3,
             "api": "./py^js/Yellow/黑料.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": "",
+            "style": {
+                "type": "rect",
+                "ratio": 1.48
+            }
+        },
+        {
+            "key": "黄瓜视频",
+            "name": "ദ്ദി黄瓜视频",
+            "type": 3,
+            "api": "./py^js/Yellow/黄瓜视频.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "ext": "",
+            "style": {
+                "type": "rect",
+                "ratio": 1.48
+            }
+        },
+        {
+            "key": "4k日本动漫",
+            "name": "ദ്ദി4k日本动漫",
+            "type": 3,
+            "api": "./py^js/Yellow/4k日本动漫.py",
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 1,
