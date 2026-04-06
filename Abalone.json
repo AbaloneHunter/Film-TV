@@ -1,6 +1,6 @@
 {
     "name": "Abalone",
-    "notice": "欢迎使用Abalone数据源,更新于2026.03.27",
+    "notice": "欢迎使用Abalone数据源,更新于2026.04.06",
     "author": "TG:https://t.me/Eat_Abalone",
     "spider": "./jar/内置Lzgo.jar",
     "logo": "./logo/hunter.gif",
@@ -675,6 +675,233 @@
             "name": "❅本地视频",
             "type": 3,
             "api": "csp_Local"
+        },
+        {
+            "key": "sese1",
+            "name": "sese1",
+            "type": 4,
+            "api": "http://ser995290833053.gptapp.ren/tvbox/php/sese1.php?token=yyds",
+            "playUrl": "",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1
+        },
+        {
+            "key": "sese2",
+            "name": "sese2",
+            "type": 4,
+            "api": "http://ser995290833053.gptapp.ren/tvbox/php/sese2.php?token=yyds",
+            "playUrl": "",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1
+        },
+        {
+            "key": "pptv",
+            "name": "pptv",
+            "type": 4,
+            "api": "http://ser995290833053.gptapp.ren/tvbox/php/pptv.php?token=yyds",
+            "playUrl": "",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1
+        },
+        {
+            "key": "sese",
+            "name": "sese",
+            "type": 4,
+            "api": "http://ser995290833053.gptapp.ren/tvbox/php/sese.php?token=yyds",
+            "playUrl": "",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1
+        },
+        {
+            "key": "yintao",
+            "name": "yintao",
+            "type": 4,
+            "api": "http://ser995290833053.gptapp.ren/tvbox/php/yintao.php?token=yyds",
+            "playUrl": "",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1
+        },
+        {
+            "key": "pingguo",
+            "name": "pingguo",
+            "type": 4,
+            "api": "http://ser995290833053.gptapp.ren/tvbox/php/pingguo.php?token=yyds",
+            "playUrl": "",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1
+        },
+        {
+            "key": "mianfei",
+            "name": "mianfei",
+            "type": 4,
+            "api": "http://ser995290833053.gptapp.ren/tvbox/php/mianfei.php?token=yyds",
+            "playUrl": "",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1
+        },
+        {
+            "key": "jiang",
+            "name": "jiang",
+            "type": 4,
+            "api": "http://ser995290833053.gptapp.ren/tvbox/php/jiang.php?token=yyds",
+            "playUrl": "",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1
+        },
+        {
+            "key": "bihe",
+            "name": "bihe",
+            "type": 4,
+            "api": "http://ser995290833053.gptapp.ren/tvbox/php/bihe.php?token=yyds",
+            "playUrl": "",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1
+        },
+        {
+            "key": "jxx",
+            "name": "jxx",
+            "type": 4,
+            "api": "http://ser995290833053.gptapp.ren/tvbox/php/jxx.php?token=yyds",
+            "playUrl": "",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1
+        },
+        {
+            "key": "av338",
+            "name": "av338",
+            "type": 4,
+            "api": "http://ser995290833053.gptapp.ren/tvbox/php/av338.php?token=yyds",
+            "playUrl": "",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1
+        },
+        {
+            "key": "大地",
+            "name": "大地",
+            "type": 0,
+            "api": "https://dadiapi.com/api.php"
+        },
+        {
+            "key": "黄AV",
+            "name": "黄AV",
+            "type": 0,
+            "api": "https://www.pgxdy.com/api/xml.php"
+        },
+        {
+            "key": "白嫖",
+            "name": "白嫖",
+            "type": 0,
+            "api": "https://www.kxgav.com/api/xml.php"
+        },
+        {
+            "key": "美少女",
+            "name": "美少女",
+            "type": 0,
+            "api": "https://www.msnii.com/api/xml.php"
+        },
+        {
+            "key": "香奶儿",
+            "name": "香奶儿",
+            "type": 0,
+            "api": "https://www.gdlsp.com/api/xml.php"
+        },
+        {
+            "key": "淫水机",
+            "name": "淫水机",
+            "type": 0,
+            "api": "https://www.xrbsp.com/api/xml.php"
+        },
+        {
+            "key": "番号",
+            "name": "番号",
+            "type": 1,
+            "api": "http://fhapi9.com/api.php/provide/vod/"
+        },
+        {
+            "key": "玉兔",
+            "name": "玉兔",
+            "type": 1,
+            "api": "http://yutuzy1.com/api.php/provide/vod/"
+        },
+        {
+            "key": "jkun",
+            "name": "jkun",
+            "type": 1,
+            "api": "https://jkunzyapi.com/api.php/seaxml/vod/"
+        },
+        {
+            "key": "2",
+            "name": "2",
+            "type": 1,
+            "api": "https://thzy1.me/api.php/provide/vod/"
+        },
+        {
+            "key": "森林",
+            "name": "森林",
+            "type": 1,
+            "api": "https://slapibf.com/api.php/provide/vod/"
+        },
+        {
+            "key": "155",
+            "name": "155",
+            "type": 1,
+            "api": "https://155api.com/api.php/provide/vod/"
+        },
+        {
+            "key": "乐播",
+            "name": "乐播",
+            "type": 1,
+            "api": "https://lbapi9.com/api.php/provide/vod/"
+        },
+        {
+            "key": "AIvin",
+            "name": "AIvin",
+            "type": 1,
+            "api": "http://lbapiby.com/api.php/provide/vod/"
+        },
+        {
+            "key": "老色逼",
+            "name": "老色逼",
+            "type": 1,
+            "api": "https://apilsbzy1.com/api.php/provide/vod/"
+        },
+        {
+            "key": "奥斯卡",
+            "name": "奥斯卡",
+            "type": 1,
+            "api": "https://aosikazy.com/api.php/provide/vod/",
+            "header": {
+                "User-Agent": "Mozilla/5.0"
+            }
+        },
+        {
+            "key": "奶香",
+            "name": "奶香",
+            "type": 1,
+            "api": "https://Naixxzy.com/api.php/provide/vod/"
+        },
+        {
+            "key": "玉兔",
+            "name": "玉兔",
+            "type": 1,
+            "api": "https://apiyutu.com/api.php/provide/vod/"
+        },
+        {
+            "key": "滴滴",
+            "name": "滴滴",
+            "type": 1,
+            "api": "https://api.ddapi.cc/api.php/provide/vod/"
         }
     ],
     "lives": [
