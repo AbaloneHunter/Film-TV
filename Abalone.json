@@ -159,6 +159,20 @@
             }
         },
         {
+            "key": "whostv",
+            "name": "❅whostv",
+            "type": 3,
+            "api": "./py^js/Yellow/whostv.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0,
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.48
+            }
+        },
+        {
             "key": "missav",
             "name": "❅missav",
             "type": 3,
@@ -644,6 +658,23 @@
                         "loadUrl": "https://xojav.tv/search/${key}/?mode=async&function=get_block&sort_by=most_relevant&from_videos=${pg:-1}"
                     }
                 }
+            }
+        },
+        {
+            "key": "db数据库读取",
+            "name": "db数据库读取",
+            "type": 3,
+            "api": "./py^js/Yellow/db数据库读取.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0,
+            "ext": {
+                "proxy": {},
+                "plp": ""
+            },
+            "style": {
+                "type": "rect",
+                "ratio": 1.48
             }
         },
         {

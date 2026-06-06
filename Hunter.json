@@ -1,35 +1,107 @@
 {
     "name": "Hunter",
-    "notice": "欢迎使用Hunter数据源,更新于2026.03.27",
+    "notice": "欢迎使用Hunter数据源,更新于2026.06.06",
     "author": "TG:https://t.me/Eat_Abalone",
-    "spider": "./jar/内置Lzgo.jar",
+    "spider": "./jar/so-sy.jar",
     "logo": "./logo/hunter.gif",
     "wallpaper": "./imgs/V1.jpg",
     "sites": [
         {
-            "key": "哔哩",
-            "name": "꒰ঌ哔哩໒꒱",
+            "key": "油管so",
+            "name": "油管so",
             "type": 3,
-            "api": "csp_Bili",
+            "api": "csp_Ytdl",
+            "searchable": 1,
+            "quickSearch": 1,
+            "ext": "http://127.0.0.1:9978/file/Film-TV/php/lz/youtube.txt",
             "style": {
                 "type": "rect",
-                "ratio": 1.80
+                "ratio": 1.33
             },
-            "ext": {
-                "cookie": "buvid3=6357D22F-F506-31C3-4FF6-D40F2EE03FEB25253infoc;b_nut=1755463825;b_lsid=FBBABD104_198B9CC40C5;bsource=search_bing;_uuid=941057596-99CD-AB36-6AEC-5D4AC4BFA31E27666infoc;bmg_af_switch=1;bmg_src_def_domain=i0.hdslb.com;buvid_fp=987890c5acab261b610302bd5b30c74b;bili_ticket=eyJhbGciOiJIUzI1NiIsImtpZCI6InMwMyIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTU3MjMwMjYsImlhdCI6MTc1NTQ2Mzc2NiwicGx0IjotMX0.FiUhmxoXVIN0x4mksOyg23DfYtIo2Q_2_r-odwCYwvQ;bili_ticket_expires=1755722966;buvid4=0906AF8D-C014-11D6-9E7A-FA4D6D3D694A27298-125081804-O64dDb05Am2odHEXsKsoMQ%3D%3D;SESSDATA=7ee477c6%2C1771016740%2C14c80%2A81CjDn2eXJ-XQoWNNQm7EC0R68I8gL23XUh_Yd5SaXceIkNHlScpLwEc2udThQhtSVbTMSVmZWQXhOZl9fZmhOYWRQeFh2YmtCa0lTN0RaZFJ4MGFVRFBuT0IzRlhJaWlrbzVzWWVoNXNHNVZkOURwY3lJakJ4bXlzSVh0Nld5STh2Z3p4Ums5Qk9BIIEC;bili_jct=a940f3a31584d2d20280e19dd8565488;DedeUserID=490060915;DedeUserID__ckMd5=b9c9bf248ebd429c;sid=8m6wb679",
-                "type": "一口气#沙雕动画#动态漫#热门漫剧#热播短剧#热播电影#热播电视剧#热播音乐#小姐姐#AI#4k#8K"
+            "filterable": 1
+        },
+        {
+            "key": "听书so",
+            "name": "听书so",
+            "type": 3,
+            "api": "csp_TingShu",
+            "style": {
+                "type": "rect",
+                "ratio": 1.33
             },
             "changeable": 1
         },
         {
-            "key": "油管",
-            "name": "꒰ঌ油管໒꒱",
-            "type": 4,
-            "api": "http://127.0.0.1:1988",
+            "key": "哔哩so",
+            "name": "哔哩so",
+            "type": 3,
+            "api": "csp_Bilibili",
             "style": {
-                "type": "rect"
+                "type": "rect",
+                "ratio": 1.33
             },
+            "ext": "http://127.0.0.1:9978/file/Film-TV/php/lz/bilibili.txt",
+            "changeable": 1
+        },
+        {
+            "key": "华人so",
+            "name": "华人so",
+            "type": 3,
+            "api": "csp_Hua",
             "searchable": 1,
+            "quickSearch": 1,
+            "style": {
+                "type": "rect",
+                "ratio": 1.33
+            },
+            "filterable": 1
+        },
+        {
+            "key": "捡的音乐so",
+            "name": "捡的音乐so",
+            "type": 3,
+            "api": "csp_Music1",
+            "searchable": 1,
+            "quickSearch": 1,
+            "style": {
+                "type": "rect",
+                "ratio": 1.33
+            },
+            "ext": "http://127.0.0.1:9978/file/Film-TV/php/lz/jdyy.json",
+            "filterable": 1
+        },
+        {
+            "key": "采集全集",
+            "name": "采集全集",
+            "type": 3,
+            "api": "csp_CJJH",
+            "ext": "http://127.0.0.1:9978/file/Film-TV/php/lz/cj.json#0",
+            "style": {
+                "type": "rect",
+                "ratio": 1.33
+            },
+            "changeable": 1
+        },
+        {
+            "key": "阅读源so",
+            "name": "阅读源so",
+            "type": 3,
+            "api": "csp_Lego",
+            "ext": "http://127.0.0.1:9978/file/Film-TV/php/lz/sources.json",
+            "style": {
+                "type": "rect",
+                "ratio": 1.33
+            }
+        },
+        {
+            "key": "本地小说so",
+            "name": "本地小说so",
+            "type": 3,
+            "api": "csp_NovelBd",
+            "style": {
+                "type": "rect",
+                "ratio": 1.33
+            },
             "changeable": 1
         },
         {
@@ -42,18 +114,6 @@
                 "type": "rect"
             },
             "changeable": 1
-        },
-        {
-            "key": "py集合",
-            "name": "꒰ঌpy集合໒꒱",
-            "type": 4,
-            "api": "http://zhangqun1818.serv00.net/py.php",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "style": {
-                "type": "rect"
-            }
         },
         {
             "key": "小苹果",
@@ -79,34 +139,6 @@
                 "ratio": 1.80
             },
             "changeable": 1
-        },
-        {
-            "key": "界影视",
-            "name": "꒰ঌ界影视໒꒱",
-            "type": 3,
-            "api": "./py^js/Green/界影视.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "style": {
-                "type": "rect"
-            },
-            "ext": ""
-        },
-        {
-            "key": "飞快",
-            "name": "꒰ঌ飞快໒꒱",
-            "type": 3,
-            "api": "./py^js/Green/飞快.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "style": {
-                "type": "rect"
-            },
-            "ext": ""
         },
         {
             "key": "Uvod",
@@ -221,27 +253,6 @@
             "ext": ""
         },
         {
-            "key": "高清电影",
-            "name": "꒰ঌ高清电影໒꒱",
-            "type": 3,
-            "searchable": 1,
-            "api": "./py^js/Green/高清电影.py"
-        },
-        {
-            "key": "努努影院",
-            "name": "꒰ঌ努努影院໒꒱",
-            "type": 3,
-            "api": "./py^js/Green/努努影院.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "style": {
-                "type": "rect"
-            },
-            "ext": ""
-        },
-        {
             "key": "悟空影视",
             "name": "꒰ঌ悟空影视໒꒱",
             "type": 3,
@@ -311,20 +322,6 @@
             "ext": ""
         },
         {
-            "key": "甜圈短剧",
-            "name": "꒰ঌ甜圈短剧໒꒱",
-            "type": 3,
-            "api": "./py^js/Green/甜圈短剧.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "style": {
-                "type": "rect"
-            },
-            "ext": ""
-        },
-        {
             "key": "星芽短剧",
             "name": "꒰ঌ星芽短剧໒꒱",
             "type": 3,
@@ -337,17 +334,6 @@
                 "type": "rect"
             },
             "ext": ""
-        },
-        {
-            "key": "采集全集",
-            "name": "꒰ঌ采集全集໒꒱",
-            "type": 4,
-            "api": "http://zhangqun1818.serv00.net/cj/cjjh.php",
-            "style": {
-                "type": "rect"
-            },
-            "ext": "1",
-            "changeable": 1
         },
         {
             "key": "猎人·直播",
