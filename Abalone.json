@@ -661,10 +661,10 @@
             }
         },
         {
-            "key": "db数据库读取",
-            "name": "db数据库读取",
+            "key": "db数据智能库",
+            "name": "🗄️ 数据智能库",
             "type": 3,
-            "api": "./py^js/Yellow/db数据库读取.py",
+            "api": "./py^js/Yellow/db数据智能库.py",
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 0,
