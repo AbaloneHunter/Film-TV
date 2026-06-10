@@ -1,61 +1,344 @@
 {
     "name": "Abalone",
-    "notice": "欢迎使用Abalone数据源,更新于2026.04.06",
+    "notice": "欢迎使用Abalone数据源,更新于2026.06.10",
     "author": "TG:https://t.me/Eat_Abalone",
-    "spider": "./jar/内置Lzgo.jar",
+    "spider": "",
     "logo": "./logo/hunter.gif",
     "wallpaper": "./imgs/y3.webp",
     "sites": [
         {
-            "key": "php_server",
-            "name": "PHP爬虫",
+            "key": "Jable",
+            "name": "Jable",
             "type": 3,
-            "api": "csp_PhpServer",
-            "searchable": 1,
             "quickSearch": 1,
-            "filterable": 1,
-            "jar": "./jar/fm_xMydev.jar"
-        },
-        {
-            "key": "AVxx",
-            "name": "❅AVxx",
-            "type": 3,
-            "api": "csp_XBPQ",
             "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "ext": "./py^js/Yellow/AVxx.json",
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            }
-        },
-        {
-            "key": "AV文件夹",
-            "name": "❅AV文件夹",
-            "type": 3,
-            "api": "csp_XBPQ",
-            "searchable": 1,
-            "quickSearch": 1,
-            "changeable": 1,
+            "changeable": 0,
             "filterable": 1,
             "timeout": 60,
             "style": {
                 "type": "rect",
                 "ratio": 1.48
             },
-            "ext": "./py^js/Yellow/AV文件夹.json"
+            "api": "csp_GM",
+            "jar": "./jar/GM.jar;md5;a36831ed798998bbf38bb5862c32f96d",
+            "ext": {
+                "userScript": "./py^js/Yellow/jable.user.js",
+                "debug": false,
+                "webViewSettings": {
+                    "blockNetworkImage": true,
+                    "blockList": [
+                        "*.ico*",
+                        "*.png*",
+                        "*.css*",
+                        "https://*.adsco.re/*",
+                        "https://*.googleapis.com/*",
+                        "https://*.googlesyndication.com/*",
+                        "https://*.googletagmanager.com/*",
+                        "https://*.hpyjmp.com/*",
+                        "https://*.magsrv.com/*",
+                        "https://*.mnaspm.com/*",
+                        "https://*.shukriya90.com/*",
+                        "https://*.tapioni.com/*",
+                        "https://*.tsyndicate.com/*",
+                        "https://assets.jable.tv/assets/js/player.js"
+                    ]
+                },
+                "spider": {
+                    "homeContent": {
+                        "loadUrl": "https://jable.tv/"
+                    },
+                    "categoryContent": {
+                        "loadUrl": "https://jable.tv/${tid:-latest-updates}/?from=${pg:-1}${sort_by:-}"
+                    },
+                    "detailContent": {
+                        "loadUrl": "https://jable.tv/videos/${id}/"
+                    },
+                    "searchContent": {
+                        "loadUrl": "https://jable.tv/search/${key}/?from=${pg:-1}"
+                    }
+                }
+            }
         },
         {
-            "key": "17AV",
-            "name": "❅17AV",
+            "key": "netflav",
+            "name": "NETFLAV",
             "type": 3,
-            "api": "csp_XBPQ",
+            "quickSearch": 1,
             "searchable": 1,
-            "ext": "./py^js/Yellow/17av.json",
+            "changeable": 0,
+            "filterable": 1,
+            "timeout": 60,
             "style": {
                 "type": "rect",
                 "ratio": 1.48
+            },
+            "api": "csp_GM",
+            "jar": "./jar/GM.jar;md5;a36831ed798998bbf38bb5862c32f96d",
+            "ext": {
+                "userScript": "./py^js/Yellow/netflav.user.js",
+                "debug": false,
+                "webViewSettings": {
+                    "blockNetworkImage": true,
+                    "blockList": [
+                        "*.png",
+                        "*.css",
+                        "*.woff2",
+                        "https://*.googletagmanager.com/*",
+                        "https://*.imkirh.com/*",
+                        "https://*.xlvirdr.com/*"
+                    ]
+                },
+                "playUrlMatch": [
+                    "https://*/*/master.m3u8*",
+                    "https://*/*/v.mp4",
+                    "https://*/*/playlist.m3u8*"
+                ],
+                "spider": {
+                    "homeContent": {
+                        "loadUrl": "https://netflav.com/trending"
+                    },
+                    "categoryContent": {
+                        "loadUrl": "https://netflav.com/${tid}&page=${pg:-1}${range:-}"
+                    },
+                    "detailContent": {
+                        "loadUrl": "https://netflav.com/video?id=${id}/"
+                    },
+                    "playerContent": {
+                        "loadUrl": "https://netflav.com/video?id=${vod_id}#${src}"
+                    },
+                    "searchContent": {
+                        "loadUrl": "https://netflav.com/search?keyword=${key}&page=${pg:-1}&type=title"
+                    }
+                }
+            }
+        },
+        {
+            "key": "123av",
+            "name": "123AV",
+            "type": 3,
+            "quickSearch": 1,
+            "searchable": 1,
+            "changeable": 0,
+            "filterable": 1,
+            "timeout": 60,
+            "style": {
+                "type": "rect",
+                "ratio": 1.49
+            },
+            "api": "csp_GM",
+            "jar": "./jar/GM.jar;md5;a36831ed798998bbf38bb5862c32f96d",
+            "ext": {
+                "userScript": "./py^js/Yellow/123av.user.js",
+                "debug": false,
+                "webViewSettings": {
+                    "blockNetworkImage": true,
+                    "blockList": [
+                        "*.ico",
+                        "*.png",
+                        "*.jpg",
+                        "*.vtt",
+                        "*.css*",
+                        "https://*.googleapis.com/*",
+                        "https://*.googletagmanager.com/*",
+                        "https://*.recombee.com/*",
+                        "https://*.google-analytics.com/*",
+                        "https://njav.tv/recomm/items/*"
+                    ]
+                },
+                "playUrlMatch": [
+                    "https://*/v.m3u8"
+                ],
+                "spider": {
+                    "homeContent": {
+                        "loadUrl": "https://123av.com/zh/dm9"
+                    },
+                    "categoryContent": {
+                        "loadUrl": "https://123av.com/zh/${tid}?page=${pg:-1}${filter:-}${sort:-}"
+                    },
+                    "detailContent": {
+                        "loadUrl": "https://123av.com/zh/${id}"
+                    },
+                    "playerContent": {
+                        "loadUrl": "https://123av.com/zh/${vod_id}"
+                    },
+                    "searchContent": {
+                        "loadUrl": "https://123av.com/zh/search?keyword=${key}&page=${pg:-1}"
+                    }
+                }
+            }
+        },
+        {
+            "key": "MissAV",
+            "name": "MissAV",
+            "type": 3,
+            "quickSearch": 1,
+            "searchable": 1,
+            "changeable": 0,
+            "filterable": 1,
+            "timeout": 60,
+            "style": {
+                "type": "rect",
+                "ratio": 1.49
+            },
+            "api": "csp_GM",
+            "jar": "./jar/GM.jar;md5;a36831ed798998bbf38bb5862c32f96d",
+            "ext": {
+                "userScript": "./py^js/Yellow/missav.user.js",
+                "debug": false,
+                "webViewSettings": {
+                    "blockNetworkImage": true,
+                    "blockList": [
+                        "*.ico",
+                        "*.png",
+                        "*.css",
+                        "*.svg",
+                        "https://*.cloudflareinsights.com/*",
+                        "https://*.googletagmanager.com/*",
+                        "https://*.ktkjmp.com/*",
+                        "https://*.magsrv.com/*",
+                        "https://*.mnaspm.com/*",
+                        "https://*.myavlive.com/*",
+                        "https://*.recombee.com/*",
+                        "https://*.rmhfrtnd.com/*",
+                        "https://*.trackwilltrk.com/*",
+                        "https://*.tsyndicate.com/*",
+                        "https://missav.com/fonts/*",
+                        "https://tsyndicate.com/*",
+                        "https://hartattenuate.com/*"
+                    ]
+                },
+                "spider": {
+                    "homeContent": {
+                        "loadUrl": "https://missav.ws/cn/"
+                    },
+                    "categoryContent": {
+                        "loadUrl": "https://missav.ws/cn/${tid}?page=${pg:-1}${filter:-}${sort:-}"
+                    },
+                    "detailContent": {
+                        "loadUrl": "https://missav.ws/cn/${id}"
+                    },
+                    "searchContent": {
+                        "loadUrl": "https://missav.ws/cn/search/${key}?page=${pg:-1}"
+                    }
+                }
+            }
+        },
+        {
+            "key": "supjav",
+            "name": "SupJav",
+            "type": 3,
+            "quickSearch": 0,
+            "searchable": 1,
+            "changeable": 0,
+            "filterable": 1,
+            "timeout": 60,
+            "style": {
+                "type": "rect",
+                "ratio": 1.48
+            },
+            "api": "csp_GM",
+            "jar": "./jar/GM.jar;md5;a36831ed798998bbf38bb5862c32f96d",
+            "ext": {
+                "userScript": "./py^js/Yellow/supjav.user.js",
+                "debug": false,
+                "webViewSettings": {
+                    "blockNetworkImage": true,
+                    "blockList": [
+                        "https://*.adforcast.com/*",
+                        "https://*.adxadserv.com/*",
+                        "https://*.bbrdbr.com/*",
+                        "https://*.fanza.cc/*",
+                        "https://*.google-analytics.com/*",
+                        "https://*.googletagmanager.com/*",
+                        "https://*.mnaspm.com/*",
+                        "https://*.recombee.com/*",
+                        "https://*.sacdnssedge.com/*",
+                        "https://*.tapioni.com/*",
+                        "https://*.yandex.ru/*",
+                        "https://*/prebid.min.js",
+                        "https://divisiondrearilyunfiled.com/*",
+                        "https://endowmentoverhangutmost.com/*",
+                        "https://imasdk.googleapis.com/*",
+                        "https://psoroumukr.com/*",
+                        "https://static.ads-twitter.com/*",
+                        "https://streamhg.com/*"
+                    ]
+                },
+                "playUrlMatch": [
+                    "https://*.cdn-centaurus.com/*/master.m3u8*",
+                    "https://*.cloudatacdn.com/*",
+                    "https://*.cloudflarestorage.com/*",
+                    "https://*.linkofnyz.com/*.m3u8*",
+                    "https://*.tapecontent.net/*",
+                    "https://*.turboviplay.*/*.m3u8",
+                    "https://*.voe-network.net/*/master.m3u8*",
+                    "https://dood.la/pass_md5/*",
+                    "https://streamtape.com/get_video*"
+                ],
+                "spider": {
+                    "homeContent": {
+                        "loadUrl": "https://supjav.com/zh/popular"
+                    },
+                    "categoryContent": {
+                        "loadUrl": "https://supjav.com/zh/${tid}/page/${pg:-1}?sort=${sort:-quantity}"
+                    },
+                    "detailContent": {
+                        "loadUrl": "https://supjav.com/zh/${id}"
+                    },
+                    "playerContent": {
+                        "loadUrl": "https://supjav.com/zh/${pathname}#${link}"
+                    },
+                    "searchContent": {
+                        "loadUrl": "https://supjav.com/zh/page/${pg:-1}?s=${key}"
+                    }
+                }
+            }
+        },
+        {
+            "key": "XOJAV",
+            "name": "XOJAV",
+            "type": 3,
+            "quickSearch": 1,
+            "searchable": 1,
+            "changeable": 0,
+            "filterable": 1,
+            "timeout": 60,
+            "style": {
+                "type": "rect",
+                "ratio": 1.78
+            },
+            "api": "csp_GM",
+            "jar": "./jar/GM.jar;md5;a36831ed798998bbf38bb5862c32f96d",
+            "ext": {
+                "userScript": "./py^js/Yellow/xojav.user.js",
+                "debug": false,
+                "webViewSettings": {
+                    "blockNetworkImage": true,
+                    "blockList": [
+                        "*.css*",
+                        "*.ico*",
+                        "*.png*",
+                        "*.svg",
+                        "https://*.googleapis.com/*",
+                        "https://*.googletagmanager.com/*",
+                        "https://*.magsrv.com/*",
+                        "https://*.pemsrv.com/*"
+                    ]
+                },
+                "spider": {
+                    "homeContent": {
+                        "loadUrl": "https://xojav.tv/?lang=zh"
+                    },
+                    "categoryContent": {
+                        "loadUrl": "https://xojav.tv/${tid}${sort_by:-}&mode=async&function=get_block&from=${pg:-1}"
+                    },
+                    "detailContent": {
+                        "loadUrl": "https://xojav.tv/videos/${id}"
+                    },
+                    "searchContent": {
+                        "loadUrl": "https://xojav.tv/search/${key}/?mode=async&function=get_block&sort_by=most_relevant&from_videos=${pg:-1}"
+                    }
+                }
             }
         },
         {
@@ -131,20 +414,6 @@
             }
         },
         {
-            "key": "hsck",
-            "name": "❅HSCK",
-            "type": 3,
-            "api": "./py^js/Yellow/hsck.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0,
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            }
-        },
-        {
             "key": "fullhd",
             "name": "❅fullhd",
             "type": 3,
@@ -171,17 +440,6 @@
                 "type": "rect",
                 "ratio": 1.48
             }
-        },
-        {
-            "key": "missav",
-            "name": "❅missav",
-            "type": 3,
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "api": "./py^js/Yellow/爱AV.py",
-            "order_num": 5,
-            "ext": ""
         },
         {
             "key": "推特APP",
@@ -225,18 +483,6 @@
                 "type": "rect",
                 "ratio": 1.48
             }
-        },
-        {
-            "key": "采集全集",
-            "name": "❅采集全集",
-            "type": 4,
-            "api": "http://zhangqun1818.serv00.net/cj/cjjh.php",
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            },
-            "ext": "0",
-            "changeable": 1
         },
         {
             "key": "韩国色情电影",
@@ -386,33 +632,6 @@
             }
         },
         {
-            "key": "优优",
-            "name": "ദ്ദിyyzyw",
-            "type": 1,
-            "api": "https://www.yyzywcj.com/api.php/provide/vod/?ac=list",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            }
-        },
-        {
-            "key": "18av",
-            "name": "ദ്ദി18av",
-            "type": 3,
-            "api": "./py^js/Yellow/18av.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 0,
-            "changeable": 0,
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            }
-        },
-        {
             "key": "boyfriend.show",
             "name": "ദ്ദിboyfriend.show",
             "type": 3,
@@ -505,162 +724,6 @@
             }
         },
         {
-            "key": "jable",
-            "name": "ദ്ദിJable",
-            "jar": "./jar/𒉽.jar",
-            "type": 3,
-            "quickSearch": 1,
-            "searchable": 1,
-            "changeable": 0,
-            "filterable": 0,
-            "timeout": 60,
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            },
-            "api": "csp_GM",
-            "ext": {
-                "userScript": "./py^js/Yellow/jable.user.js",
-                "debug": false,
-                "webViewSettings": {
-                    "blockNetworkImage": true,
-                    "blockList": [
-                        "*.ico*",
-                        "*.png*",
-                        "*.css*",
-                        "https://*.adsco.re/*",
-                        "https://*.googleapis.com/*",
-                        "https://*.googlesyndication.com/*",
-                        "https://*.googletagmanager.com/*",
-                        "https://*.hpyjmp.com/*",
-                        "https://*.magsrv.com/*",
-                        "https://*.mnaspm.com/*",
-                        "https://*.shukriya90.com/*",
-                        "https://*.tapioni.com/*",
-                        "https://*.tsyndicate.com/*",
-                        "https://assets.jable.tv/assets/js/player.js"
-                    ]
-                },
-                "spider": {
-                    "homeContent": {
-                        "loadUrl": "https://jable.tv/"
-                    },
-                    "categoryContent": {
-                        "loadUrl": "https://jable.tv/${tid:-latest-updates}/?from=${pg:-1}${sort_by:-}"
-                    },
-                    "detailContent": {
-                        "loadUrl": "https://jable.tv/videos/${id}/"
-                    },
-                    "searchContent": {
-                        "loadUrl": "https://jable.tv/search/${key}/?from=${pg:-1}"
-                    }
-                }
-            }
-        },
-        {
-            "key": "missav",
-            "name": "ദ്ദിmissav",
-            "jar": "./jar/𒉽.jar",
-            "type": 3,
-            "quickSearch": 1,
-            "searchable": 1,
-            "changeable": 1,
-            "filterable": 1,
-            "timeout": 60,
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            },
-            "api": "csp_GM",
-            "ext": {
-                "userScript": "./py^js/Yellow/missav.user.js",
-                "debug": false,
-                "webViewSettings": {
-                    "blockNetworkImage": true,
-                    "blockList": [
-                        "*.ico",
-                        "*.png",
-                        "*.css",
-                        "*.svg",
-                        "https://*.cloudflareinsights.com/*",
-                        "https://*.googletagmanager.com/*",
-                        "https://*.ktkjmp.com/*",
-                        "https://*.magsrv.com/*",
-                        "https://*.mnaspm.com/*",
-                        "https://*.myavlive.com/*",
-                        "https://*.recombee.com/*",
-                        "https://*.rmhfrtnd.com/*",
-                        "https://*.trackwilltrk.com/*",
-                        "https://*.tsyndicate.com/*",
-                        "https://missav.com/fonts/*",
-                        "https://tsyndicate.com/*",
-                        "https://hartattenuate.com/*"
-                    ]
-                },
-                "spider": {
-                    "homeContent": {
-                        "loadUrl": "https://missav.ws/cn/"
-                    },
-                    "categoryContent": {
-                        "loadUrl": "https://missav.ws/cn/${tid}?page=${pg:-1}${filter:-}${sort:-}"
-                    },
-                    "detailContent": {
-                        "loadUrl": "https://missav.ws/cn/${id}"
-                    },
-                    "searchContent": {
-                        "loadUrl": "https://missav.ws/cn/search/${key}?page=${pg:-1}"
-                    }
-                }
-            }
-        },
-        {
-            "key": "XOJAV",
-            "name": "ദ്ദിxojav",
-            "jar": "./jar/𒉽.jar",
-            "type": 3,
-            "quickSearch": 1,
-            "searchable": 1,
-            "changeable": 1,
-            "filterable": 1,
-            "timeout": 60,
-            "style": {
-                "type": "rect",
-                "ratio": 1.48
-            },
-            "api": "csp_GM",
-            "ext": {
-                "userScript": "./py^js/Yellow/xojav.user.js",
-                "debug": false,
-                "webViewSettings": {
-                    "blockNetworkImage": true,
-                    "blockList": [
-                        "*.css*",
-                        "*.ico*",
-                        "*.png*",
-                        "*.svg",
-                        "https://*.googleapis.com/*",
-                        "https://*.googletagmanager.com/*",
-                        "https://*.magsrv.com/*",
-                        "https://*.pemsrv.com/*"
-                    ]
-                },
-                "spider": {
-                    "homeContent": {
-                        "loadUrl": "https://xojav.tv/?lang=zh"
-                    },
-                    "categoryContent": {
-                        "loadUrl": "https://xojav.tv/${tid}${sort_by:-}&mode=async&function=get_block&from=${pg:-1}"
-                    },
-                    "detailContent": {
-                        "loadUrl": "https://xojav.tv/videos/${id}"
-                    },
-                    "searchContent": {
-                        "loadUrl": "https://xojav.tv/search/${key}/?mode=async&function=get_block&sort_by=most_relevant&from_videos=${pg:-1}"
-                    }
-                }
-            }
-        },
-        {
             "key": "db数据智能库",
             "name": "🗄️ 数据智能库",
             "type": 3,
@@ -708,116 +771,6 @@
             "api": "csp_Local"
         },
         {
-            "key": "sese1",
-            "name": "sese1",
-            "type": 4,
-            "api": "http://ser995290833053.gptapp.ren/tvbox/php/sese1.php?token=yyds",
-            "playUrl": "",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1
-        },
-        {
-            "key": "sese2",
-            "name": "sese2",
-            "type": 4,
-            "api": "http://ser995290833053.gptapp.ren/tvbox/php/sese2.php?token=yyds",
-            "playUrl": "",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1
-        },
-        {
-            "key": "pptv",
-            "name": "pptv",
-            "type": 4,
-            "api": "http://ser995290833053.gptapp.ren/tvbox/php/pptv.php?token=yyds",
-            "playUrl": "",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1
-        },
-        {
-            "key": "sese",
-            "name": "sese",
-            "type": 4,
-            "api": "http://ser995290833053.gptapp.ren/tvbox/php/sese.php?token=yyds",
-            "playUrl": "",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1
-        },
-        {
-            "key": "yintao",
-            "name": "yintao",
-            "type": 4,
-            "api": "http://ser995290833053.gptapp.ren/tvbox/php/yintao.php?token=yyds",
-            "playUrl": "",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1
-        },
-        {
-            "key": "pingguo",
-            "name": "pingguo",
-            "type": 4,
-            "api": "http://ser995290833053.gptapp.ren/tvbox/php/pingguo.php?token=yyds",
-            "playUrl": "",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1
-        },
-        {
-            "key": "mianfei",
-            "name": "mianfei",
-            "type": 4,
-            "api": "http://ser995290833053.gptapp.ren/tvbox/php/mianfei.php?token=yyds",
-            "playUrl": "",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1
-        },
-        {
-            "key": "jiang",
-            "name": "jiang",
-            "type": 4,
-            "api": "http://ser995290833053.gptapp.ren/tvbox/php/jiang.php?token=yyds",
-            "playUrl": "",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1
-        },
-        {
-            "key": "bihe",
-            "name": "bihe",
-            "type": 4,
-            "api": "http://ser995290833053.gptapp.ren/tvbox/php/bihe.php?token=yyds",
-            "playUrl": "",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1
-        },
-        {
-            "key": "jxx",
-            "name": "jxx",
-            "type": 4,
-            "api": "http://ser995290833053.gptapp.ren/tvbox/php/jxx.php?token=yyds",
-            "playUrl": "",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1
-        },
-        {
-            "key": "av338",
-            "name": "av338",
-            "type": 4,
-            "api": "http://ser995290833053.gptapp.ren/tvbox/php/av338.php?token=yyds",
-            "playUrl": "",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1
-        },
-        {
             "key": "大地",
             "name": "大地",
             "type": 0,
@@ -858,12 +811,6 @@
             "name": "番号",
             "type": 1,
             "api": "http://fhapi9.com/api.php/provide/vod/"
-        },
-        {
-            "key": "玉兔",
-            "name": "玉兔",
-            "type": 1,
-            "api": "http://yutuzy1.com/api.php/provide/vod/"
         },
         {
             "key": "jkun",
