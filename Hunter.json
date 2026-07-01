@@ -161,10 +161,38 @@
             }
         },
         {
+            "key": "红果短剧",
+            "name": "꒰ঌ红果短剧໒꒱",
+            "type": 3,
+            "api": "./File/py/Hunter/红果短剧.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "style": {
+                "type": "rect"
+            },
+            "ext": ""
+        },
+        {
             "key": "枫叶影院",
             "name": "꒰ঌ枫叶🍁影院໒꒱",
             "type": 3,
             "api": "./File/py/Hunter/枫叶影院.py",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "order_num": 0,
+            "style": {
+                "type": "rect"
+            },
+            "ext": ""
+        },
+        {
+            "key": "瓜子",
+            "name": "꒰ঌ瓜子໒꒱",
+            "type": 3,
+            "api": "./File/py/Hunter/瓜子.py",
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 1,
