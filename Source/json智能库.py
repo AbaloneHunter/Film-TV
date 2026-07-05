@@ -10,7 +10,7 @@ class Spider(Spider):
     CHANNEL_PAGE_SIZE = 2000  
 
     # 📂 [路径配置]：指定扫描内置/外置存储根目录下的哪些文件夹 (支持1-3级深度搜索)
-    SCAN_DIR_LIST = ["Film-TV"
+    SCAN_DIR_LIST = ["Film-TV/File/json"
                 #"bh", "tvbox",  "bhh",         #电视📺专用文件夹，把db文件放在这里# 👈 u盘也用这个文件夹                                          
                 #"lz", "纯福利", "私藏视频",  "江湖", "粉妹"           # 👈 前面加#关闭   这里可以修改任意大佬包名 
                 #"VodPlus", "peekpili/php-scripts"                       #同上

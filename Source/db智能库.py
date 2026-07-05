@@ -15,7 +15,7 @@ class Spider(BaseSpider):
     """智能本地数据库爬虫 - 极速版"""
 
     def init(self, extend=""):
-        self.db_folder = "/storage/emulated/0/Film-TV/File/db/"
+        self.db_folder = "/storage/emulated/0/Film-TV/File/db/Abalone/"
         self.page_size = 200
         self.databases = []
         self.db_cache = {}
