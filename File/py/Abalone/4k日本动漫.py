@@ -18,11 +18,18 @@ class Spider(Spider):
             'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8'
         }
         self.sess = requests.Session()
-        self.sess.mount('https://', HTTPAdapter(max_retries=Retry(total=3, status_forcelist=[500, 502, 503, 504])))
+        adapter = HTTPAdapter(
+            max_retries=Retry(total=2, backoff_factor=0.5, status_forcelist=[500, 502, 503, 504]),
+            pool_connections=10,
+            pool_maxsize=20
+        )
+        self.sess.mount('https://', adapter)
 
     def fetch(self, url):
-        try: return self.sess.get(url, headers=self.headers, timeout=10, verify=False)
-        except: return None
+        try: 
+            return self.sess.get(url, headers=self.headers, timeout=10, verify=False)
+        except: 
+            return None
 
     def homeContent(self, filter):
         cats = [
@@ -57,7 +64,48 @@ class Spider(Spider):
     def postList(self, url, pg):
         r = self.fetch(url)
         l = []
+        total_pages = pg
+        
         if r and r.ok:
+            pagination_match = re.search(r'<nav[^>]*class=["\']pagination["\'][^>]*>(.*?)</nav>', r.text, re.S)
+            if pagination_match:
+                page_links = re.findall(r'<a[^>]*href=["\'][^"\']*page=(\d+)["\'][^>]*>', pagination_match.group(1))
+                active_page = re.search(r'<li[^>]*class=["\']active["\'][^>]*>.*?(\d+).*?</li>', pagination_match.group(1), re.S)
+                
+                if page_links:
+                    max_page = max([int(p) for p in page_links])
+                    total_pages = max_page
+                elif active_page:
+                    total_text = re.search(r'共\s*(\d+)\s*页', pagination_match.group(1))
+                    if total_text:
+                        total_pages = int(total_text.group(1))
+            
+            if total_pages == pg:
+                json_match = re.search(r'window\.__INITIAL_STATE__\s*=\s*({[^;]+});', r.text)
+                if json_match:
+                    try:
+                        import json
+                        state_data = json.loads(json_match.group(1))
+                        if 'pagination' in state_data:
+                            pagination = state_data['pagination']
+                            if 'totalPages' in pagination:
+                                total_pages = int(pagination['totalPages'])
+                            elif 'total' in pagination and 'perPage' in pagination:
+                                total_pages = (int(pagination['total']) + int(pagination['perPage']) - 1) // int(pagination['perPage'])
+                        elif 'total' in state_data and 'perPage' in state_data:
+                            total_pages = (int(state_data['total']) + int(state_data['perPage']) - 1) // int(state_data['perPage'])
+                        elif 'totalPages' in state_data:
+                            total_pages = int(state_data['totalPages'])
+                    except:
+                        pass
+            
+            if total_pages == pg:
+                next_match = re.search(r'<a[^>]*rel=["\']next["\'][^>]*>', r.text, re.I)
+                if next_match:
+                    total_pages = pg + 1
+                else:
+                    total_pages = pg
+            
             blocks = re.findall(r'<a[^>]*href=["\'][^"\']*/hentai/([^"\']+)["\'][^>]*>(.*?)</a>', r.text, re.S)
             seen = set()
             for block in blocks:
@@ -83,7 +131,7 @@ class Spider(Spider):
                     'style': {"type": "rect", "ratio": 1.33}
                 })
                 
-        return {'list': l, 'page': pg, 'pagecount': pg + 1 if len(l) == 24 else pg, 'limit': 24, 'total': 9999}
+        return {'list': l, 'page': pg, 'pagecount': total_pages, 'limit': 24, 'total': total_pages * 24}
 
     def detailContent(self, ids):
         vid = ids[0]
@@ -95,10 +143,19 @@ class Spider(Spider):
             name = parts[1] if len(parts) > 1 else name
             pic = parts[2] if len(parts) > 2 else pic
 
-        # 【极致纯净】：只有 4K，简单粗暴！
-        play_list = [
-            f"4K画质${vid}|2160/manifest.mpd"
-        ]
+        page_url = f"{self.siteUrl}/hentai/{vid}"
+        r = self.fetch(page_url)
+        
+        has_4k = False
+        if r and r.ok:
+            if re.search(r'4K|2160|3840', r.text, re.I):
+                has_4k = True
+        
+        play_list = []
+        if has_4k:
+            play_list.append(f"4K超清${vid}|4k/manifest.mpd")
+        play_list.append(f"1080P高清${vid}|1080/manifest.mpd")
+        play_list.append(f"720P流畅${vid}|720/manifest.mpd")
 
         vod = {
             'vod_id': ids[0],
@@ -113,11 +170,15 @@ class Spider(Spider):
     def playerContent(self, flag, id, vipFlags):
         id_parts = id.split("|")
         vid = id_parts[0]
-        mode = id_parts[1] if len(id_parts) > 1 else "2160/manifest.mpd"
+        quality = id_parts[1] if len(id_parts) > 1 else "1080/manifest.mpd"
 
         page_url = f"{self.siteUrl}/hentai/{vid}"
+        
         try:
             r = self.sess.get(page_url, headers=self.headers, verify=False, timeout=10)
+            
+            if not r.ok:
+                return {"parse": 0, "url": f"error://page_error_{r.status_code}"}
             
             xsrf_cookie = self.sess.cookies.get('XSRF-TOKEN', '')
             if xsrf_cookie:
@@ -127,63 +188,115 @@ class Spider(Spider):
             token_match = re.search(r'<meta name="csrf-token" content="([^"]+)">', r.text)
             if token_match:
                 meta_token = token_match.group(1)
-
-            if not xsrf_cookie and not meta_token:
-                return {"parse": 0, "url": f"error://token_not_found"}
-
-            api_headers = self.headers.copy()
-            api_headers.update({
-                "Accept": "application/json, text/plain, */*",
-                "Content-Type": "application/json",
-                "X-Requested-With": "XMLHttpRequest",
-                "Referer": page_url
-            })
-            if xsrf_cookie: api_headers["X-XSRF-TOKEN"] = xsrf_cookie
-            if meta_token: api_headers["X-CSRF-TOKEN"] = meta_token
-
-            # 从隐藏 input 里挖出原生 episode_id
+            
             episode_id = None
-            e_id_match = re.search(r'id=["\']e_id["\'][^>]*value=["\'](\d+)["\']|value=["\'](\d+)["\'][^>]*id=["\']e_id["\']', r.text, re.I)
+            
+            e_id_match = re.search(r'<input[^>]*id=["\']e_id["\'][^>]*value=["\'](\d+)["\']', r.text, re.I)
+            if not e_id_match:
+                e_id_match = re.search(r'value=["\'](\d+)["\'][^>]*id=["\']e_id["\']', r.text, re.I)
+            
             if e_id_match:
-                episode_id = e_id_match.group(1) or e_id_match.group(2)
-            else:
-                lw_match = re.search(r'"class":"App\\\\Models\\\\Episode","key":(\d+)', r.text)
-                if lw_match:
-                    episode_id = lw_match.group(1)
-
+                episode_id = e_id_match.group(1)
+            
             if not episode_id:
-                return {"parse": 0, "url": "error://episode_id_not_found"}
-
-            payload = {"episode_id": episode_id} 
+                state_match = re.search(r'window\.__INITIAL_STATE__\s*=\s*({[^;]+});', r.text)
+                if state_match:
+                    try:
+                        import json
+                        state_data = json.loads(state_match.group(1))
+                        if 'episode' in state_data and 'id' in state_data['episode']:
+                            episode_id = str(state_data['episode']['id'])
+                        elif 'currentEpisode' in state_data and 'id' in state_data['currentEpisode']:
+                            episode_id = str(state_data['currentEpisode']['id'])
+                    except:
+                        pass
+            
+            if not episode_id:
+                return {"parse": 0, "url": "error://no_episode_id"}
+            
+            api_headers = {
+                'User-Agent': self.headers['User-Agent'],
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Referer': page_url,
+                'Origin': self.siteUrl
+            }
+            
+            if xsrf_cookie:
+                api_headers['X-XSRF-TOKEN'] = xsrf_cookie
+            if meta_token:
+                api_headers['X-CSRF-TOKEN'] = meta_token
+            
+            payload = {"episode_id": int(episode_id)}
             api_url = f"{self.siteUrl}/player/api"
             
-            res = self.sess.post(api_url, json=payload, headers=api_headers, timeout=10, verify=False)
+            try:
+                api_res = self.sess.post(api_url, json=payload, headers=api_headers, timeout=10, verify=False)
+            except requests.Timeout:
+                return {"parse": 0, "url": "error://api_timeout"}
+            except Exception as e:
+                return {"parse": 0, "url": f"error://api_exception"}
             
-            if res.ok:
-                data = res.json()
-                
-                # 依然坚守主节点
-                domains = data.get("stream_domains", [])
-                if not domains:
-                    domains = data.get("asia_stream_domains", [])
+            if api_res and api_res.status_code == 200:
+                try:
+                    data = api_res.json()
                     
-                if domains and "stream_url" in data:
-                    domain = domains[0].rstrip('/')
-                    stream_url = data["stream_url"].strip('/')
-                    play_url = f"{domain}/{stream_url}/{mode}"
+                    stream_url = data.get("stream_url", "")
+                    domains = data.get("stream_domains", [])
                     
-                    return {
-                        "parse": 0, 
-                        "url": play_url, 
-                        "header": {
-                            "Referer": self.siteUrl + "/",
-                            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+                    if not domains:
+                        domains = data.get("asia_stream_domains", [])
+                    
+                    if stream_url:
+                        if stream_url.startswith('http'):
+                            base_url = stream_url.rstrip('/')
+                        elif domains and len(domains) > 0:
+                            domain = domains[0].rstrip('/')
+                            stream_path = stream_url.lstrip('/')
+                            base_url = f"{domain}/{stream_path}"
+                        else:
+                            base_url = f"{self.siteUrl}/{stream_url.lstrip('/')}"
+                        
+                        if quality == "4k/manifest.mpd":
+                            if "4k" in base_url.lower() or "2160" in base_url.lower():
+                                play_url = f"{base_url}/{quality}"
+                            else:
+                                play_url = base_url.replace("/1080/", "/4k/").replace("/720/", "/4k/")
+                                if not play_url.endswith(quality):
+                                    play_url = f"{play_url.rstrip('/')}/{quality}"
+                        else:
+                            play_url = f"{base_url}/{quality}"
+                        
+                        if quality == "4k/manifest.mpd":
+                            try:
+                                test_res = self.sess.head(play_url, headers=self.headers, timeout=3, verify=False)
+                                if test_res.status_code != 200:
+                                    play_url = f"{base_url}/1080/manifest.mpd"
+                                    quality = "1080/manifest.mpd"
+                            except:
+                                play_url = f"{base_url}/1080/manifest.mpd"
+                                quality = "1080/manifest.mpd"
+                        
+                        return {
+                            "parse": 0, 
+                            "url": play_url, 
+                            "header": {
+                                "Referer": self.siteUrl + "/",
+                                "User-Agent": self.headers['User-Agent']
+                            }
                         }
-                    }
-                else:
-                    return {"parse": 0, "url": "error://json_missing_domains"}
+                    else:
+                        return {"parse": 0, "url": "error://no_stream_url"}
+                        
+                except ValueError:
+                    return {"parse": 0, "url": "error://json_parse_failed"}
+                except Exception as e:
+                    return {"parse": 0, "url": f"error://data_error"}
             else:
-                return {"parse": 0, "url": f"error://post_api_failed_status_{res.status_code}"}
+                return {"parse": 0, "url": f"error://api_failed"}
                 
+        except requests.Timeout:
+            return {"parse": 0, "url": "error://page_timeout"}
         except Exception as e:
-            return {"parse": 0, "url": f"error://exception_{str(e)[:20]}"}
+            return {"parse": 0, "url": f"error://exception_{str(e)[:30]}"}

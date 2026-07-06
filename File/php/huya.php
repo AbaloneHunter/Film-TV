@@ -186,7 +186,13 @@ function huya_play($id, $file){
         
     $uid = $data['profileInfo']['uid'];
     $streamName =$data['stream']['baseSteamInfoList'][0]['sStreamName'];
-    $Url = "http://al.flv.huya.com/src/$streamName.flv";
+    
+    // ====== 优化点：随机选择CDN节点，避免单一节点断流 ======
+    $cdn_list = ['al', 'tx', 'hw', 'ws'];  // 阿里云、腾讯云、华为云、网宿
+    $cdn = $cdn_list[array_rand($cdn_list)];
+    $Url = "http://{$cdn}.flv.huya.com/src/$streamName.flv";
+    // =====================================================
+    
     $seqid = strval(intval($uid) . time());
     $ss = md5("{$seqid}|huya_adr|102");
     $wsTime = dechex(time()+21600);
