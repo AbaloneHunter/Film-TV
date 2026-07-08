@@ -342,6 +342,20 @@
       }
     },
     {
+      "key": "智能py",
+      "name": "꒰ঌ智能py໒꒱",
+      "type": 3,
+      "api": "./Source/智能py¹.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "order_num": 0,
+      "style": {
+        "type": "rect"
+      },
+      "ext": ""
+    },
+    {
       "key": "高清仓库",
       "name": "❅高清仓库",
       "type": 3,
@@ -862,10 +876,10 @@
       }
     },
     {
-      "key": "db智能库",
-      "name": "db智能库",
+      "key": "智能db",
+      "name": "智能db",
       "type": 3,
-      "api": "./Source/db智能库.py",
+      "api": "./Source/智能db.py",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0,
@@ -879,10 +893,10 @@
       }
     },
     {
-      "key": "m3u智能",
-      "name": "m3u智能库",
+      "key": "智能m3u",
+      "name": "智能m3u",
       "type": 3,
-      "api": "./Source/m3u智能库.py",
+      "api": "./Source/智能m3u.py",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0,
@@ -890,10 +904,10 @@
       "playerType": 2
     },
     {
-      "key": "txt智能",
-      "name": "txt智能库",
+      "key": "智能txt",
+      "name": "智能txt",
       "type": 3,
-      "api": "./Source/txt智能库.py",
+      "api": "./Source/智能txt.py",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0,
@@ -901,10 +915,10 @@
       "playerType": 2
     },
     {
-      "key": "json智能",
-      "name": "json智能库",
+      "key": "智能json",
+      "name": "智能json",
       "type": 3,
-      "api": "./Source/json智能库.py",
+      "api": "./Source/智能json.py",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0,
