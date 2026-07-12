@@ -342,10 +342,10 @@
       }
     },
     {
-      "key": "智能py",
-      "name": "꒰ঌ智能py໒꒱",
+      "key": "智能聚合¹",
+      "name": "꒰ঌ智能聚合¹໒꒱",
       "type": 3,
-      "api": "./Source/智能py¹.py",
+      "api": "./Source/智能聚合¹.py",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,

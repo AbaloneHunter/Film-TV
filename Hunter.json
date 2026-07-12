@@ -7,90 +7,10 @@
   "wallpaper": "./imgs/V1.jpg",
   "sites": [
     {
-      "key": "油管so",
-      "name": "油管so",
-      "jar": "./jar/pro.jar",
+      "key": "智能聚合²",
+      "name": "꒰ঌ智能聚合໒꒱",
       "type": 3,
-      "api": "csp_ProxySpider",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "style": {
-        "type": "rect",
-        "ratio": 1.33
-      },
-      "ext": {
-        "class": "Ytdl",
-        "ext": {
-          "youtube_txt": "./File/lz/youtube.txt"
-        }
-      }
-    },
-    {
-      "key": "哔哩so",
-      "name": "哔哩so",
-      "jar": "./jar/pro.jar",
-      "type": 3,
-      "api": "csp_ProxySpider",
-      "style": {
-        "type": "rect",
-        "ratio": 1.33
-      },
-      "changeable": 1,
-      "ext": {
-        "class": "Bilibili",
-        "ext": "./File/lz/bilibili.txt"
-      }
-    },
-    {
-      "key": "阅读助手",
-      "name": "阅读助手",
-      "jar": "./jar/pro.jar",
-      "type": 3,
-      "api": "csp_ProxySpider",
-      "style": {
-        "type": "rect",
-        "ratio": 1.33
-      },
-      "changeable": 1,
-      "ext": {
-        "class": "ReaderHelper"
-      }
-    },
-    {
-      "key": "听书so",
-      "name": "听书so",
-      "jar": "./jar/pro.jar",
-      "type": 3,
-      "api": "csp_ProxySpider",
-      "style": {
-        "type": "rect",
-        "ratio": 1.33
-      },
-      "ext": {
-        "class": "TingShu"
-      },
-      "changeable": 1
-    },
-    {
-      "key": "TxtLiveList",
-      "name": "虎牙合集",
-      "jar": "./jar/pro.jar",
-      "type": 3,
-      "api": "csp_ProxySpider",
-      "searchable": 0,
-      "quickSearch": 0,
-      "filterable": 0,
-      "ext": {
-        "class": "TxtLiveSpider",
-        "ext": "./File/lz/虎牙全集.txt"
-      }
-    },
-    {
-      "key": "智能py",
-      "name": "꒰ঌ智能py໒꒱",
-      "type": 3,
-      "api": "./Source/智能py².py",
+      "api": "./Source/智能聚合².py",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
@@ -101,49 +21,46 @@
       "ext": ""
     },
     {
-      "key": "JS聚合",
-      "name": "JS聚合",
-      "jar": "./jar/pro.jar",
+      "key": "哔哩哔哩",
+      "name": "꒰ঌ哔哩哔哩໒꒱",
       "type": 3,
-      "api": "csp_ProxySpider",
+      "api": "./File/py/Hunter/哔哩哔哩.py",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": {
-        "class": "PY",
-        "ext": "js"
-      }
+      "order_num": 0,
+      "style": {
+        "type": "rect"
+      },
+      "ext": ""
     },
     {
-      "key": "采集全集",
-      "name": "采集全集",
-      "jar": "./jar/pro.jar",
+      "key": "YouTube",
+      "name": "꒰ঌYouTube໒꒱",
       "type": 3,
-      "api": "csp_ProxySpider",
+      "api": "./File/py/Hunter/YouTube.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "order_num": 0,
       "style": {
-        "type": "rect",
-        "ratio": 1.33
+        "type": "rect"
       },
-      "changeable": 1,
-      "ext": {
-        "class": "CJJH",
-        "ext": "./File/lz/cj.json#0"
-      }
+      "ext": ""
     },
     {
-      "key": "PTT",
-      "name": "PTT",
-      "jar": "./jar/pro.jar",
+      "key": "YouTube_live",
+      "name": "꒰ঌYouTube_livee໒꒱",
       "type": 3,
-      "api": "csp_ProxySpider",
+      "api": "./File/py/Hunter/YouTube_live.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "order_num": 0,
       "style": {
-        "type": "rect",
-        "ratio": 1.33
+        "type": "rect"
       },
-      "changeable": 1,
-      "ext": {
-        "class": "PTT"
-      }
+      "ext": ""
     },
     {
       "key": "红果短剧",
@@ -449,6 +366,36 @@
       "searchable": 1,
       "filterable": 0,
       "switchable": 0
+    },
+    {
+      "key": "TxtLiveList",
+      "name": "虎牙合集",
+      "jar": "./jar/pro.jar",
+      "type": 3,
+      "api": "csp_ProxySpider",
+      "searchable": 0,
+      "quickSearch": 0,
+      "filterable": 0,
+      "ext": {
+        "class": "TxtLiveSpider",
+        "ext": "./File/lz/虎牙全集.txt"
+      }
+    },
+    {
+      "key": "采集全集",
+      "name": "采集全集",
+      "jar": "./jar/pro.jar",
+      "type": 3,
+      "api": "csp_ProxySpider",
+      "style": {
+        "type": "rect",
+        "ratio": 1.33
+      },
+      "changeable": 1,
+      "ext": {
+        "class": "CJJH",
+        "ext": "./File/lz/cj.json#0"
+      }
     },
     {
       "key": "猎人·直播",
