@@ -1,4 +1,7 @@
-import os, sys, re, hashlib, inspect, importlib.util, json, base64, threading
+import sys
+sys.dont_write_bytecode = True
+
+import os, re, hashlib, inspect, importlib.util, json, base64, threading
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 import requests
 from base.spider import Spider
@@ -186,13 +189,11 @@ class Spider(Spider):
                 res = spider.detailContent([real_id])
                 if res and 'list' in res:
                     vod = res['list'][0]
-                    # 修改播放地址中的ID为py_path|real_id格式
                     if vod.get('vod_play_url'):
                         new_play_urls = []
                         for play in vod['vod_play_url'].split('#'):
                             if '$' in play:
                                 title, pid = play.split('$', 1)
-                                # 提取真实ID（去掉@后缀）
                                 if '@' in pid:
                                     real_pid = pid.split('@')[0]
                                 else:
@@ -221,9 +222,7 @@ class Spider(Spider):
                 spider, _ = self._load_spider_instance(py_path)
                 if not spider:
                     return {"parse": 0, "url": "error"}
-                # 直接调用子插件
-                result = spider.playerContent(flag, real_id, vipFlags)
-                return result
+                return spider.playerContent(flag, real_id, vipFlags)
             except:
                 pass
             return {"parse": 0, "url": ""}
@@ -256,29 +255,20 @@ class Spider(Spider):
         return {"list": res_list[:100]}
 
     def localProxy(self, params):
-        # 解析请求参数，判断是哪个子插件的代理请求
         if params.get('do') != 'py':
             return None
-        
-        # 从params中获取vid参数
         vid = params.get('vid')
         if not vid:
             return None
-        
-        # 尝试从缓存中查找对应的插件路径
-        # 这里使用一个简单的映射：遍历所有已加载的插件，检查是否能处理这个vid
         with self.global_lock:
             for py_path, spider in self.spider_cache.items():
                 if spider and hasattr(spider, 'localProxy'):
                     try:
-                        # 尝试调用子插件的localProxy
                         result = spider.localProxy(params)
                         if result is not None:
                             return result
                     except:
                         continue
-        
-        # 如果找不到对应的插件，直接返回None
         return None
 
     def destroy(self):

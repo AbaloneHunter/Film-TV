@@ -59,7 +59,7 @@ CATEGORY_FILTERS = {
     ]
 }
 
-# ==================== BaseExtractor ====================
+# ==================== 基础提取器 ====================
 class BaseExtractor:
     @staticmethod
     def extract_video_id(text):
@@ -145,7 +145,7 @@ class BaseExtractor:
                 return m.group(1).replace('\\/', '/')
         return ''
 
-# ==================== YouTubeLite ====================
+# ==================== 视频提取器 ====================
 class YouTubeLite(BaseExtractor):
     def __init__(self, session, headers=None, config=None):
         self.session = session
@@ -223,6 +223,7 @@ class YouTubeLite(BaseExtractor):
             'title': details.get('title') or video_id,
             'duration': int(details.get('lengthSeconds') or 0),
             'formats': formats,
+            'is_live': bool(details.get('isLive')),
         }
         self.extract_cache[video_id] = {'data': data, 'expires': time.time() + self.extract_cache_ttl}
         return data
@@ -242,104 +243,6 @@ class YouTubeLite(BaseExtractor):
         if isinstance(tokens, dict):
             return tokens.get(f'{client_name}.{context}') or tokens.get(client_name) or tokens.get(context)
         return None
-
-    # ========== 严格清晰度选择 ==========
-    def choose_playable(self, formats, quality=None):
-        all_videos = [x for x in formats if x.get('vcodec') != 'none' and x.get('acodec') == 'none']
-        if not all_videos:
-            return None
-
-        quality_levels = ['16k', '12k', '8k', '4k', '2k', '1080p', '720p', '480p', '360p']
-        if quality is None or quality not in quality_levels:
-            quality = '1080p'
-
-        try:
-            target_idx = quality_levels.index(quality)
-        except ValueError:
-            target_idx = 0
-
-        for idx in range(target_idx, len(quality_levels)):
-            q = quality_levels[idx]
-            if q == '16k':
-                candidates = [x for x in all_videos if int(x.get('height') or 0) >= 8640]
-            elif q == '12k':
-                candidates = [x for x in all_videos if 6480 <= int(x.get('height') or 0) < 8640]
-            elif q == '8k':
-                candidates = [x for x in all_videos if 4320 <= int(x.get('height') or 0) < 6480]
-            elif q == '4k':
-                candidates = [x for x in all_videos if 2160 <= int(x.get('height') or 0) < 4320]
-            elif q == '2k':
-                candidates = [x for x in all_videos if 1440 <= int(x.get('height') or 0) < 2160]
-            elif q == '1080p':
-                candidates = [x for x in all_videos if 1000 <= int(x.get('height') or 0) < 1440]
-            elif q == '720p':
-                candidates = [x for x in all_videos if 700 <= int(x.get('height') or 0) < 1000]
-            elif q == '480p':
-                candidates = [x for x in all_videos if 400 <= int(x.get('height') or 0) < 700]
-            elif q == '360p':
-                candidates = [x for x in all_videos if 200 <= int(x.get('height') or 0) < 400]
-            else:
-                candidates = all_videos
-
-            if candidates:
-                candidates.sort(key=lambda x: (int(x.get('height') or 0), int(x.get('bitrate') or 0)), reverse=True)
-                for item in candidates:
-                    ok, _ = self._probe_format(item)
-                    if ok:
-                        return item
-                return candidates[0]
-
-        all_videos.sort(key=lambda x: int(x.get('height') or 0), reverse=True)
-        return all_videos[0] if all_videos else None
-
-    def _is_risky_best_video(self, item):
-        mime = (item.get('mimeType') or '').lower()
-        codecs = (item.get('codecs') or '').lower()
-        return 'vp9.2' in mime or 'vp09.02' in codecs or 'av01' in codecs
-
-    def choose_audio(self, formats):
-        candidates = [x for x in formats if x.get('acodec') != 'none' and x.get('vcodec') == 'none']
-        if not candidates:
-            return None
-        candidates.sort(key=lambda x: (1 if x.get('ext') == 'mp4' else 0, int(x.get('bitrate') or 0)), reverse=True)
-        for item in candidates:
-            ok, _ = self._probe_format(item)
-            if ok:
-                return item
-        return None
-
-    def _probe_format(self, item):
-        try:
-            headers = self.headers.copy()
-            headers.update(item.get('headers') or {})
-            headers['Range'] = 'bytes=0-1'
-            r = self.session.get(item.get('url'), headers=headers, stream=True, timeout=10)
-            if r.url and r.url != item.get('url'):
-                item['url'] = r.url
-                item['redirected'] = True
-            status_code = r.status_code
-            r.close()
-            return status_code in (200, 206), status_code
-        except Exception:
-            return False, 0
-
-    def choose_best_video_audio(self, formats):
-        videos = [x for x in formats if x.get('vcodec') != 'none' and x.get('acodec') == 'none']
-        audios = [x for x in formats if x.get('acodec') != 'none' and x.get('vcodec') == 'none']
-        videos.sort(key=lambda x: (int(x.get('height') or 0), int(x.get('bitrate') or 0)), reverse=True)
-        audios.sort(key=lambda x: int(x.get('bitrate') or 0), reverse=True)
-        return (videos[0] if videos else None), (audios[0] if audios else None)
-
-    def _url_summary(self, media_url):
-        parsed = urlparse(media_url or '')
-        query = parse_qs(parsed.query)
-        keys = ['itag', 'mime', 'c', 'expire', 'ip', 'mip', 'source', 'requiressl', 'gir', 'clen', 'dur', 'n', 'pot', 'sig', 'lsig', 'cms_redirect']
-        return {
-            'host': parsed.netloc,
-            'path': parsed.path,
-            'len': len(media_url or ''),
-            'params': {k: bool(query.get(k)) if k in ('pot', 'sig', 'lsig', 'cms_redirect') else (query.get(k, [''])[0][:80]) for k in keys if k in query}
-        }
 
     def _get(self, url, **kwargs):
         headers = self.headers.copy()
@@ -669,7 +572,7 @@ class YouTubeLite(BaseExtractor):
     def _extract_initial_player_response(self, text):
         return self._extract_json_after(text, 'ytInitialPlayerResponse')
 
-# ==================== YouTubeLiveLite ====================
+# ==================== 直播提取器 ====================
 class YouTubeLiveLite(BaseExtractor):
     def __init__(self, session, headers=None, config=None):
         self.session = session
@@ -722,7 +625,7 @@ class YouTubeLiveLite(BaseExtractor):
             streaming['hlsManifestUrl'] = page_hls_url
 
         hls_url = streaming.get('hlsManifestUrl') or ''
-        is_live = bool(details.get('isLiveContent') or hls_url)
+        is_live = bool(details.get('isLive') or hls_url)
         status = status_obj.get('status') or ''
         reason = status_obj.get('reason') or ''
         title = details.get('title') or video_id
@@ -908,103 +811,61 @@ class Spider(Spider):
             'total': len(merged)
         }
 
-    # ========== detailContent 动态过滤，选集显示清晰度名称 ==========
     def detailContent(self, did):
         video_id = did[0]
         is_live = False
         title = video_id
         status = '视频'
-        try:
-            live_data = self.yt_live.extract_live(video_id)
-            if live_data.get('is_live') or live_data.get('hls_url'):
-                is_live = True
-                title = live_data.get('title') or video_id
-                status = '直播中'
-        except Exception:
-            pass
+        has_super = False
 
-        if is_live:
-            safe_title = self._safe_title(title)
-            vod = {
-                'vod_id': video_id,
-                'vod_name': title,
-                'vod_pic': f'https://img.youtube.com/vi/{video_id}/hqdefault.jpg',
-                'vod_remarks': status,
-                'vod_play_from': '直播',
-                'vod_play_url': f'{safe_title} 直播${video_id}@live'
-            }
-            return {'list': [vod]}
-
-        # 非直播：动态检测可用清晰度
-        available_qualities = []
-        fallback = False
         try:
             data = self.yt_video.extract(video_id)
-            if data.get('title'):
-                title = data['title']
-            formats = data.get('formats', [])
-            heights = []
-            for f in formats:
-                if f.get('vcodec') != 'none' and f.get('acodec') == 'none':
-                    h = int(f.get('height') or 0)
-                    if h > 0:
-                        heights.append(h)
-            quality_map = [
-                ('16K', 8640, float('inf')),
-                ('12K', 6480, 8639),
-                ('8K', 4320, 6479),
-                ('4K', 2160, 4319),
-                ('2K', 1440, 2159),
-                ('1080P', 1000, 1439),
-            ]
-            for label, low, high in quality_map:
-                if any(low <= h <= high for h in heights):
-                    available_qualities.append(label)
-            if not available_qualities:
-                fallback = True
+            title = data.get('title') or video_id
+            is_live = data.get('is_live', False)
+            status = '直播中' if is_live else '视频'
+
+            if not is_live:
+                formats = data.get('formats') or []
+                all_videos = [x for x in formats if x.get('vcodec') != 'none' and x.get('acodec') == 'none']
+                high_res = [x for x in all_videos if int(x.get('height') or 0) >= 720]
+                has_super = len(high_res) > 0
         except Exception:
-            fallback = True
+            is_live = False
+            title = self._get_video_title(video_id) or video_id
+            status = '视频'
 
-        if fallback or not available_qualities:
-            available_qualities = ['16K', '12K', '8K', '4K', '2K', '1080P']
-            if title == video_id:
-                title = self._get_video_title(video_id) or video_id
-
-        safe_title = self._safe_title(title)
-
-        # ===== 关键修改：选集名称显示清晰度标签，而不是视频标题 =====
-        quality_links = []
-        for label in available_qualities:
-            if 'K' in label:
-                q_key = label.lower().replace('k', 'k')
-            else:
-                q_key = label.lower()
-            # 选集显示清晰度名称（如 "16K"），而不是视频标题
-            quality_links.append(f'{label}${video_id}@{q_key}')
-
-        play_sources = ['清晰度']
-        play_urls = ['#'.join(quality_links)]
-
-        # 相关推荐作为第二播放源
         related = []
         try:
             r = self.session.get(f'https://www.youtube.com/watch?v={video_id}', timeout=30)
             related = self._extract_videos_fixed(r.text, 20)
         except Exception:
             pass
+
+        safe_title = self._safe_title(title)
+
+        play_sources = []
+        play_urls = []
+
+        if is_live:
+            play_sources.append('直播')
+            play_urls.append(f'{safe_title}${video_id}@live')
+        else:
+            if has_super:
+                play_sources.append('极客VP')
+                play_urls.append(f'{safe_title}${video_id}@super')
+
+            play_sources.append('万能MP')
+            play_urls.append(f'{safe_title}${video_id}@normal')
+
         if related:
-            rec_links = []
-            for v in related[:10]:
-                if v.get('vod_id') != video_id:
-                    rec_links.append(f"{self._safe_title(v['vod_name'])}${v['vod_id']}@best")
-            if rec_links:
-                play_sources.append('相关推荐')
-                play_urls.append('#'.join(rec_links))
+            play_sources.append('相关推荐')
+            play_url2 = '#'.join([f"{self._safe_title(v['vod_name'])}${v['vod_id']}@normal" for v in related if v.get('vod_id') != video_id])
+            play_urls.append(play_url2)
 
         vod = {
             'vod_id': video_id,
             'vod_name': title,
-            'vod_pic': f'https://img.youtube.com/vi/{video_id}/hqdefault.jpg',
+            'vod_pic': f'http://127.0.0.1:9978/proxy?do=py&type=image&vid={video_id}',
             'vod_remarks': status,
             'vod_play_from': '$$$'.join(play_sources),
             'vod_play_url': '$$$'.join(play_urls)
@@ -1016,13 +877,12 @@ class Spider(Spider):
         if '@' in raw_pid:
             video_id, quality_or_type = raw_pid.rsplit('@', 1)
         else:
-            video_id, quality_or_type = raw_pid, '1080p'
+            video_id, quality_or_type = raw_pid, 'super'
+
         if quality_or_type == 'live':
             return self._play_live(video_id)
         else:
-            valid_qualities = ['16k', '12k', '8k', '4k', '2k', '1080p', '720p', '480p', '360p']
-            quality = quality_or_type if quality_or_type in valid_qualities else '1080p'
-            return self._play_video(video_id, quality)
+            return self._play_video(video_id, quality_or_type)
 
     # ---------- 辅助方法 ----------
     def _is_live_category(self, cid):
@@ -1233,14 +1093,30 @@ class Spider(Spider):
                 vid = (nav.get('watchEndpoint') or {}).get('videoId')
             if not vid:
                 return None
+
+            is_actually_live = False
+            badges = renderer.get('badges', [])
+            for badge in badges:
+                if isinstance(badge, dict):
+                    text = badge.get('text', '') or badge.get('label', '') or ''
+                    if '直播' in text or 'LIVE' in text.upper():
+                        is_actually_live = True
+                        break
+            if not is_live and is_actually_live:
+                return None
+
             title_obj = renderer.get('title') or renderer.get('headline') or {}
             title = title_obj.get('simpleText') or ''.join([x.get('text', '') for x in title_obj.get('runs', [])]) or 'YouTube Video'
-            dur = (renderer.get('lengthText') or {}).get('simpleText') or ''
-            remarks = '直播' if is_live else (dur if dur else '视频')
+            dur = ''
+            if not is_actually_live:
+                dur_obj = renderer.get('lengthText') or {}
+                dur = dur_obj.get('simpleText') or ''
+            remarks = '直播' if is_actually_live else (dur if dur else '视频')
+
             return {
                 'vod_id': vid,
                 'vod_name': html.unescape(title),
-                'vod_pic': f'https://img.youtube.com/vi/{vid}/hqdefault.jpg',
+                'vod_pic': f'http://127.0.0.1:9978/proxy?do=py&type=image&vid={vid}',
                 'vod_remarks': remarks
             }
         except Exception:
@@ -1270,7 +1146,183 @@ class Spider(Spider):
             return 'video'
         return re.sub(r'[#$@%&!?*|\\/:<>]', ' ', title)[:60]
 
-    # ---------- 播放 ----------
+    # ==================== 播放（点播） ====================
+    def _play_video(self, video_id, quality):
+        try:
+            data = self.yt_video.extract(video_id)
+            formats = data.get('formats') or []
+
+            all_videos = [x for x in formats if x.get('vcodec') != 'none' and x.get('acodec') == 'none']
+
+            def filter_and_sort_videos(videos):
+                filtered = [v for v in videos if int(v.get('height') or 0) >= 720]
+                filtered.sort(key=lambda x: (int(x.get('height') or 0), int(x.get('bitrate') or 0)), reverse=True)
+                seen_res = {}
+                result = []
+                for v in filtered:
+                    h = int(v.get('height') or 0)
+                    if h not in seen_res:
+                        seen_res[h] = True
+                        result.append(v)
+                return result
+
+            webm_videos = filter_and_sort_videos([x for x in all_videos if x.get('ext') == 'webm'])
+            mp4_videos = filter_and_sort_videos([x for x in all_videos if x.get('ext') == 'mp4'])
+
+            if quality == 'normal':
+                target_videos = mp4_videos if mp4_videos else webm_videos
+            else:
+                target_videos = webm_videos if webm_videos else mp4_videos
+
+            audio_candidates = [x for x in formats if x.get('acodec') != 'none' and x.get('vcodec') == 'none']
+            audio_candidates.sort(
+                key=lambda x: (1 if x.get('ext') == 'mp4' else 0, int(x.get('bitrate') or 0)),
+                reverse=True
+            )
+            audio = audio_candidates[0] if audio_candidates else None
+
+            if not target_videos:
+                raise Exception('未获取到可用视频流')
+
+            cache_key = f'yt_{video_id}_{quality}'
+            all_cached = {}
+            for v in target_videos:
+                all_cached[str(v.get('itag'))] = v
+            if audio:
+                all_cached[str(audio.get('itag'))] = audio
+
+            self.setCache(cache_key, {
+                'target_videos': target_videos,
+                'audio_item': audio,
+                'all_by_itag': all_cached,
+                'duration': data.get('duration') or 0,
+                'expires': time.time() + 300,
+            })
+
+            return {
+                'parse': 0, 'jx': 0,
+                'url': f'http://127.0.0.1:9978/proxy?do=py&type=mpd&vid={video_id}&quality={quality}',
+                'format': 'application/dash+xml'
+            }
+        except Exception:
+            return {
+                'parse': 1,
+                'url': f'https://www.youtube.com/embed/{video_id}?autoplay=1',
+                'header': json.dumps(self.header)
+            }
+
+    def _proxy_mpd(self, params):
+        vid = params.get('vid')
+        quality = params.get('quality') or 'super'
+        data = self.getCache(f'yt_{vid}_{quality}') if vid else None
+        if not data:
+            return [404, 'text/plain', '视频缓存已过期或不存在']
+
+        target_videos = data.get('target_videos') or []
+        audio_item = data.get('audio_item') or {}
+        duration = data.get('duration') or 0
+        duration_pt = f"PT{int(duration)}S"
+        media_base = f'http://127.0.0.1:9978/proxy?do=py&type=media&vid={vid}&quality={quality}'
+
+        def build_video_repr(item, rank):
+            itag = item.get('itag', 0)
+            init = item.get('initRange') or {}
+            index = item.get('indexRange') or {}
+            return (
+                f'      <Representation id="v{itag}" bandwidth="{item.get("bitrate", 1000000)}" '
+                f'codecs="{html.escape(item.get("codecs") or "")}" '
+                f'height="{item.get("height", 0)}" width="{item.get("width", 0)}" '
+                f'frameRate="{item.get("fps", 30)}" qualityRanking="{rank}">\n'
+                f'        <BaseURL>{html.escape(media_base + f"&itag={itag}&track=video")}</BaseURL>\n'
+                f'        <SegmentBase indexRange="{index.get("start", "0")}-{index.get("end", "0")}">'
+                f'<Initialization range="{init.get("start", "0")}-{init.get("end", "0")}"/></SegmentBase>\n'
+                f'      </Representation>'
+            )
+
+        mpd = (
+            f'<?xml version="1.0" encoding="UTF-8"?>\n'
+            f'<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" type="static" '
+            f'mediaPresentationDuration="{duration_pt}" minBufferTime="PT1.5S" '
+            f'profiles="urn:mpeg:dash:profile:isoff-on-demand:2011">\n'
+            f'  <Period id="1" start="PT0S">'
+        )
+
+        if target_videos:
+            mime_type = "video/webm" if target_videos[0].get('ext') == 'webm' else "video/mp4"
+            label = "极客VP" if mime_type == "video/webm" else "万能MP"
+            mpd += f'\n    <AdaptationSet mimeType="{mime_type}" startWithSAP="1" segmentAlignment="true" scanType="progressive">\n'
+            mpd += f'      <Label>{label}</Label>\n'
+            for rank, v in enumerate(target_videos, start=1):
+                mpd += build_video_repr(v, rank) + '\n'
+            mpd += '    </AdaptationSet>'
+
+        if audio_item:
+            audio_itag = audio_item.get('itag', 0)
+            audio_init = audio_item.get('initRange') or {}
+            audio_index = audio_item.get('indexRange') or {}
+            audio_mime = (audio_item.get('mimeType') or 'audio/mp4').split(';')[0]
+            mpd += (
+                f'\n    <AdaptationSet mimeType="{html.escape(audio_mime)}" startWithSAP="1" segmentAlignment="true" lang="und">\n'
+                f'      <Representation id="a{audio_itag}" bandwidth="{audio_item.get("bitrate", 128000)}" '
+                f'codecs="{html.escape(audio_item.get("codecs") or "")}" audioSamplingRate="44100">\n'
+                f'        <BaseURL>{html.escape(media_base + f"&itag={audio_itag}&track=audio")}</BaseURL>\n'
+                f'        <SegmentBase indexRange="{audio_index.get("start", "0")}-{audio_index.get("end", "0")}">'
+                f'<Initialization range="{audio_init.get("start", "0")}-{audio_init.get("end", "0")}"/></SegmentBase>\n'
+                f'      </Representation>\n'
+                f'    </AdaptationSet>'
+            )
+
+        mpd += '\n  </Period>\n</MPD>'
+        return [200, 'application/dash+xml', mpd]
+
+    def _proxy_media(self, params):
+        vid = params.get('vid')
+        quality = params.get('quality') or 'super'
+        itag = params.get('itag')
+        track = params.get('track')
+        data = self.getCache(f'yt_{vid}_{quality}') if vid else None
+        if not data:
+            return [404, 'text/plain', '媒体缓存不存在或已过期']
+
+        all_by_itag = data.get('all_by_itag') or {}
+        media_item = None
+
+        if itag and str(itag) in all_by_itag:
+            media_item = all_by_itag[str(itag)]
+        elif track == 'audio':
+            media_item = data.get('audio_item')
+
+        if not media_item:
+            return [404, 'text/plain', f'流不存在 (itag={itag})']
+
+        target_url = media_item.get('url')
+        if not target_url:
+            return [404, 'text/plain', '播放地址不存在']
+
+        headers = self.header.copy()
+        headers.update(media_item.get('headers') or {})
+
+        range_header = params.get('range') or params.get('Range')
+        if range_header:
+            headers['Range'] = range_header
+
+        try:
+            r = self.session.get(target_url, headers=headers, stream=True, timeout=30)
+            content_type = r.headers.get('content-type', 'application/octet-stream')
+            resp_headers = {
+                'Content-Type': content_type,
+                'Accept-Ranges': 'bytes',
+                'Cache-Control': 'no-cache',
+            }
+            if r.headers.get('content-range'):
+                resp_headers['Content-Range'] = r.headers.get('content-range')
+            if r.headers.get('content-length'):
+                resp_headers['Content-Length'] = r.headers.get('content-length')
+            return [r.status_code, content_type, r.content, resp_headers]
+        except Exception:
+            return [500, 'text/plain', '代理媒体失败']
+
+    # ==================== 播放（直播） ====================
     def _play_live(self, video_id):
         try:
             data = self.yt_live.extract_live(video_id)
@@ -1292,53 +1344,7 @@ class Spider(Spider):
         except Exception:
             return {'parse': 1, 'jx': 1, 'url': f'https://www.youtube.com/embed/{video_id}?autoplay=1'}
 
-    def _play_video(self, video_id, quality):
-        max_retries = 2
-        for attempt in range(max_retries):
-            try:
-                data = self.yt_video.extract(video_id)
-                playable = self.yt_video.choose_playable(data['formats'], quality)
-                if not playable:
-                    raise Exception(f'没有可用的 {quality} 视频流')
-
-                audio = self.yt_video.choose_audio(data['formats'])
-                if audio:
-                    cache_key = f'yt_{video_id}_{quality}'
-                    self.setCache(cache_key, {
-                        'video_url': playable['url'],
-                        'audio_url': audio['url'],
-                        'video_item': playable,
-                        'audio_item': audio,
-                        'duration': data.get('duration') or 0,
-                        'expires': time.time() + 300,
-                    })
-                    return {
-                        'parse': 0,
-                        'jx': 0,
-                        'url': f'http://127.0.0.1:9978/proxy?do=py&type=mpd&vid={video_id}&quality={quality}',
-                        'format': 'application/dash+xml'
-                    }
-                else:
-                    headers = self.header.copy()
-                    headers.update(playable.get('headers') or {})
-                    return {
-                        'parse': 0,
-                        'jx': 0,
-                        'url': playable['url'],
-                        'header': headers
-                    }
-            except Exception as e:
-                self.yt_video.extract_cache.pop(video_id, None)
-                if attempt == max_retries - 1:
-                    return {
-                        'parse': 1,
-                        'url': f'https://www.youtube.com/embed/{video_id}?autoplay=1',
-                        'header': json.dumps(self.header)
-                    }
-                time.sleep(1)
-        return {'parse': 1, 'url': f'https://www.youtube.com/embed/{video_id}?autoplay=1'}
-
-    # ---------- HLS 代理 ----------
+    # ==================== HLS 代理 ====================
     def _probe_hls(self, video_id, hls_url):
         try:
             response = self.session.get(hls_url, headers=self.header, timeout=30)
@@ -1435,7 +1441,7 @@ class Spider(Spider):
             return f'URI="{proxied}"'
         return re.sub(r'URI="([^"]+)"', replace_uri, line)
 
-    # ---------- 本地代理 ----------
+    # ==================== 本地代理 ====================
     def localProxy(self, params):
         if params.get('do') != 'py':
             return None
@@ -1457,7 +1463,7 @@ class Spider(Spider):
         if not vid:
             return [400, 'text/plain', '缺少 video id']
         quality = params.get('quality', 'hqdefault')
-        img_url = f'https://img.youtube.com/vi/{vid}/{quality}.jpg'
+        img_url = f'https://i.ytimg.com/vi/{vid}/{quality}.jpg'
         try:
             r = self.session.get(img_url, timeout=30)
             if r.status_code == 200:
@@ -1496,75 +1502,6 @@ class Spider(Spider):
         except Exception:
             return [500, 'text/plain', '代理播放失败']
 
-    def _proxy_mpd(self, params):
-        vid = params.get('vid')
-        quality = params.get('quality') or '1080p'
-        data = self.getCache(f'yt_{vid}_{quality}') if vid else None
-        if not data:
-            return [404, 'text/plain', '视频缓存已过期或不存在']
-        video_url = data.get('video_url')
-        audio_url = data.get('audio_url')
-        duration = data.get('duration') or 'PT0S'
-        video_item = data.get('video_item') or {}
-        audio_item = data.get('audio_item') or {}
-        media_base = f'http://127.0.0.1:9978/proxy?do=py&type=media&vid={vid}&quality={quality}'
-        duration_pt = f"PT{int(duration or 0)}S"
-        video_mime = (video_item.get('mimeType') or 'video/webm').split(';')[0]
-        audio_mime = (audio_item.get('mimeType') or 'audio/mp4').split(';')[0]
-        video_init = video_item.get('initRange') or {}
-        video_index = video_item.get('indexRange') or {}
-        audio_init = audio_item.get('initRange') or {}
-        audio_index = audio_item.get('indexRange') or {}
-
-        mpd = f'''<?xml version="1.0" encoding="UTF-8"?>
-<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" type="static" mediaPresentationDuration="{duration_pt}" minBufferTime="PT1.5S" profiles="urn:mpeg:dash:profile:isoff-on-demand:2011">
-  <Period id="1" start="PT0S">
-    <AdaptationSet mimeType="{html.escape(video_mime)}" startWithSAP="1" segmentAlignment="true" scanType="progressive">
-      <Representation id="v{video_item.get('itag', 1)}" bandwidth="{video_item.get('bitrate', 1000000)}" codecs="{html.escape(video_item.get('codecs') or '')}" height="{video_item.get('height', 0)}" width="{video_item.get('width', 0)}">
-        <BaseURL>{html.escape(media_base + '&track=video')}</BaseURL>
-        <SegmentBase indexRange="{video_index.get('start', '0')}-{video_index.get('end', '0')}"><Initialization range="{video_init.get('start', '0')}-{video_init.get('end', '0')}"/></SegmentBase>
-      </Representation>
-    </AdaptationSet>
-'''
-        if audio_url:
-            mpd += f'''    <AdaptationSet mimeType="{html.escape(audio_mime)}" startWithSAP="1" segmentAlignment="true" lang="und">
-      <Representation id="a{audio_item.get('itag', 1)}" bandwidth="{audio_item.get('bitrate', 128000)}" codecs="{html.escape(audio_item.get('codecs') or '')}" audioSamplingRate="44100">
-        <BaseURL>{html.escape(media_base + '&track=audio')}</BaseURL>
-        <SegmentBase indexRange="{audio_index.get('start', '0')}-{audio_index.get('end', '0')}"><Initialization range="{audio_init.get('start', '0')}-{audio_init.get('end', '0')}"/></SegmentBase>
-      </Representation>
-    </AdaptationSet>
-'''
-        mpd += '  </Period>\n</MPD>'
-        return [200, 'application/dash+xml', mpd]
-
-    def _proxy_media(self, params):
-        vid = params.get('vid')
-        quality = params.get('quality') or '1080p'
-        track = params.get('track')
-        data = self.getCache(f'yt_{vid}_{quality}') if vid else None
-        if not data or track not in ('video', 'audio'):
-            return [404, 'text/plain', '媒体不存在']
-        target_url = data.get('video_url') if track == 'video' else data.get('audio_url')
-        if not target_url:
-            return [404, 'text/plain', f'{track} 流不存在']
-        media_item = data.get('video_item') if track == 'video' else data.get('audio_item')
-        headers = self.header.copy()
-        headers.update((media_item or {}).get('headers') or {})
-        range_header = params.get('range') or params.get('Range')
-        if range_header:
-            headers['Range'] = range_header
-        try:
-            r = self.session.get(target_url, headers=headers, stream=True, timeout=30)
-            content_type = r.headers.get('content-type', 'application/octet-stream')
-            resp_headers = {'Content-Type': content_type, 'Accept-Ranges': 'bytes', 'Cache-Control': 'no-cache'}
-            if r.headers.get('content-range'):
-                resp_headers['Content-Range'] = r.headers.get('content-range')
-            if r.headers.get('content-length'):
-                resp_headers['Content-Length'] = r.headers.get('content-length')
-            return [r.status_code, content_type, r.content, resp_headers]
-        except Exception:
-            return [500, 'text/plain', '代理媒体失败']
-
     def _proxy_hls(self, params):
         key = params.get('key') or ''
         item = self.hls_url_cache.get(key)
@@ -1575,11 +1512,9 @@ class Spider(Spider):
         try:
             headers = self._hls_headers(target_url, item.get('kind'))
             response = self.session.get(target_url, headers=headers, stream=True, timeout=30)
-            retried = False
             if item.get('kind') == 'media' and response.status_code == 403:
                 retry_headers = self._hls_headers(target_url, 'media_retry')
                 response.close()
-                retried = True
                 response = self.session.get(target_url, headers=retry_headers, stream=True, timeout=30)
             content_type = response.headers.get('content-type') or ''
             is_m3u8 = item.get('kind') in ('master', 'playlist') or 'mpegurl' in content_type.lower() or target_url.split('?')[0].endswith('.m3u8')
