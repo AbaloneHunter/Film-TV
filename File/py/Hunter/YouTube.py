@@ -1,16 +1,15 @@
 #coding=utf-8
 #!/usr/bin/python
 import re
-import os
-import sys
 import json
 import html
 import time
 from urllib.parse import quote, unquote, parse_qs, urlencode, urlparse, urlunparse, urljoin
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from base.spider import Spider
 
-# ==================== 分类与过滤器 ====================
 YOUTUBE_CLASSES = [
     {"type_id": "电影", "type_name": "电影"},
     {"type_id": "直播", "type_name": "直播"},
@@ -59,7 +58,6 @@ CATEGORY_FILTERS = {
     ]
 }
 
-# ==================== 基础提取器 ====================
 class BaseExtractor:
     @staticmethod
     def extract_video_id(text):
@@ -145,7 +143,6 @@ class BaseExtractor:
                 return m.group(1).replace('\\/', '/')
         return ''
 
-# ==================== 视频提取器 ====================
 class YouTubeLite(BaseExtractor):
     def __init__(self, session, headers=None, config=None):
         self.session = session
@@ -164,7 +161,7 @@ class YouTubeLite(BaseExtractor):
             return cached.get('data')
 
         watch_url = f"https://www.youtube.com/watch?v={video_id}"
-        page = self._get(watch_url, timeout=30).text
+        page = self._get(watch_url, timeout=60).text
 
         ytcfg = self._extract_ytcfg(page) or {}
         player_response = self._extract_initial_player_response(page) or {}
@@ -247,7 +244,7 @@ class YouTubeLite(BaseExtractor):
     def _get(self, url, **kwargs):
         headers = self.headers.copy()
         headers.update(kwargs.pop('headers', {}) or {})
-        timeout = kwargs.pop('timeout', 30)
+        timeout = kwargs.pop('timeout', 60)
         r = self.session.get(url, headers=headers, timeout=timeout, **kwargs)
         r.raise_for_status()
         return r
@@ -257,7 +254,7 @@ class YouTubeLite(BaseExtractor):
         h.update({'Content-Type': 'application/json', 'Origin': 'https://www.youtube.com'})
         if headers:
             h.update({k: v for k, v in headers.items() if v})
-        r = self.session.post(url, json=payload, headers=h, timeout=30)
+        r = self.session.post(url, json=payload, headers=h, timeout=60)
         r.raise_for_status()
         return r.json()
 
@@ -431,7 +428,7 @@ class YouTubeLite(BaseExtractor):
         elif player_url.startswith('/'):
             player_url = 'https://www.youtube.com' + player_url
         try:
-            code = self._get(player_url, timeout=30).text
+            code = self._get(player_url, timeout=60).text
         except Exception:
             code = ''
         self.player_cache[player_url] = code
@@ -572,7 +569,6 @@ class YouTubeLite(BaseExtractor):
     def _extract_initial_player_response(self, text):
         return self._extract_json_after(text, 'ytInitialPlayerResponse')
 
-# ==================== 直播提取器 ====================
 class YouTubeLiveLite(BaseExtractor):
     def __init__(self, session, headers=None, config=None):
         self.session = session
@@ -589,7 +585,7 @@ class YouTubeLiveLite(BaseExtractor):
             return cached.get('data')
 
         watch_url = f'https://www.youtube.com/watch?v={video_id}'
-        page = self._get(watch_url, timeout=30).text
+        page = self._get(watch_url, timeout=60).text
 
         player_response = self._extract_initial_player_response(page) or {}
         ytcfg = self._extract_ytcfg(page) or {}
@@ -645,7 +641,7 @@ class YouTubeLiveLite(BaseExtractor):
     def _get(self, url, **kwargs):
         headers = self.headers.copy()
         headers.update(kwargs.pop('headers', {}) or {})
-        timeout = kwargs.pop('timeout', 30)
+        timeout = kwargs.pop('timeout', 60)
         response = self.session.get(url, headers=headers, timeout=timeout, **kwargs)
         response.raise_for_status()
         return response
@@ -655,7 +651,7 @@ class YouTubeLiveLite(BaseExtractor):
         final_headers.update({'Content-Type': 'application/json', 'Origin': 'https://www.youtube.com'})
         if headers:
             final_headers.update({k: v for k, v in headers.items() if v})
-        response = self.session.post(url, json=payload, headers=final_headers, timeout=30)
+        response = self.session.post(url, json=payload, headers=final_headers, timeout=60)
         response.raise_for_status()
         return response.json()
 
@@ -702,7 +698,6 @@ class YouTubeLiveLite(BaseExtractor):
     def _extract_initial_player_response(self, text):
         return self._extract_json_after(text, 'ytInitialPlayerResponse')
 
-# ==================== 主 Spider 类 ====================
 class Spider(Spider):
     def getName(self):
         return 'YouTube 视频+直播'
@@ -713,6 +708,17 @@ class Spider(Spider):
         except Exception:
             self.extendDict = {}
         self.session = requests.Session()
+        # 设置重试策略
+        retry = Retry(
+            total=3,
+            backoff_factor=1,
+            status_forcelist=[500, 502, 503, 504, 408, 429],
+            allowed_methods=["GET", "POST"]
+        )
+        adapter = HTTPAdapter(max_retries=retry, pool_connections=20, pool_maxsize=20)
+        self.session.mount('http://', adapter)
+        self.session.mount('https://', adapter)
+        self.session.keep_alive = False
         self._cache = {}
 
         proxy_config = self.extendDict.get('proxy')
@@ -816,47 +822,106 @@ class Spider(Spider):
         is_live = False
         title = video_id
         status = '视频'
-        has_super = False
 
         try:
             data = self.yt_video.extract(video_id)
             title = data.get('title') or video_id
             is_live = data.get('is_live', False)
             status = '直播中' if is_live else '视频'
-
-            if not is_live:
-                formats = data.get('formats') or []
-                all_videos = [x for x in formats if x.get('vcodec') != 'none' and x.get('acodec') == 'none']
-                high_res = [x for x in all_videos if int(x.get('height') or 0) >= 720]
-                has_super = len(high_res) > 0
         except Exception:
             is_live = False
             title = self._get_video_title(video_id) or video_id
             status = '视频'
 
-        related = []
-        try:
-            r = self.session.get(f'https://www.youtube.com/watch?v={video_id}', timeout=30)
-            related = self._extract_videos_fixed(r.text, 20)
-        except Exception:
-            pass
+        if is_live:
+            safe_title = self._safe_title(title)
+            vod = {
+                'vod_id': video_id,
+                'vod_name': title,
+                'vod_pic': f'http://127.0.0.1:9978/proxy?do=py&type=image&vid={video_id}',
+                'vod_remarks': '直播中',
+                'vod_play_from': '直播',
+                'vod_play_url': f'{safe_title}${video_id}@live'
+            }
+            return {'list': [vod]}
 
-        safe_title = self._safe_title(title)
+        if 'data' not in locals() or not data:
+            try:
+                data = self.yt_video.extract(video_id)
+            except Exception:
+                data = {'formats': []}
+        formats = data.get('formats', [])
+        video_streams = [f for f in formats if f.get('vcodec') != 'none' and f.get('acodec') == 'none']
+
+        wh_map = {}
+        for f in video_streams:
+            w = int(f.get('width', 0))
+            h = int(f.get('height', 0))
+            if h < 720 or w <= 0 or h <= 0:
+                continue
+            key = (w, h)
+            bitrate = int(f.get('bitrate', 0))
+            if key not in wh_map or bitrate > int(wh_map[key].get('bitrate', 0)):
+                wh_map[key] = f
+
+        unique_streams = list(wh_map.values())
+        if not unique_streams:
+            vod = {
+                'vod_id': video_id,
+                'vod_name': title,
+                'vod_pic': f'http://127.0.0.1:9978/proxy?do=py&type=image&vid={video_id}',
+                'vod_remarks': status,
+                'vod_play_from': '视频',
+                'vod_play_url': f'{self._safe_title(title)}${video_id}@normal'
+            }
+            return {'list': [vod]}
+
+        unique_streams.sort(key=lambda x: (int(x.get('height', 0)), int(x.get('width', 0))), reverse=True)
 
         play_sources = []
         play_urls = []
+        used_labels = set()
 
-        if is_live:
-            play_sources.append('直播')
-            play_urls.append(f'{safe_title}${video_id}@live')
-        else:
-            if has_super:
-                play_sources.append('极客VP')
-                play_urls.append(f'{safe_title}${video_id}@super')
+        for f in unique_streams:
+            h = int(f.get('height', 0))
+            if h >= 15360:
+                label = '16K'
+            elif h >= 11520:
+                label = '12K'
+            elif h >= 7680:
+                label = '10K'
+            elif h >= 4320:
+                label = '8K'
+            elif h >= 2160:
+                label = '4K'
+            elif h >= 1440:
+                label = '2K'
+            elif h >= 1080:
+                label = '1080P'
+            elif h >= 720:
+                label = '720P'
+            else:
+                continue
 
-            play_sources.append('万能MP')
-            play_urls.append(f'{safe_title}${video_id}@normal')
+            if label not in used_labels:
+                used_labels.add(label)
+                play_sources.append(label)
+                play_urls.append(f'{self._safe_title(title)}${video_id}@height={h}')
 
+        if not play_sources:
+            play_sources.append('视频')
+            if unique_streams:
+                max_h = unique_streams[0].get('height', 720)
+                play_urls.append(f'{self._safe_title(title)}${video_id}@height={max_h}')
+            else:
+                play_urls.append(f'{self._safe_title(title)}${video_id}@normal')
+
+        related = []
+        try:
+            r = self.session.get(f'https://www.youtube.com/watch?v={video_id}', timeout=60)
+            related = self._extract_videos_fixed(r.text, 20)
+        except Exception:
+            pass
         if related:
             play_sources.append('相关推荐')
             play_url2 = '#'.join([f"{self._safe_title(v['vod_name'])}${v['vod_id']}@normal" for v in related if v.get('vod_id') != video_id])
@@ -875,16 +940,20 @@ class Spider(Spider):
     def playerContent(self, flag, pid, vipFlags):
         raw_pid = pid.split('$')[-1]
         if '@' in raw_pid:
-            video_id, quality_or_type = raw_pid.rsplit('@', 1)
+            parts = raw_pid.split('@')
+            video_id = parts[0]
+            params = parts[1] if len(parts) > 1 else ''
+            if params.startswith('height='):
+                height = int(params.split('=')[1])
+                return self._play_video(video_id, height)
+            elif params == 'live':
+                return self._play_live(video_id)
+            else:
+                return self._play_video(video_id, None)
         else:
-            video_id, quality_or_type = raw_pid, 'super'
+            video_id = raw_pid
+            return self._play_video(video_id, None)
 
-        if quality_or_type == 'live':
-            return self._play_live(video_id)
-        else:
-            return self._play_video(video_id, quality_or_type)
-
-    # ---------- 辅助方法 ----------
     def _is_live_category(self, cid):
         return 'live' in cid.lower() or '直播' in cid.lower()
 
@@ -966,7 +1035,7 @@ class Spider(Spider):
 
     def _fetch_live_search_first_page(self, key):
         search_url = f'https://www.youtube.com/results?search_query={quote(str(key or ""))}&sp=EgJAAQ%253D%253D'
-        r = self.session.get(search_url, timeout=30)
+        r = self.session.get(search_url, timeout=60)
         html_str = r.text
         data = self.yt_video._extract_json_after(html_str, 'ytInitialData') or {}
         ytcfg = self.yt_video._extract_ytcfg(html_str) or {}
@@ -986,7 +1055,7 @@ class Spider(Spider):
 
     def _fetch_search_first_page(self, key):
         search_url = f'https://www.youtube.com/results?search_query={quote(str(key or ""))}'
-        r = self.session.get(search_url, timeout=30)
+        r = self.session.get(search_url, timeout=60)
         html_str = r.text
         data = self.yt_video._extract_json_after(html_str, 'ytInitialData') or {}
         ytcfg = self.yt_video._extract_ytcfg(html_str) or {}
@@ -1019,7 +1088,7 @@ class Spider(Spider):
             'X-YouTube-Client-Version': session.get('client_version') or '2.20240310.01.00',
         })
         payload = {'context': session.get('context') or {}, 'continuation': token}
-        r = self.session.post(url, json=payload, headers=headers, timeout=30)
+        r = self.session.post(url, json=payload, headers=headers, timeout=60)
         r.raise_for_status()
         return r.json()
 
@@ -1146,33 +1215,34 @@ class Spider(Spider):
             return 'video'
         return re.sub(r'[#$@%&!?*|\\/:<>]', ' ', title)[:60]
 
-    # ==================== 播放（点播） ====================
-    def _play_video(self, video_id, quality):
+    def _play_video(self, video_id, target_height=None):
         try:
             data = self.yt_video.extract(video_id)
             formats = data.get('formats') or []
 
             all_videos = [x for x in formats if x.get('vcodec') != 'none' and x.get('acodec') == 'none']
 
-            def filter_and_sort_videos(videos):
-                filtered = [v for v in videos if int(v.get('height') or 0) >= 720]
-                filtered.sort(key=lambda x: (int(x.get('height') or 0), int(x.get('bitrate') or 0)), reverse=True)
-                seen_res = {}
-                result = []
-                for v in filtered:
-                    h = int(v.get('height') or 0)
-                    if h not in seen_res:
-                        seen_res[h] = True
-                        result.append(v)
-                return result
-
-            webm_videos = filter_and_sort_videos([x for x in all_videos if x.get('ext') == 'webm'])
-            mp4_videos = filter_and_sort_videos([x for x in all_videos if x.get('ext') == 'mp4'])
-
-            if quality == 'normal':
-                target_videos = mp4_videos if mp4_videos else webm_videos
+            if target_height is not None and target_height > 0:
+                exact = [v for v in all_videos if int(v.get('height', 0)) == target_height]
+                if exact:
+                    exact.sort(key=lambda x: int(x.get('bitrate') or 0), reverse=True)
+                    target_videos = [exact[0]]
+                else:
+                    all_videos.sort(key=lambda x: abs(int(x.get('height', 0)) - target_height))
+                    target_videos = [all_videos[0]] if all_videos else []
             else:
-                target_videos = webm_videos if webm_videos else mp4_videos
+                all_videos.sort(key=lambda x: (int(x.get('height') or 0), int(x.get('bitrate') or 0)), reverse=True)
+                seen_heights = set()
+                target_videos = []
+                for v in all_videos:
+                    h = int(v.get('height') or 0)
+                    if h not in seen_heights:
+                        seen_heights.add(h)
+                        target_videos.append(v)
+                target_videos = target_videos[:1]
+
+            if not target_videos:
+                raise Exception('未获取到可用视频流')
 
             audio_candidates = [x for x in formats if x.get('acodec') != 'none' and x.get('vcodec') == 'none']
             audio_candidates.sort(
@@ -1181,10 +1251,7 @@ class Spider(Spider):
             )
             audio = audio_candidates[0] if audio_candidates else None
 
-            if not target_videos:
-                raise Exception('未获取到可用视频流')
-
-            cache_key = f'yt_{video_id}_{quality}'
+            cache_key = f'yt_{video_id}_{target_height if target_height else "max"}'
             all_cached = {}
             for v in target_videos:
                 all_cached[str(v.get('itag'))] = v
@@ -1196,15 +1263,15 @@ class Spider(Spider):
                 'audio_item': audio,
                 'all_by_itag': all_cached,
                 'duration': data.get('duration') or 0,
-                'expires': time.time() + 300,
+                'expires': time.time() + 600,
             })
 
             return {
                 'parse': 0, 'jx': 0,
-                'url': f'http://127.0.0.1:9978/proxy?do=py&type=mpd&vid={video_id}&quality={quality}',
+                'url': f'http://127.0.0.1:9978/proxy?do=py&type=mpd&vid={video_id}&height={target_height if target_height else "max"}',
                 'format': 'application/dash+xml'
             }
-        except Exception:
+        except Exception as e:
             return {
                 'parse': 1,
                 'url': f'https://www.youtube.com/embed/{video_id}?autoplay=1',
@@ -1213,8 +1280,9 @@ class Spider(Spider):
 
     def _proxy_mpd(self, params):
         vid = params.get('vid')
-        quality = params.get('quality') or 'super'
-        data = self.getCache(f'yt_{vid}_{quality}') if vid else None
+        height_param = params.get('height')
+        cache_key = f'yt_{vid}_{height_param if height_param else "max"}'
+        data = self.getCache(cache_key)
         if not data:
             return [404, 'text/plain', '视频缓存已过期或不存在']
 
@@ -1222,9 +1290,12 @@ class Spider(Spider):
         audio_item = data.get('audio_item') or {}
         duration = data.get('duration') or 0
         duration_pt = f"PT{int(duration)}S"
-        media_base = f'http://127.0.0.1:9978/proxy?do=py&type=media&vid={vid}&quality={quality}'
+        media_base = f'http://127.0.0.1:9978/proxy?do=py&type=media&vid={vid}&height={height_param if height_param else "max"}'
 
-        def build_video_repr(item, rank):
+        if not target_videos:
+            return [404, 'text/plain', '没有视频流']
+
+        def build_video_repr(item):
             itag = item.get('itag', 0)
             init = item.get('initRange') or {}
             index = item.get('indexRange') or {}
@@ -1232,7 +1303,7 @@ class Spider(Spider):
                 f'      <Representation id="v{itag}" bandwidth="{item.get("bitrate", 1000000)}" '
                 f'codecs="{html.escape(item.get("codecs") or "")}" '
                 f'height="{item.get("height", 0)}" width="{item.get("width", 0)}" '
-                f'frameRate="{item.get("fps", 30)}" qualityRanking="{rank}">\n'
+                f'frameRate="{item.get("fps", 30)}">\n'
                 f'        <BaseURL>{html.escape(media_base + f"&itag={itag}&track=video")}</BaseURL>\n'
                 f'        <SegmentBase indexRange="{index.get("start", "0")}-{index.get("end", "0")}">'
                 f'<Initialization range="{init.get("start", "0")}-{init.get("end", "0")}"/></SegmentBase>\n'
@@ -1247,14 +1318,13 @@ class Spider(Spider):
             f'  <Period id="1" start="PT0S">'
         )
 
-        if target_videos:
-            mime_type = "video/webm" if target_videos[0].get('ext') == 'webm' else "video/mp4"
-            label = "极客VP" if mime_type == "video/webm" else "万能MP"
-            mpd += f'\n    <AdaptationSet mimeType="{mime_type}" startWithSAP="1" segmentAlignment="true" scanType="progressive">\n'
-            mpd += f'      <Label>{label}</Label>\n'
-            for rank, v in enumerate(target_videos, start=1):
-                mpd += build_video_repr(v, rank) + '\n'
-            mpd += '    </AdaptationSet>'
+        video_item = target_videos[0]
+        mime_type = "video/webm" if video_item.get('ext') == 'webm' else "video/mp4"
+        label = "极客VP" if mime_type == "video/webm" else "万能MP"
+        mpd += f'\n    <AdaptationSet mimeType="{mime_type}" startWithSAP="1" segmentAlignment="true" scanType="progressive">\n'
+        mpd += f'      <Label>{label}</Label>\n'
+        mpd += build_video_repr(video_item) + '\n'
+        mpd += '    </AdaptationSet>'
 
         if audio_item:
             audio_itag = audio_item.get('itag', 0)
@@ -1277,10 +1347,11 @@ class Spider(Spider):
 
     def _proxy_media(self, params):
         vid = params.get('vid')
-        quality = params.get('quality') or 'super'
+        height_param = params.get('height')
         itag = params.get('itag')
         track = params.get('track')
-        data = self.getCache(f'yt_{vid}_{quality}') if vid else None
+        cache_key = f'yt_{vid}_{height_param if height_param else "max"}'
+        data = self.getCache(cache_key)
         if not data:
             return [404, 'text/plain', '媒体缓存不存在或已过期']
 
@@ -1301,28 +1372,51 @@ class Spider(Spider):
 
         headers = self.header.copy()
         headers.update(media_item.get('headers') or {})
-
         range_header = params.get('range') or params.get('Range')
         if range_header:
             headers['Range'] = range_header
 
-        try:
-            r = self.session.get(target_url, headers=headers, stream=True, timeout=30)
-            content_type = r.headers.get('content-type', 'application/octet-stream')
-            resp_headers = {
-                'Content-Type': content_type,
-                'Accept-Ranges': 'bytes',
-                'Cache-Control': 'no-cache',
-            }
-            if r.headers.get('content-range'):
-                resp_headers['Content-Range'] = r.headers.get('content-range')
-            if r.headers.get('content-length'):
-                resp_headers['Content-Length'] = r.headers.get('content-length')
-            return [r.status_code, content_type, r.content, resp_headers]
-        except Exception:
-            return [500, 'text/plain', '代理媒体失败']
+        max_retries = 3
+        for attempt in range(max_retries + 1):
+            try:
+                r = self.session.get(target_url, headers=headers, stream=True, timeout=120)
+                if r.status_code in (403, 404) and attempt < max_retries:
+                    try:
+                        fresh_data = self.yt_video.extract(vid)
+                        fresh_formats = fresh_data.get('formats', [])
+                        fresh_item = None
+                        for f in fresh_formats:
+                            if str(f.get('itag')) == str(itag):
+                                fresh_item = f
+                                break
+                        if fresh_item and fresh_item.get('url'):
+                            media_item['url'] = fresh_item['url']
+                            target_url = fresh_item['url']
+                            all_by_itag[str(itag)] = fresh_item
+                            data['all_by_itag'] = all_by_itag
+                            self.setCache(cache_key, data)
+                            continue
+                    except Exception:
+                        pass
+                    time.sleep(1)
+                    continue
+                content_type = r.headers.get('content-type', 'application/octet-stream')
+                resp_headers = {
+                    'Content-Type': content_type,
+                    'Accept-Ranges': 'bytes',
+                    'Cache-Control': 'no-cache',
+                }
+                if r.headers.get('content-range'):
+                    resp_headers['Content-Range'] = r.headers.get('content-range')
+                if r.headers.get('content-length'):
+                    resp_headers['Content-Length'] = r.headers.get('content-length')
+                return [r.status_code, content_type, r.content, resp_headers]
+            except Exception as e:
+                if attempt == max_retries:
+                    return [500, 'text/plain', f'代理媒体失败: {str(e)}']
+                time.sleep(1)
+        return [500, 'text/plain', '代理媒体失败']
 
-    # ==================== 播放（直播） ====================
     def _play_live(self, video_id):
         try:
             data = self.yt_live.extract_live(video_id)
@@ -1344,14 +1438,13 @@ class Spider(Spider):
         except Exception:
             return {'parse': 1, 'jx': 1, 'url': f'https://www.youtube.com/embed/{video_id}?autoplay=1'}
 
-    # ==================== HLS 代理 ====================
     def _probe_hls(self, video_id, hls_url):
         try:
-            response = self.session.get(hls_url, headers=self.header, timeout=30)
+            response = self.session.get(hls_url, headers=self.header, timeout=60)
             full_text = response.text or ''
             variant_url = self._pick_variant_playlist(hls_url, full_text)
             if variant_url:
-                self.session.get(variant_url, headers=self.header, timeout=30)
+                self.session.get(variant_url, headers=self.header, timeout=60)
         except Exception:
             pass
 
@@ -1441,7 +1534,53 @@ class Spider(Spider):
             return f'URI="{proxied}"'
         return re.sub(r'URI="([^"]+)"', replace_uri, line)
 
-    # ==================== 本地代理 ====================
+    def _proxy_hls(self, params):
+        key = params.get('key') or ''
+        item = self.hls_url_cache.get(key)
+        if not item or item.get('expires', 0) < time.time():
+            return [404, 'text/plain', 'HLS 缓存已过期']
+        item['expires'] = time.time() + self._hls_ttl(item.get('kind'))
+        target_url = item.get('url') or ''
+        video_id = item.get('video_id', '')
+
+        try:
+            headers = self._hls_headers(target_url, item.get('kind'))
+            max_retries = 3
+            for attempt in range(max_retries + 1):
+                try:
+                    response = self.session.get(target_url, headers=headers, stream=True, timeout=120)
+                    if response.status_code in (403, 404) and attempt < max_retries:
+                        if video_id and item.get('kind') in ('master', 'playlist'):
+                            try:
+                                live_data = self.yt_live.extract_live(video_id)
+                                new_hls = live_data.get('hls_url')
+                                if new_hls:
+                                    item['url'] = new_hls
+                                    target_url = new_hls
+                                    self.hls_url_cache[key] = item
+                                    continue
+                            except Exception:
+                                pass
+                        time.sleep(1)
+                        continue
+                    content_type = response.headers.get('content-type') or ''
+                    is_m3u8 = item.get('kind') in ('master', 'playlist') or 'mpegurl' in content_type.lower() or target_url.split('?')[0].endswith('.m3u8')
+                    if is_m3u8:
+                        text = response.text
+                        rewritten = self._rewrite_m3u8(text, target_url, video_id)
+                        return [response.status_code, 'application/vnd.apple.mpegurl', rewritten, {'Content-Type': 'application/vnd.apple.mpegurl', 'Cache-Control': 'no-cache'}]
+                    resp_headers = {'Content-Type': content_type or 'application/octet-stream', 'Cache-Control': 'no-cache'}
+                    if response.headers.get('content-length'):
+                        resp_headers['Content-Length'] = response.headers.get('content-length')
+                    return [response.status_code, content_type or 'application/octet-stream', response.content, resp_headers]
+                except Exception as e:
+                    if attempt == max_retries:
+                        raise
+                    time.sleep(1)
+        except Exception as e:
+            return [500, 'text/plain', f'HLS 代理失败: {str(e)}']
+        return [500, 'text/plain', 'HLS 代理失败']
+
     def localProxy(self, params):
         if params.get('do') != 'py':
             return None
@@ -1487,7 +1626,7 @@ class Spider(Spider):
         if range_header:
             headers['Range'] = range_header
         try:
-            r = self.session.get(target_url, headers=headers, stream=True, timeout=30)
+            r = self.session.get(target_url, headers=headers, stream=True, timeout=120)
             content_type = r.headers.get('content-type', 'video/mp4')
             resp_headers = {
                 'Content-Type': content_type,
@@ -1501,33 +1640,6 @@ class Spider(Spider):
             return [r.status_code, content_type, r.content, resp_headers]
         except Exception:
             return [500, 'text/plain', '代理播放失败']
-
-    def _proxy_hls(self, params):
-        key = params.get('key') or ''
-        item = self.hls_url_cache.get(key)
-        if not item or item.get('expires', 0) < time.time():
-            return [404, 'text/plain', 'HLS 缓存已过期']
-        item['expires'] = time.time() + self._hls_ttl(item.get('kind'))
-        target_url = item.get('url') or ''
-        try:
-            headers = self._hls_headers(target_url, item.get('kind'))
-            response = self.session.get(target_url, headers=headers, stream=True, timeout=30)
-            if item.get('kind') == 'media' and response.status_code == 403:
-                retry_headers = self._hls_headers(target_url, 'media_retry')
-                response.close()
-                response = self.session.get(target_url, headers=retry_headers, stream=True, timeout=30)
-            content_type = response.headers.get('content-type') or ''
-            is_m3u8 = item.get('kind') in ('master', 'playlist') or 'mpegurl' in content_type.lower() or target_url.split('?')[0].endswith('.m3u8')
-            if is_m3u8:
-                text = response.text
-                rewritten = self._rewrite_m3u8(text, target_url, item.get('video_id') or '')
-                return [response.status_code, 'application/vnd.apple.mpegurl', rewritten, {'Content-Type': 'application/vnd.apple.mpegurl', 'Cache-Control': 'no-cache'}]
-            resp_headers = {'Content-Type': content_type or 'application/octet-stream', 'Cache-Control': 'no-cache'}
-            if response.headers.get('content-length'):
-                resp_headers['Content-Length'] = response.headers.get('content-length')
-            return [response.status_code, content_type or 'application/octet-stream', response.content, resp_headers]
-        except Exception:
-            return [500, 'text/plain', 'HLS 代理失败']
 
     def destroy(self):
         try:
