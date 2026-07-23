@@ -259,12 +259,11 @@ class YouTubeLite(BaseExtractor):
         return r.json()
 
     def _call_player_api(self, video_id, api_key, context, referer, visitor_data=None, sts=None):
+        # ===== 使用 ANDROID_VR + ANDROID + IOS =====
         clients = [
             {'client': {'clientName': 'ANDROID_VR', 'clientVersion': '1.65.10', 'deviceMake': 'Oculus', 'deviceModel': 'Quest 3', 'androidSdkVersion': 32, 'userAgent': 'com.google.android.apps.youtube.vr.oculus/1.65.10 (Linux; U; Android 12L; eureka-user Build/SQ3A.220605.009.A1) gzip', 'osName': 'Android', 'osVersion': '12L', 'hl': 'en', 'gl': 'US'}},
             {'client': {'clientName': 'ANDROID', 'clientVersion': '21.02.35', 'androidSdkVersion': 30, 'userAgent': 'com.google.android.youtube/21.02.35 (Linux; U; Android 11) gzip', 'osName': 'Android', 'osVersion': '11', 'hl': 'en', 'gl': 'US'}},
             {'client': {'clientName': 'IOS', 'clientVersion': '21.02.3', 'deviceMake': 'Apple', 'deviceModel': 'iPhone16,2', 'userAgent': 'com.google.ios.youtube/21.02.3 (iPhone16,2; U; CPU iOS 18_3_2 like Mac OS X;)', 'osName': 'iPhone', 'osVersion': '18.3.2.22D82', 'hl': 'en', 'gl': 'US'}},
-            context,
-            {'client': {'clientName': 'MWEB', 'clientVersion': '2.20260115.01.00', 'userAgent': 'Mozilla/5.0 (iPad; CPU OS 16_7_10 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1,gzip(gfe)', 'hl': 'en', 'gl': 'US'}},
         ]
         results = []
         fallback = None
@@ -656,18 +655,15 @@ class YouTubeLiveLite(BaseExtractor):
         return response.json()
 
     def _call_player_api(self, video_id, api_key, ytcfg, referer, visitor_data=None):
-        context = ytcfg.get('INNERTUBE_CONTEXT') or {
-            'client': {'clientName': 'WEB', 'clientVersion': '2.20240310.01.00', 'hl': 'en', 'gl': 'US'}
-        }
+        # ===== 使用 ANDROID_VR + ANDROID + IOS =====
         clients = [
+            {'client': {'clientName': 'ANDROID_VR', 'clientVersion': '1.65.10', 'deviceMake': 'Oculus', 'deviceModel': 'Quest 3', 'androidSdkVersion': 32, 'userAgent': 'com.google.android.apps.youtube.vr.oculus/1.65.10 (Linux; U; Android 12L; eureka-user Build/SQ3A.220605.009.A1) gzip', 'osName': 'Android', 'osVersion': '12L', 'hl': 'en', 'gl': 'US'}},
             {'client': {'clientName': 'ANDROID', 'clientVersion': '21.02.35', 'androidSdkVersion': 30, 'userAgent': 'com.google.android.youtube/21.02.35 (Linux; U; Android 11) gzip', 'osName': 'Android', 'osVersion': '11', 'hl': 'en', 'gl': 'US'}},
             {'client': {'clientName': 'IOS', 'clientVersion': '21.02.3', 'deviceMake': 'Apple', 'deviceModel': 'iPhone16,2', 'userAgent': 'com.google.ios.youtube/21.02.3 (iPhone16,2; U; CPU iOS 18_3_2 like Mac OS X;)', 'osName': 'iPhone', 'osVersion': '18.3.2.22D82', 'hl': 'en', 'gl': 'US'}},
-            {'client': {'clientName': 'MWEB', 'clientVersion': '2.20260115.01.00', 'userAgent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1', 'hl': 'en', 'gl': 'US'}},
-            context,
         ]
         for ctx in clients:
             client = ctx.get('client') or {}
-            client_name = client.get('clientName') or 'WEB'
+            client_name = client.get('clientName') or 'ANDROID_VR'
             try:
                 url = f'https://www.youtube.com/youtubei/v1/player?key={quote(api_key)}&prettyPrint=false'
                 headers = {
@@ -708,7 +704,6 @@ class Spider(Spider):
         except Exception:
             self.extendDict = {}
         self.session = requests.Session()
-        # 设置重试策略
         retry = Retry(
             total=3,
             backoff_factor=1,
@@ -822,99 +817,23 @@ class Spider(Spider):
         is_live = False
         title = video_id
         status = '视频'
+        has_super = False
 
         try:
             data = self.yt_video.extract(video_id)
             title = data.get('title') or video_id
             is_live = data.get('is_live', False)
             status = '直播中' if is_live else '视频'
+
+            if not is_live:
+                formats = data.get('formats') or []
+                all_videos = [x for x in formats if x.get('vcodec') != 'none' and x.get('acodec') == 'none']
+                high_res = [x for x in all_videos if int(x.get('height') or 0) >= 720]
+                has_super = len(high_res) > 0
         except Exception:
             is_live = False
             title = self._get_video_title(video_id) or video_id
             status = '视频'
-
-        if is_live:
-            safe_title = self._safe_title(title)
-            vod = {
-                'vod_id': video_id,
-                'vod_name': title,
-                'vod_pic': f'http://127.0.0.1:9978/proxy?do=py&type=image&vid={video_id}',
-                'vod_remarks': '直播中',
-                'vod_play_from': '直播',
-                'vod_play_url': f'{safe_title}${video_id}@live'
-            }
-            return {'list': [vod]}
-
-        if 'data' not in locals() or not data:
-            try:
-                data = self.yt_video.extract(video_id)
-            except Exception:
-                data = {'formats': []}
-        formats = data.get('formats', [])
-        video_streams = [f for f in formats if f.get('vcodec') != 'none' and f.get('acodec') == 'none']
-
-        wh_map = {}
-        for f in video_streams:
-            w = int(f.get('width', 0))
-            h = int(f.get('height', 0))
-            if h < 720 or w <= 0 or h <= 0:
-                continue
-            key = (w, h)
-            bitrate = int(f.get('bitrate', 0))
-            if key not in wh_map or bitrate > int(wh_map[key].get('bitrate', 0)):
-                wh_map[key] = f
-
-        unique_streams = list(wh_map.values())
-        if not unique_streams:
-            vod = {
-                'vod_id': video_id,
-                'vod_name': title,
-                'vod_pic': f'http://127.0.0.1:9978/proxy?do=py&type=image&vid={video_id}',
-                'vod_remarks': status,
-                'vod_play_from': '视频',
-                'vod_play_url': f'{self._safe_title(title)}${video_id}@normal'
-            }
-            return {'list': [vod]}
-
-        unique_streams.sort(key=lambda x: (int(x.get('height', 0)), int(x.get('width', 0))), reverse=True)
-
-        play_sources = []
-        play_urls = []
-        used_labels = set()
-
-        for f in unique_streams:
-            h = int(f.get('height', 0))
-            if h >= 15360:
-                label = '16K'
-            elif h >= 11520:
-                label = '12K'
-            elif h >= 7680:
-                label = '10K'
-            elif h >= 4320:
-                label = '8K'
-            elif h >= 2160:
-                label = '4K'
-            elif h >= 1440:
-                label = '2K'
-            elif h >= 1080:
-                label = '1080P'
-            elif h >= 720:
-                label = '720P'
-            else:
-                continue
-
-            if label not in used_labels:
-                used_labels.add(label)
-                play_sources.append(label)
-                play_urls.append(f'{self._safe_title(title)}${video_id}@height={h}')
-
-        if not play_sources:
-            play_sources.append('视频')
-            if unique_streams:
-                max_h = unique_streams[0].get('height', 720)
-                play_urls.append(f'{self._safe_title(title)}${video_id}@height={max_h}')
-            else:
-                play_urls.append(f'{self._safe_title(title)}${video_id}@normal')
 
         related = []
         try:
@@ -922,6 +841,23 @@ class Spider(Spider):
             related = self._extract_videos_fixed(r.text, 20)
         except Exception:
             pass
+
+        safe_title = self._safe_title(title)
+
+        play_sources = []
+        play_urls = []
+
+        if is_live:
+            play_sources.append('直播')
+            play_urls.append(f'{safe_title}${video_id}@live')
+        else:
+            if has_super:
+                play_sources.append('极客VP')
+                play_urls.append(f'{safe_title}${video_id}@super')
+
+            play_sources.append('万能MP')
+            play_urls.append(f'{safe_title}${video_id}@normal')
+
         if related:
             play_sources.append('相关推荐')
             play_url2 = '#'.join([f"{self._safe_title(v['vod_name'])}${v['vod_id']}@normal" for v in related if v.get('vod_id') != video_id])
@@ -940,19 +876,14 @@ class Spider(Spider):
     def playerContent(self, flag, pid, vipFlags):
         raw_pid = pid.split('$')[-1]
         if '@' in raw_pid:
-            parts = raw_pid.split('@')
-            video_id = parts[0]
-            params = parts[1] if len(parts) > 1 else ''
-            if params.startswith('height='):
-                height = int(params.split('=')[1])
-                return self._play_video(video_id, height)
-            elif params == 'live':
-                return self._play_live(video_id)
-            else:
-                return self._play_video(video_id, None)
+            video_id, quality_or_type = raw_pid.rsplit('@', 1)
         else:
-            video_id = raw_pid
-            return self._play_video(video_id, None)
+            video_id, quality_or_type = raw_pid, 'super'
+
+        if quality_or_type == 'live':
+            return self._play_live(video_id)
+        else:
+            return self._play_video(video_id, quality_or_type)
 
     def _is_live_category(self, cid):
         return 'live' in cid.lower() or '直播' in cid.lower()
@@ -1215,43 +1146,88 @@ class Spider(Spider):
             return 'video'
         return re.sub(r'[#$@%&!?*|\\/:<>]', ' ', title)[:60]
 
-    def _play_video(self, video_id, target_height=None):
+    # ==================== 改进后的 _play_video 方法 ====================
+    def _play_video(self, video_id, quality):
         try:
             data = self.yt_video.extract(video_id)
             formats = data.get('formats') or []
 
+            # 分离视频流（有视频无音频）
             all_videos = [x for x in formats if x.get('vcodec') != 'none' and x.get('acodec') == 'none']
 
-            if target_height is not None and target_height > 0:
-                exact = [v for v in all_videos if int(v.get('height', 0)) == target_height]
-                if exact:
-                    exact.sort(key=lambda x: int(x.get('bitrate') or 0), reverse=True)
-                    target_videos = [exact[0]]
+            # 如果 all_videos 为空，尝试所有包含视频的流（可能有些混流）
+            if not all_videos:
+                all_videos = [x for x in formats if x.get('vcodec') != 'none']
+
+            # 定义筛选函数：优先保留 >=720p，按高度和码率降序
+            def filter_and_sort(videos):
+                # 先按高度 >=720 过滤
+                high = [v for v in videos if int(v.get('height') or 0) >= 720]
+                # 如果 high 为空，则取所有视频
+                candidates = high if high else videos
+                # 按高度降序，码率降序
+                candidates.sort(key=lambda x: (int(x.get('height') or 0), int(x.get('bitrate') or 0)), reverse=True)
+                # 去重：每个分辨率只保留最高码率
+                seen_res = {}
+                result = []
+                for v in candidates:
+                    h = int(v.get('height') or 0)
+                    if h not in seen_res:
+                        seen_res[h] = True
+                        result.append(v)
+                return result
+
+            # 根据 quality 选择容器格式偏好
+            if quality == 'normal':
+                # 优先 mp4，其次 webm
+                mp4 = [v for v in all_videos if v.get('ext') == 'mp4']
+                webm = [v for v in all_videos if v.get('ext') == 'webm']
+                if mp4:
+                    target_videos = filter_and_sort(mp4)
+                elif webm:
+                    target_videos = filter_and_sort(webm)
                 else:
-                    all_videos.sort(key=lambda x: abs(int(x.get('height', 0)) - target_height))
-                    target_videos = [all_videos[0]] if all_videos else []
-            else:
+                    # 没有明确容器，全取
+                    target_videos = filter_and_sort(all_videos)
+            else:  # 'super' 优先 webm (VP9/AV1)
+                webm = [v for v in all_videos if v.get('ext') == 'webm']
+                mp4 = [v for v in all_videos if v.get('ext') == 'mp4']
+                if webm:
+                    target_videos = filter_and_sort(webm)
+                elif mp4:
+                    target_videos = filter_and_sort(mp4)
+                else:
+                    target_videos = filter_and_sort(all_videos)
+
+            # 如果仍然没有目标视频，从 all_videos 中取最高的几个（不去重）
+            if not target_videos:
                 all_videos.sort(key=lambda x: (int(x.get('height') or 0), int(x.get('bitrate') or 0)), reverse=True)
-                seen_heights = set()
-                target_videos = []
+                seen = set()
                 for v in all_videos:
                     h = int(v.get('height') or 0)
-                    if h not in seen_heights:
-                        seen_heights.add(h)
+                    if h not in seen:
+                        seen.add(h)
                         target_videos.append(v)
-                target_videos = target_videos[:1]
+                        if len(target_videos) >= 3:
+                            break
 
+            # 如果还是没有，抛出异常（会被外层捕获）
             if not target_videos:
                 raise Exception('未获取到可用视频流')
 
+            # 选择音频流（取最高码率的）
             audio_candidates = [x for x in formats if x.get('acodec') != 'none' and x.get('vcodec') == 'none']
+            if not audio_candidates:
+                # 尝试混流中的音频（如果有）
+                audio_candidates = [x for x in formats if x.get('acodec') != 'none']
             audio_candidates.sort(
                 key=lambda x: (1 if x.get('ext') == 'mp4' else 0, int(x.get('bitrate') or 0)),
                 reverse=True
             )
             audio = audio_candidates[0] if audio_candidates else None
 
-            cache_key = f'yt_{video_id}_{target_height if target_height else "max"}'
+            # 缓存
+            cache_key = f'yt_{video_id}_{quality}'
             all_cached = {}
             for v in target_videos:
                 all_cached[str(v.get('itag'))] = v
@@ -1268,21 +1244,22 @@ class Spider(Spider):
 
             return {
                 'parse': 0, 'jx': 0,
-                'url': f'http://127.0.0.1:9978/proxy?do=py&type=mpd&vid={video_id}&height={target_height if target_height else "max"}',
+                'url': f'http://127.0.0.1:9978/proxy?do=py&type=mpd&vid={video_id}&quality={quality}',
                 'format': 'application/dash+xml'
             }
         except Exception as e:
+            # 出错时降级到 embed
             return {
                 'parse': 1,
                 'url': f'https://www.youtube.com/embed/{video_id}?autoplay=1',
                 'header': json.dumps(self.header)
             }
+    # ==================== 改进结束 ====================
 
     def _proxy_mpd(self, params):
         vid = params.get('vid')
-        height_param = params.get('height')
-        cache_key = f'yt_{vid}_{height_param if height_param else "max"}'
-        data = self.getCache(cache_key)
+        quality = params.get('quality') or 'super'
+        data = self.getCache(f'yt_{vid}_{quality}') if vid else None
         if not data:
             return [404, 'text/plain', '视频缓存已过期或不存在']
 
@@ -1290,12 +1267,9 @@ class Spider(Spider):
         audio_item = data.get('audio_item') or {}
         duration = data.get('duration') or 0
         duration_pt = f"PT{int(duration)}S"
-        media_base = f'http://127.0.0.1:9978/proxy?do=py&type=media&vid={vid}&height={height_param if height_param else "max"}'
+        media_base = f'http://127.0.0.1:9978/proxy?do=py&type=media&vid={vid}&quality={quality}'
 
-        if not target_videos:
-            return [404, 'text/plain', '没有视频流']
-
-        def build_video_repr(item):
+        def build_video_repr(item, rank):
             itag = item.get('itag', 0)
             init = item.get('initRange') or {}
             index = item.get('indexRange') or {}
@@ -1303,7 +1277,7 @@ class Spider(Spider):
                 f'      <Representation id="v{itag}" bandwidth="{item.get("bitrate", 1000000)}" '
                 f'codecs="{html.escape(item.get("codecs") or "")}" '
                 f'height="{item.get("height", 0)}" width="{item.get("width", 0)}" '
-                f'frameRate="{item.get("fps", 30)}">\n'
+                f'frameRate="{item.get("fps", 30)}" qualityRanking="{rank}">\n'
                 f'        <BaseURL>{html.escape(media_base + f"&itag={itag}&track=video")}</BaseURL>\n'
                 f'        <SegmentBase indexRange="{index.get("start", "0")}-{index.get("end", "0")}">'
                 f'<Initialization range="{init.get("start", "0")}-{init.get("end", "0")}"/></SegmentBase>\n'
@@ -1318,13 +1292,14 @@ class Spider(Spider):
             f'  <Period id="1" start="PT0S">'
         )
 
-        video_item = target_videos[0]
-        mime_type = "video/webm" if video_item.get('ext') == 'webm' else "video/mp4"
-        label = "极客VP" if mime_type == "video/webm" else "万能MP"
-        mpd += f'\n    <AdaptationSet mimeType="{mime_type}" startWithSAP="1" segmentAlignment="true" scanType="progressive">\n'
-        mpd += f'      <Label>{label}</Label>\n'
-        mpd += build_video_repr(video_item) + '\n'
-        mpd += '    </AdaptationSet>'
+        if target_videos:
+            mime_type = "video/webm" if target_videos[0].get('ext') == 'webm' else "video/mp4"
+            label = "极客VP" if mime_type == "video/webm" else "万能MP"
+            mpd += f'\n    <AdaptationSet mimeType="{mime_type}" startWithSAP="1" segmentAlignment="true" scanType="progressive">\n'
+            mpd += f'      <Label>{label}</Label>\n'
+            for rank, v in enumerate(target_videos, start=1):
+                mpd += build_video_repr(v, rank) + '\n'
+            mpd += '    </AdaptationSet>'
 
         if audio_item:
             audio_itag = audio_item.get('itag', 0)
@@ -1347,11 +1322,10 @@ class Spider(Spider):
 
     def _proxy_media(self, params):
         vid = params.get('vid')
-        height_param = params.get('height')
+        quality = params.get('quality') or 'super'
         itag = params.get('itag')
         track = params.get('track')
-        cache_key = f'yt_{vid}_{height_param if height_param else "max"}'
-        data = self.getCache(cache_key)
+        data = self.getCache(f'yt_{vid}_{quality}') if vid else None
         if not data:
             return [404, 'text/plain', '媒体缓存不存在或已过期']
 
@@ -1394,7 +1368,7 @@ class Spider(Spider):
                             target_url = fresh_item['url']
                             all_by_itag[str(itag)] = fresh_item
                             data['all_by_itag'] = all_by_itag
-                            self.setCache(cache_key, data)
+                            self.setCache(f'yt_{vid}_{quality}', data)
                             continue
                     except Exception:
                         pass
