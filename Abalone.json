@@ -859,23 +859,6 @@
       }
     },
     {
-      "key": "javxx",
-      "name": "ദ്ദിjavxx",
-      "type": 3,
-      "api": "./File/py/Abalone/javxx.py",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 0,
-      "ext": {
-        "proxy": {},
-        "plp": ""
-      },
-      "style": {
-        "type": "rect",
-        "ratio": 1.48
-      }
-    },
-    {
       "key": "智能db",
       "name": "智能db",
       "type": 3,
