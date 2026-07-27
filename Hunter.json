@@ -7,7 +7,7 @@
     "wallpaper": "./imgs/V1.jpg",
     "sites": [
         {
-            "key": "智能聚合²",
+            "key": "智能聚合",
             "name": "꒰ঌ智能聚合໒꒱",
             "type": 3,
             "api": "./Source/智能聚合².py",
@@ -53,20 +53,6 @@
             "name": "꒰ঌYouTube_livee໒꒱",
             "type": 3,
             "api": "./File/py/Hunter/YouTube_live.py",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "order_num": 0,
-            "style": {
-                "type": "rect"
-            },
-            "ext": ""
-        },
-        {
-            "key": "红果短剧",
-            "name": "꒰ঌ红果🍎短剧໒꒱",
-            "type": 3,
-            "api": "./File/py/Hunter/红果短剧.py",
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 1,

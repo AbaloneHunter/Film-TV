@@ -7,6 +7,20 @@
   "wallpaper": "./imgs/y3.webp",
   "sites": [
     {
+      "key": "智能聚合",
+      "name": "꒰ঌ智能聚合໒꒱",
+      "type": 3,
+      "api": "./Source/智能聚合¹.py",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "order_num": 0,
+      "style": {
+        "type": "rect"
+      },
+      "ext": ""
+    },
+    {
       "key": "Jable",
       "name": "Jable",
       "type": 3,
@@ -340,20 +354,6 @@
           }
         }
       }
-    },
-    {
-      "key": "智能聚合¹",
-      "name": "꒰ঌ智能聚合¹໒꒱",
-      "type": 3,
-      "api": "./Source/智能聚合¹.py",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "order_num": 0,
-      "style": {
-        "type": "rect"
-      },
-      "ext": ""
     },
     {
       "key": "高清仓库",
