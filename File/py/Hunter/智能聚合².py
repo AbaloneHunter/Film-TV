@@ -17,19 +17,18 @@ from base.spider import Spider
 
 
 class Spider(Spider):
-    # 不再使用硬编码路径，改为同目录扫描
     CACHE_DIR_NAME = ".spider_cache"
     MAX_CACHE_SIZE = 30
     FAST_PLACEHOLDER = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-    ID_SEP = "|||"  # 自定义分隔符，避免冲突
+    ID_SEP = "|||"
 
     def __init__(self):
         super().__init__()
         self.scan_paths = []
         self.cache_dir = None
         self.class_cache = {}
-        self.spider_cache = OrderedDict()      # {py_path: (instance, mtime)}
-        self.spider_base_url = {}              # {py_path: base_url}
+        self.spider_cache = OrderedDict()
+        self.spider_base_url = {}
         self.global_lock = threading.RLock()
         self.executor = ThreadPoolExecutor(max_workers=5)
         self.session = requests.Session()
@@ -50,23 +49,87 @@ class Spider(Spider):
         cfg.setdefault('hls_proxy', False)
         self.extend_config = cfg
 
-        # --- 修改：固定为当前脚本所在目录，并记录自身文件名 ---
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        self.scan_paths = [current_dir]
-        self.SELF_NAME = os.path.basename(__file__)
-        # -----------------------------------------------------
+        # ---------- 确定扫描基准目录 ----------
+        # 1. 若用户通过 extend 明确指定 scan_base，则直接使用
+        if 'scan_base' in cfg and isinstance(cfg['scan_base'], str):
+            base_dir = cfg['scan_base']
+            if not os.path.exists(base_dir):
+                # 如果目录不存在，尝试在当前工作目录下寻找相对路径
+                base_dir = os.path.join(os.getcwd(), base_dir)
+            if os.path.exists(base_dir) and os.path.isdir(base_dir):
+                self.scan_paths = [base_dir]
+            else:
+                # 无效则回退自动检测
+                self.scan_paths = []
+        else:
+            self.scan_paths = []
 
-        self.cache_dir = os.path.join(self.scan_paths[0], self.CACHE_DIR_NAME)
+        # 2. 自动检测（如果没有通过配置指定或指定无效）
+        if not self.scan_paths:
+            try:
+                # 获取当前文件的真实路径（比 __file__ 更可靠）
+                current_file = inspect.getfile(inspect.currentframe())
+                if os.path.isfile(current_file) and not current_file.startswith('<'):
+                    base_dir = os.path.dirname(os.path.abspath(current_file))
+                    self.scan_paths = [base_dir]
+                    self.SELF_NAME = os.path.basename(current_file)
+                else:
+                    # 如果获取不到，则使用当前工作目录
+                    base_dir = os.getcwd()
+                    self.scan_paths = [base_dir]
+                    # 自身文件名使用一个虚拟名称，但实际不会匹配，因为文件不在列表中
+                    self.SELF_NAME = '聚合.py'
+            except:
+                # 兜底
+                base_dir = os.getcwd()
+                self.scan_paths = [base_dir]
+                self.SELF_NAME = '聚合.py'
+
+        # 如果 scan_paths 包含多个（但我们只用一个），可以扩展为列表，现在保留兼容
+        # 但为了支持多目录，我们可以接受 'scan_paths' 列表（可后续添加）
+        # 这里我们只取第一个作为主要扫描目录，但也可支持多个
+        # 扩展：如果用户传入 scan_paths 列表，则使用它
+        if 'scan_paths' in cfg and isinstance(cfg['scan_paths'], list):
+            paths = [p for p in cfg['scan_paths'] if os.path.exists(p)]
+            if paths:
+                self.scan_paths = paths
+                # 注意：此时 SELF_NAME 可能无法确定，但我们会跳过自身
+                # 我们仍然尝试从当前文件获取名称
+                try:
+                    current_file = inspect.getfile(inspect.currentframe())
+                    if os.path.isfile(current_file):
+                        self.SELF_NAME = os.path.basename(current_file)
+                except:
+                    pass
+
+        # 确保 SELF_NAME 非空
+        if not self.SELF_NAME:
+            self.SELF_NAME = '聚合.py'  # 占位，实际扫描时会跳过同名文件
+
+        # 打印调试信息（部署后可删除）
+        print(f"[聚合] 扫描目录: {self.scan_paths}")
+        print(f"[聚合] 自身文件名（将跳过）: {self.SELF_NAME}")
+
+        # ---------- 缓存目录 ----------
+        # 使用第一个扫描路径作为缓存根目录
+        cache_root = self.scan_paths[0] if self.scan_paths else os.getcwd()
+        self.cache_dir = os.path.join(cache_root, self.CACHE_DIR_NAME)
         try:
             if not os.path.exists(self.cache_dir):
                 os.makedirs(self.cache_dir)
-        except:
-            pass
+        except Exception as e:
+            print(f"[聚合] 创建缓存目录失败: {e}")
+            # 无法创建则使用系统临时目录
+            import tempfile
+            self.cache_dir = os.path.join(tempfile.gettempdir(), self.CACHE_DIR_NAME)
+            if not os.path.exists(self.cache_dir):
+                os.makedirs(self.cache_dir, exist_ok=True)
 
         if not self._initialized:
             self._clean_orphan_cache()
             self._initialized = True
 
+    # ---------- 以下方法不变（与之前完全相同） ----------
     def getName(self):
         return "智能聚合"
 
@@ -74,35 +137,28 @@ class Spider(Spider):
         return self.FAST_PLACEHOLDER
 
     def _normalize_vod(self, v, py_path, spider=None):
-        # ID
         vid = v.get('vod_id') or v.get('id')
         if vid:
             v['vod_id'] = f"{py_path}{self.ID_SEP}{vid}"
         else:
             v['vod_id'] = f"{py_path}{self.ID_SEP}{v.get('title', 'unknown')}"
 
-        # 标题
         if not v.get('vod_name'):
             v['vod_name'] = v.get('title') or v.get('name') or "未命名"
 
-        # 备注
         if not v.get('vod_remarks'):
             v['vod_remarks'] = v.get('remark') or ""
 
-        # 图片处理
         pic = None
         for key in ['vod_pic', 'pic', 'img', 'cover', 'thumb', 'thumbnail', 'poster', 'image']:
             val = v.get(key)
             if val and isinstance(val, str) and val.strip():
                 pic = val.strip()
-                # 排除无效
                 if pic.lower() in ('null', 'none', 'undefined', 'false'):
                     pic = None
                     continue
-                # 补全协议
                 if pic.startswith('//'):
                     pic = 'https:' + pic
-                # 相对路径补全
                 elif not pic.startswith(('http://', 'https://', 'data:')):
                     base = None
                     if spider:
@@ -164,7 +220,6 @@ class Spider(Spider):
                     else:
                         instance.init()
 
-                # 保存基础URL供图片补全
                 base = getattr(instance, 'base_url', None) or getattr(instance, 'host', None) or getattr(instance, 'api', None)
                 if base:
                     self.spider_base_url[py_path] = base
@@ -179,7 +234,8 @@ class Spider(Spider):
 
                 return instance, "OK"
 
-            except:
+            except Exception as e:
+                print(f"[聚合] 加载 {py_path} 失败: {e}")
                 return None, "加载失败"
 
     def _clean_orphan_cache(self):
@@ -282,7 +338,8 @@ class Spider(Spider):
                     self._normalize_vod(v, tid, spider)
                 return res
 
-            except:
+            except Exception as e:
+                print(f"[聚合] categoryContent 错误: {e}")
                 return {"list": []}
 
     def detailContent(self, array):
@@ -301,13 +358,11 @@ class Spider(Spider):
                     vod = res['list'][0]
                     self._normalize_vod(vod, py_path, spider)
 
-                    # 处理播放URL，添加前缀但保留原始ID完整
                     if vod.get('vod_play_url'):
                         play_parts = []
                         for part in vod['vod_play_url'].split('#'):
                             if '$' in part:
                                 title, pid = part.split('$', 1)
-                                # 如果尚未添加前缀则添加
                                 if not pid.startswith(f"{py_path}{self.ID_SEP}"):
                                     play_parts.append(f"{title}${py_path}{self.ID_SEP}{pid}")
                                 else:
@@ -320,8 +375,8 @@ class Spider(Spider):
                         vod['vod_play_url'] = '#'.join(play_parts)
 
                     return {"list": [vod]}
-            except:
-                pass
+            except Exception as e:
+                print(f"[聚合] detailContent 错误: {e}")
             return {"list": []}
 
     def playerContent(self, flag, id, vipFlags):
@@ -334,7 +389,8 @@ class Spider(Spider):
                 if not spider:
                     return {"parse": 0, "url": "error"}
                 return spider.playerContent(flag, real_id, vipFlags)
-            except:
+            except Exception as e:
+                print(f"[聚合] playerContent 错误: {e}")
                 return {"parse": 0, "url": ""}
 
     def _safe_search(self, py_path, key, quick, pg):
@@ -344,8 +400,8 @@ class Spider(Spider):
                 res = spider.searchContent(key, quick, pg)
                 if res and 'list' in res:
                     return [self._normalize_vod(v, py_path, spider) for v in res['list']]
-        except:
-            pass
+        except Exception as e:
+            print(f"[聚合] 搜索 {py_path} 错误: {e}")
         return []
 
     def searchContent(self, key, quick, pg="1"):
@@ -372,7 +428,6 @@ class Spider(Spider):
                         results.extend(data)
                 except:
                     pass
-        # 去重
         seen = set()
         unique = []
         for v in results:
