@@ -17,10 +17,7 @@ from base.spider import Spider
 
 
 class Spider(Spider):
-    # 硬编码扫描路径
-    PATH_1 = "/storage/emulated/0/Film-TV/File/py/Hunter"
-    PATH_2 = "F:\\模拟共享\\Film-TV\\File\\py\\Hunter"
-
+    # 不再使用硬编码路径，改为同目录扫描
     CACHE_DIR_NAME = ".spider_cache"
     MAX_CACHE_SIZE = 30
     FAST_PLACEHOLDER = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
@@ -53,20 +50,16 @@ class Spider(Spider):
         cfg.setdefault('hls_proxy', False)
         self.extend_config = cfg
 
-        self.scan_paths = []
-        if os.path.exists(self.PATH_1):
-            self.scan_paths.append(self.PATH_1)
-        if os.path.exists(self.PATH_2) and self.PATH_2 not in self.scan_paths:
-            self.scan_paths.append(self.PATH_2)
-        if not self.scan_paths:
-            self.scan_paths.append(os.path.dirname(os.path.abspath(__file__)))
+        # --- 修改：固定为当前脚本所在目录，并记录自身文件名 ---
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        self.scan_paths = [current_dir]
+        self.SELF_NAME = os.path.basename(__file__)
+        # -----------------------------------------------------
 
-        main_path = self.scan_paths[0] if self.scan_paths else "."
-        self.cache_dir = os.path.join(main_path, self.CACHE_DIR_NAME)
+        self.cache_dir = os.path.join(self.scan_paths[0], self.CACHE_DIR_NAME)
         try:
             if not os.path.exists(self.cache_dir):
                 os.makedirs(self.cache_dir)
-            self.SELF_NAME = os.path.basename(inspect.getfile(inspect.currentframe()))
         except:
             pass
 
