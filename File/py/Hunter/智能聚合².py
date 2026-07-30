@@ -17,7 +17,7 @@ from base.spider import Spider
 
 
 class Spider(Spider):
-    # 备用扫描路径（手机和电脑）
+    # 硬编码扫描路径
     PATH_1 = "/storage/emulated/0/Film-TV/File/py/Hunter"
     PATH_2 = "F:\\模拟共享\\Film-TV\\File\\py\\Hunter"
 
@@ -42,7 +42,6 @@ class Spider(Spider):
         self._initialized = False
 
     def init(self, extend):
-        # 解析 extend 配置
         cfg = {}
         if isinstance(extend, str):
             try:
@@ -54,30 +53,14 @@ class Spider(Spider):
         cfg.setdefault('hls_proxy', False)
         self.extend_config = cfg
 
-        # 基准目录：当前脚本所在目录，可通过配置覆盖
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        if 'base_dir' in cfg:
-            base_dir = cfg['base_dir']
-
-        # 优先使用配置中的 scan_paths，否则使用备用路径
-        if 'scan_paths' in cfg:
-            paths = cfg['scan_paths']
-        else:
-            paths = [self.PATH_1, self.PATH_2]
-
         self.scan_paths = []
-        for p in paths:
-            if not os.path.isabs(p):
-                p = os.path.join(base_dir, p)
-            p = os.path.normpath(p)
-            if os.path.exists(p) and p not in self.scan_paths:
-                self.scan_paths.append(p)
-
-        # 若所有路径均无效，回退到当前目录
+        if os.path.exists(self.PATH_1):
+            self.scan_paths.append(self.PATH_1)
+        if os.path.exists(self.PATH_2) and self.PATH_2 not in self.scan_paths:
+            self.scan_paths.append(self.PATH_2)
         if not self.scan_paths:
-            self.scan_paths.append(base_dir)
+            self.scan_paths.append(os.path.dirname(os.path.abspath(__file__)))
 
-        # 缓存目录
         main_path = self.scan_paths[0] if self.scan_paths else "."
         self.cache_dir = os.path.join(main_path, self.CACHE_DIR_NAME)
         try:

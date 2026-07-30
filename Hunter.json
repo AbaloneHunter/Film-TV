@@ -10,7 +10,7 @@
       "key": "智能聚合",
       "name": "꒰ঌ智能聚合໒꒱",
       "type": 3,
-      "api": "./Source/智能聚合².py",
+      "api": "./File/py/Hunter/智能聚合².py",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
@@ -18,7 +18,7 @@
       "style": {
         "type": "rect"
       },
-      "ext": "{\"scan_paths\": [\"./py/Hunter\", \"/mnt/sdcard/scripts\"]}"
+      "ext": ""
     },
     {
       "key": "哔哩哔哩",
