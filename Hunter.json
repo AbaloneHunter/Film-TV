@@ -18,7 +18,20 @@
       "style": {
         "type": "rect"
       },
-      "ext": ""
+      "ext": "{
+  "key": "智能聚合",
+  "name": "꒰ঌ智能聚合໒꒱",
+  "type": 3,
+  "api": "./File/py/Hunter/智能聚合².py",
+  "searchable": 1,
+  "quickSearch": 1,
+  "filterable": 1,
+  "order_num": 0,
+  "style": {
+    "type": "rect"
+  },
+  "ext": "{\"scan_base\":\"/storage/emulated/0/Film-TV/File/py/Hunter\"}"
+}"
     },
     {
       "key": "哔哩哔哩",
