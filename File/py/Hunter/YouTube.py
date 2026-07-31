@@ -1146,116 +1146,104 @@ class Spider(Spider):
             return 'video'
         return re.sub(r'[#$@%&!?*|\\/:<>]', ' ', title)[:60]
 
-    # ==================== 改进后的 _play_video 方法 ====================
+    # ==================== 优化后的 _play_video 方法（保留高画质分离流） ====================
     def _play_video(self, video_id, quality):
         try:
             data = self.yt_video.extract(video_id)
             formats = data.get('formats') or []
 
-            # 分离视频流（有视频无音频）
+            # 1. 分离视频流（无音频）和高分辨率
             all_videos = [x for x in formats if x.get('vcodec') != 'none' and x.get('acodec') == 'none']
-
-            # 如果 all_videos 为空，尝试所有包含视频的流（可能有些混流）
             if not all_videos:
-                all_videos = [x for x in formats if x.get('vcodec') != 'none']
+                all_videos = [x for x in formats if x.get('vcodec') != 'none']  # 兜底
 
-            # 定义筛选函数：优先保留 >=720p，按高度和码率降序
-            def filter_and_sort(videos):
-                # 先按高度 >=720 过滤
-                high = [v for v in videos if int(v.get('height') or 0) >= 720]
-                # 如果 high 为空，则取所有视频
-                candidates = high if high else videos
-                # 按高度降序，码率降序
-                candidates.sort(key=lambda x: (int(x.get('height') or 0), int(x.get('bitrate') or 0)), reverse=True)
-                # 去重：每个分辨率只保留最高码率
-                seen_res = {}
-                result = []
-                for v in candidates:
-                    h = int(v.get('height') or 0)
-                    if h not in seen_res:
-                        seen_res[h] = True
-                        result.append(v)
-                return result
-
-            # 根据 quality 选择容器格式偏好
+            # 根据 quality 参数选择优先容器：'super' 优先 webm (VP9/AV1)，'normal' 优先 mp4
             if quality == 'normal':
-                # 优先 mp4，其次 webm
-                mp4 = [v for v in all_videos if v.get('ext') == 'mp4']
-                webm = [v for v in all_videos if v.get('ext') == 'webm']
-                if mp4:
-                    target_videos = filter_and_sort(mp4)
-                elif webm:
-                    target_videos = filter_and_sort(webm)
-                else:
-                    # 没有明确容器，全取
-                    target_videos = filter_and_sort(all_videos)
-            else:  # 'super' 优先 webm (VP9/AV1)
-                webm = [v for v in all_videos if v.get('ext') == 'webm']
-                mp4 = [v for v in all_videos if v.get('ext') == 'mp4']
-                if webm:
-                    target_videos = filter_and_sort(webm)
-                elif mp4:
-                    target_videos = filter_and_sort(mp4)
-                else:
-                    target_videos = filter_and_sort(all_videos)
+                priority_ext = 'mp4'
+            else:
+                priority_ext = 'webm'
 
-            # 如果仍然没有目标视频，从 all_videos 中取最高的几个（不去重）
+            # 过滤出 >=720p 的流，并按高度、码率降序
+            high_res = [v for v in all_videos if int(v.get('height') or 0) >= 720]
+            candidates = high_res if high_res else all_videos
+            # 按优先容器排序
+            candidates.sort(key=lambda x: (0 if x.get('ext') == priority_ext else 1, int(x.get('height') or 0), int(x.get('bitrate') or 0)), reverse=True)
+
+            # 去重：每个分辨率只保留最高码率
+            seen_res = {}
+            target_videos = []
+            for v in candidates:
+                h = int(v.get('height') or 0)
+                if h not in seen_res:
+                    seen_res[h] = True
+                    target_videos.append(v)
+                # 可选限制数量（如保留前5个最高分辨率）
+            target_videos = target_videos[:5]  # 避免 MPD 过大
+
             if not target_videos:
-                all_videos.sort(key=lambda x: (int(x.get('height') or 0), int(x.get('bitrate') or 0)), reverse=True)
-                seen = set()
-                for v in all_videos:
-                    h = int(v.get('height') or 0)
-                    if h not in seen:
-                        seen.add(h)
-                        target_videos.append(v)
-                        if len(target_videos) >= 3:
-                            break
+                # 如果没有分离流，尝试混合流（降级）
+                muxed = [f for f in formats if f.get('vcodec') != 'none' and f.get('acodec') != 'none']
+                if muxed:
+                    muxed.sort(key=lambda x: (int(x.get('height') or 0), int(x.get('bitrate') or 0)), reverse=True)
+                    best = muxed[0]
+                    cache_key = f'yt_single_{video_id}'
+                    self.setCache(cache_key, {
+                        'url': best.get('url'),
+                        'headers': best.get('headers') or {},
+                        'expires': time.time() + 600,
+                    })
+                    mime = best.get('mimeType', 'video/mp4').split(';')[0]
+                    return {
+                        'parse': 0,
+                        'jx': 0,
+                        'url': f'http://127.0.0.1:9978/proxy?do=py&type=single&vid={video_id}',
+                        'format': mime
+                    }
+                raise Exception('没有可用的视频流')
 
-            # 如果还是没有，抛出异常（会被外层捕获）
-            if not target_videos:
-                raise Exception('未获取到可用视频流')
-
-            # 选择音频流（取最高码率的）
+            # 2. 选取音频流（最高码率）
             audio_candidates = [x for x in formats if x.get('acodec') != 'none' and x.get('vcodec') == 'none']
             if not audio_candidates:
-                # 尝试混流中的音频（如果有）
                 audio_candidates = [x for x in formats if x.get('acodec') != 'none']
             audio_candidates.sort(
-                key=lambda x: (1 if x.get('ext') == 'mp4' else 0, int(x.get('bitrate') or 0)),
+                key=lambda x: (0 if x.get('ext') == 'mp4' else 1, int(x.get('bitrate') or 0)),
                 reverse=True
             )
             audio = audio_candidates[0] if audio_candidates else None
 
-            # 缓存
+            # 3. 缓存所有流信息
             cache_key = f'yt_{video_id}_{quality}'
-            all_cached = {}
+            all_by_itag = {}
             for v in target_videos:
-                all_cached[str(v.get('itag'))] = v
+                all_by_itag[str(v.get('itag'))] = v
             if audio:
-                all_cached[str(audio.get('itag'))] = audio
+                all_by_itag[str(audio.get('itag'))] = audio
 
             self.setCache(cache_key, {
                 'target_videos': target_videos,
                 'audio_item': audio,
-                'all_by_itag': all_cached,
+                'all_by_itag': all_by_itag,
                 'duration': data.get('duration') or 0,
                 'expires': time.time() + 600,
             })
 
+            # 4. 返回 MPD 代理地址
             return {
-                'parse': 0, 'jx': 0,
+                'parse': 0,
+                'jx': 0,
                 'url': f'http://127.0.0.1:9978/proxy?do=py&type=mpd&vid={video_id}&quality={quality}',
                 'format': 'application/dash+xml'
             }
         except Exception as e:
-            # 出错时降级到 embed
+            # 降级到 embed 页面
             return {
                 'parse': 1,
                 'url': f'https://www.youtube.com/embed/{video_id}?autoplay=1',
                 'header': json.dumps(self.header)
             }
-    # ==================== 改进结束 ====================
+    # ==================== _play_video 结束 ====================
 
+    # ==================== 完善 MPD 生成（添加命名空间和标准属性） ====================
     def _proxy_mpd(self, params):
         vid = params.get('vid')
         quality = params.get('quality') or 'super'
@@ -1269,38 +1257,39 @@ class Spider(Spider):
         duration_pt = f"PT{int(duration)}S"
         media_base = f'http://127.0.0.1:9978/proxy?do=py&type=media&vid={vid}&quality={quality}'
 
-        def build_video_repr(item, rank):
-            itag = item.get('itag', 0)
-            init = item.get('initRange') or {}
-            index = item.get('indexRange') or {}
-            return (
-                f'      <Representation id="v{itag}" bandwidth="{item.get("bitrate", 1000000)}" '
-                f'codecs="{html.escape(item.get("codecs") or "")}" '
-                f'height="{item.get("height", 0)}" width="{item.get("width", 0)}" '
-                f'frameRate="{item.get("fps", 30)}" qualityRanking="{rank}">\n'
-                f'        <BaseURL>{html.escape(media_base + f"&itag={itag}&track=video")}</BaseURL>\n'
-                f'        <SegmentBase indexRange="{index.get("start", "0")}-{index.get("end", "0")}">'
-                f'<Initialization range="{init.get("start", "0")}-{init.get("end", "0")}"/></SegmentBase>\n'
-                f'      </Representation>'
-            )
-
+        # 构建 MPD，添加完整命名空间和 schemaLocation
         mpd = (
             f'<?xml version="1.0" encoding="UTF-8"?>\n'
-            f'<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" type="static" '
-            f'mediaPresentationDuration="{duration_pt}" minBufferTime="PT1.5S" '
+            f'<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" '
+            f'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            f'xsi:schemaLocation="urn:mpeg:dash:schema:mpd:2011 http://standards.iso.org/ittf/PubliclyAvailableStandards/MPEG-DASH_schema_files/DASH-MPD.xsd" '
+            f'type="static" mediaPresentationDuration="{duration_pt}" minBufferTime="PT1.5S" '
             f'profiles="urn:mpeg:dash:profile:isoff-on-demand:2011">\n'
             f'  <Period id="1" start="PT0S">'
         )
 
+        # 视频 AdaptationSet
         if target_videos:
             mime_type = "video/webm" if target_videos[0].get('ext') == 'webm' else "video/mp4"
-            label = "极客VP" if mime_type == "video/webm" else "万能MP"
             mpd += f'\n    <AdaptationSet mimeType="{mime_type}" startWithSAP="1" segmentAlignment="true" scanType="progressive">\n'
-            mpd += f'      <Label>{label}</Label>\n'
+            mpd += f'      <Label>高画质视频</Label>\n'
             for rank, v in enumerate(target_videos, start=1):
-                mpd += build_video_repr(v, rank) + '\n'
-            mpd += '    </AdaptationSet>'
+                itag = v.get('itag', 0)
+                init = v.get('initRange') or {}
+                index = v.get('indexRange') or {}
+                mpd += (
+                    f'      <Representation id="v{itag}" bandwidth="{v.get("bitrate", 1000000)}" '
+                    f'codecs="{html.escape(v.get("codecs") or "")}" '
+                    f'height="{v.get("height", 0)}" width="{v.get("width", 0)}" '
+                    f'frameRate="{v.get("fps", 30)}" qualityRanking="{rank}">\n'
+                    f'        <BaseURL>{html.escape(media_base + f"&itag={itag}&track=video")}</BaseURL>\n'
+                    f'        <SegmentBase indexRange="{index.get("start", "0")}-{index.get("end", "0")}">'
+                    f'<Initialization range="{init.get("start", "0")}-{init.get("end", "0")}"/></SegmentBase>\n'
+                    f'      </Representation>'
+                )
+            mpd += '\n    </AdaptationSet>'
 
+        # 音频 AdaptationSet
         if audio_item:
             audio_itag = audio_item.get('itag', 0)
             audio_init = audio_item.get('initRange') or {}
@@ -1318,7 +1307,8 @@ class Spider(Spider):
             )
 
         mpd += '\n  </Period>\n</MPD>'
-        return [200, 'application/dash+xml', mpd]
+        return [200, 'application/dash+xml; charset=utf-8', mpd]
+    # ==================== _proxy_mpd 结束 ====================
 
     def _proxy_media(self, params):
         vid = params.get('vid')
@@ -1355,6 +1345,7 @@ class Spider(Spider):
             try:
                 r = self.session.get(target_url, headers=headers, stream=True, timeout=120)
                 if r.status_code in (403, 404) and attempt < max_retries:
+                    # 尝试刷新流 URL
                     try:
                         fresh_data = self.yt_video.extract(vid)
                         fresh_formats = fresh_data.get('formats', [])
